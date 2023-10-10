@@ -18,19 +18,31 @@ public class CircleTarget implements Target {
 
     @Override
     public boolean hitTarget(double x, double y) {
-        if (dist(this.centerX, this.centerY, x, y) <= this.radius) {
+        if (dist(x, y) <= this.radius) {
             return true;
         } else {
             return false;
         }
     }
 
-    public double dist(double pointOneX, double pointOneY, double pointTwoX, double pointTwoY) {
-        double dist = Math.sqrt(Math.pow(pointOneX - pointTwoX, 2) + Math.pow(pointOneY - pointTwoY, 2));
+    public double dist(double pointOneX, double pointOneY) { // dist from point to the target
+        double dist = Math.sqrt(Math.pow(pointOneX - centerX, 2) + Math.pow(pointOneY - centerY, 2));
         return dist;
     }
 
     public void changeSize(double radius) {
         this.radius = radius;
+    }
+
+    public double getCenterX() {
+        return centerX;
+    }
+
+    public double getCenterY() {
+        return centerY;
+    }
+
+    public double getRadius() {
+        return radius;
     }
 }

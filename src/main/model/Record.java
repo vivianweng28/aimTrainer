@@ -1,11 +1,12 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
 import model.Session;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Record {
-    private List sessions;
+    private List<Session> sessions;
 
     public Record() {
         sessions = new ArrayList<Session>();
