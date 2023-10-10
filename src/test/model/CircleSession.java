@@ -1,16 +1,15 @@
 package model;
 
-import model.Suggestion;
-import model.Vector;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class CircleSession implements Session{
-    private List<Suggestion> totalAccuracy;
+    private List<Suggestion> allSuggestions;
+    private Suggestion summarySuggestion;
 
     public CircleSession(){
-        totalAccuracy = new ArrayList<Suggestion>();
+        allSuggestions = new ArrayList<Suggestion>();
+        summarySuggestion = null;
     }
 
     public void analyze(double x, double y, double centerX, double centerY, double radius){
@@ -41,7 +40,7 @@ public class CircleSession implements Session{
 
         Suggestion suggest = new Suggestion(x, y, dirX, dirY, xAdjust, yAdjust);
 
-        totalAccuracy.add(suggest);
+        allSuggestions.add(suggest);
     }
 
     public Shot getClosestShot(Vector vector, double radius)
@@ -52,9 +51,48 @@ public class CircleSession implements Session{
        return s;
     }
 
-    public List<Suggestion> getTotalAccuracy(){
-        return totalAccuracy;
+    public List<Suggestion> getAllSuggestions(){
+        return allSuggestions;
     }
 
-    public
+    public Suggestion getLastSuggestion(){
+        return allSuggestions.get(allSuggestions.size()-1);
+    }
+
+    public Suggestion getSummarySuggestion(){
+        return summarySuggestion;
+    }
+
+    public Suggestion updateSummarySuggestion(){
+        double totalX = 0;
+        double totalY = 0;
+
+        for (Suggestion s : allSuggestions) {
+            totalX += s.getAmtX();
+            totalY += s.getAmtY();
+        }
+
+       double avgX = totalX/(double) (allSuggestions.size());
+       double avgY = totalY/(double) (allSuggestions.size());
+
+       String dirX = "perfect";
+       String dirY = "perfect";
+
+       if(avgX > 0) {
+           dirX = "right";
+       }
+       else if (avgX < 0) {
+           dirX = "left";
+       }
+       if(avgY > 0) {
+            dirX = "up";
+       }
+       else if (avgX < 0) {
+            dirX = "right";
+       }
+
+       Suggestion summary = new Suggestion(avgX, avgY, dirX, dirY, avgX, avgY);
+
+       return summary;
+    }
 }

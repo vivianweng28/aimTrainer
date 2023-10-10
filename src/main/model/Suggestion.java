@@ -13,4 +13,34 @@ public class Suggestion extends Shot {
         this.amtX = amtX;
         this.amtY = amtY;
     }
+
+    public double getAmtX() {
+        return amtX;
+    }
+
+    public double getAmtY() {
+        return amtY;
+    }
+
+    public String giveSuggestion() {
+        String suggestion = "";
+        if (dirX.equals("right")) {
+            suggestion = "Shoot more to the right!";
+        } else if (dirX.equals("left")) {
+            suggestion = "Shoot more to the left!";
+        }
+
+        if (dirY.equals("up")) {
+            suggestion += " Shoot more downwards!";
+        } else if (dirY.equals("down")) {
+            suggestion += " Shoot more upwards!";
+        }
+
+        if (dirX.equals("perfect") && dirY.equals("perfect")) {
+            suggestion = "Perfect shot!";
+        }
+
+        return suggestion;
+
+    }
 }
