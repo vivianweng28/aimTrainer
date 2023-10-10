@@ -1,6 +1,7 @@
 package model;
 
 import model.Suggestion;
+import model.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,12 @@ public class CircleSession implements Session{
     }
 
     public void analyze(double x, double y, double centerX, double centerY, double radius){
-        double xAdjust = x - radius;
-        double yAdjust = x - super.getRadius();
+        Vector vec = new Vector(x - radius, y-radius);
+
+        Shot closestShot = getClosestShot(vec, radius);
+
+        double xAdjust = x - closestShot.getDirX();
+        double yAdjust = y - closestShot.getDirY();
 
         String dirX = "perfect";
         String dirY = "perfect";
@@ -39,12 +44,17 @@ public class CircleSession implements Session{
         totalAccuracy.add(suggest);
     }
 
-    public Shot getClosestShot()
+    public Shot getClosestShot(Vector vector, double radius)
     {
-
+        double x = radius * vector.getUnitVector().getCompX();
+        double y = radius * vector.getUnitVector().getCompY();
+       Shot s = new Shot(x, y);
+       return s;
     }
 
     public List<Suggestion> getTotalAccuracy(){
         return totalAccuracy;
     }
+
+    public
 }
