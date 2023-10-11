@@ -69,7 +69,7 @@ class CircleSessionTest {
     }
 
     @Test
-    public void testAnalyzeRightUp() { //TODO
+    public void testAnalyzeRightUp() {
         cs.analyze(100, 100, 10, 10, 5);
         Suggestion generatedSuggestion = cs.getLastSuggestion();
         double correctDist = 100 - (5 / Math.sqrt(2) + 10);
@@ -81,7 +81,7 @@ class CircleSessionTest {
     }
 
     @Test
-    public void testAnalyzeRightDown() { //TODO
+    public void testAnalyzeRightDown() {
         cs.analyze(100, 1, 10, 10, 5);
         Suggestion generatedSuggestion = cs.getLastSuggestion();
 
@@ -96,7 +96,7 @@ class CircleSessionTest {
     }
 
     @Test
-    public void testAnalyzeLeftUp() { //TODO
+    public void testAnalyzeLeftUp() {
         cs.analyze(1, 100, 10, 10, 5);
         Suggestion generatedSuggestion = cs.getLastSuggestion();
 
@@ -111,7 +111,7 @@ class CircleSessionTest {
     }
 
     @Test
-    public void testAnalyzeLeftDown() { //TODO
+    public void testAnalyzeLeftDown() {
         cs.analyze(1, 1, 10, 10, 5);
         Suggestion generatedSuggestion = cs.getLastSuggestion();
         double correctDist = 10 - (5 / Math.sqrt(2)) - 1;
@@ -146,6 +146,10 @@ class CircleSessionTest {
         cs.analyze(1, 1, 10, 10, 5);
         cs.analyze(0.1, 0.1, 10, 10, 5);
         cs.analyze(400, 400, 10, 10, 5);
+        cs.analyze(400, 400, 10, 10, 5);
+        cs.analyze(400, 400, 10, 10, 5);
+        cs.analyze(400, 1, 10, 10, 5);
+        cs.analyze(1, 400, 10, 10, 5);
         cs.analyze(400, 400, 10, 10, 5);
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
