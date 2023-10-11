@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 class CircleSessionTest {
     private CircleSession cs;
 
@@ -170,5 +172,28 @@ class CircleSessionTest {
 
         assertEquals(0, before);
         assertEquals(2, after);
+    }
+
+    @Test
+    public void testGetAllSuggestions() {
+        cs.analyze(300, 300, 10, 10, 5);
+        cs.analyze(1, 300, 10, 10, 5);
+        cs.analyze(300, 300, 10, 10, 5);
+
+        List<Suggestion> allSuggestions = cs.getAllSuggestions();
+
+        assertEquals(3, allSuggestions.size());
+        assertEquals("Shoot more to the left! Shoot more downwards!", allSuggestions.get(0).giveSuggestion());
+        assertEquals("Shoot more to the right! Shoot more downwards!", allSuggestions.get(1).giveSuggestion());
+        assertEquals("Shoot more to the left! Shoot more downwards!", allSuggestions.get(2).giveSuggestion());
+    }
+
+    @Test
+    public void testAccuracy() {
+        cs.analyze(300, 300, 10, 10, 5);
+        cs.hit();
+        double accuracy = cs.getAccuracy();
+
+        assertEquals(50, accuracy);
     }
 }

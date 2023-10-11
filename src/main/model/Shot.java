@@ -9,10 +9,12 @@ public class Shot {
         this.compY = compY;
     }
 
+    // EFFECTS: get x coordinate of the shot
     public double getCompX() {
         return compX;
     }
 
+    // EFFECTS: get y coordinate of the shot
     public double getCompY() {
         return compY;
     }

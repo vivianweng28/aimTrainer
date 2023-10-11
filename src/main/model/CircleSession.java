@@ -10,6 +10,8 @@ public class CircleSession implements Session {
     private int shots;
     private double accuracy;
 
+    // EFFECTS: creates new circle target session with no hits, shots, accuracy or summary suggestion, and has no
+    // suggestions recorded.
     public CircleSession() {
         allSuggestions = new ArrayList<Suggestion>();
         summarySuggestion = null;
@@ -55,6 +57,7 @@ public class CircleSession implements Session {
         allSuggestions.add(suggest);
     }
 
+    // REQUIRES: radius, centerX and centerY > 0.
     // EFFECTS: generates closest shot on the target from the user shot
     public Shot getClosestShot(Vector vector, double radius, double centerX, double centerY) {
         double x = centerX + radius * vector.getUnitVector().getCompX();
@@ -63,32 +66,36 @@ public class CircleSession implements Session {
         return s;
     }
 
+    // MODIFIES: this
+    // EFFECTS: increases the number of times the user's shot hits the target by one, increases the total number of
+    // shots by one, and calculates the new accuracy.
     public void hit() {
         hit++;
         shots++;
         accuracy = (double) hit / (double) shots;
     }
 
+    // EFFECTS: gets the list of all generated suggestions
     public List<Suggestion> getAllSuggestions() {
         return allSuggestions;
     }
 
+    // EFFECTS: gets the total session accuracy in percentage
     public double getAccuracy() {
         return accuracy * 100;
     }
 
+    // EFFECTS: gets the total number of times the user's shot has hit the target
     public int getHit() {
         return hit;
     }
 
-    public int getShots() {
-        return shots;
-    }
-
+    // EFFECTS: gets the last suggestion made by the system
     public Suggestion getLastSuggestion() {
         return allSuggestions.get(allSuggestions.size() - 1);
     }
 
+    // EFFECTS: gets the average deviance from all the user's missed shots to the target in the x direction
     public double getSummarizedX() {
         double totalX = 0;
         for (Suggestion s : allSuggestions) {
@@ -103,6 +110,7 @@ public class CircleSession implements Session {
         return avgX;
     }
 
+    // EFFECTS: gets the average deviance from all the user's missed shots to the target in the y direction
     public double getSummarizedY() {
         double totalY = 0;
         for (Suggestion s : allSuggestions) {
@@ -117,6 +125,7 @@ public class CircleSession implements Session {
         return avgY;
     }
 
+    // EFFECTS: create summary suggestion from all suggestions given this session
     public Suggestion updateSummarySuggestion() {
         double avgX = getSummarizedX();
         double avgY = getSummarizedY();

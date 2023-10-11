@@ -11,18 +11,17 @@ public class Vector {
         this.length = getVectorLength();
     }
 
+    //EFFECT: get component x of this vector
     public double getCompX() {
         return compX;
     }
 
+    //EFFECT: get component y of this vector
     public double getCompY() {
         return compY;
     }
 
-    public double getLength() {
-        return length;
-    }
-
+    //EFFECT: get the length of this vector
     public double getVectorLength() {
         return Math.sqrt(Math.pow(this.compX, 2) + Math.pow(this.compY, 2));
     }
