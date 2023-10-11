@@ -17,28 +17,28 @@ public class CircleSession implements Session {
 
         Shot closestShot = getClosestShot(vec, radius, centerX, centerY);
 
-        double xAdjust = x - closestShot.getDirX();
-        double yAdjust = y - closestShot.getDirY();
+        double adjustX = x - closestShot.getDirX();
+        double adjustY = y - closestShot.getDirY();
 
         String dirX = "perfect";
         String dirY = "perfect";
 
-        if(xAdjust > 0) {
+        if(adjustX > 0) {
             dirX = "right";
-        } else if(xAdjust < 0) {
+        } else if(adjustX < 0) {
             dirX = "left";
         }
 
-        if(yAdjust > 0) {
+        if(adjustY > 0) {
             dirY = "up";
-        } else if(yAdjust < 0) {
+        } else if(adjustY < 0) {
             dirY = "down";
         }
 
-        xAdjust = Math.abs(xAdjust);
-        yAdjust = Math.abs(yAdjust);
+        adjustX = Math.abs(adjustX);
+        adjustY = Math.abs(adjustY);
 
-        Suggestion suggest = new Suggestion(x, y, dirX, dirY, xAdjust, yAdjust);
+        Suggestion suggest = new Suggestion(x, y, dirX, dirY, adjustX, adjustY);
 
         allSuggestions.add(suggest);
     }

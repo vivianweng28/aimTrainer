@@ -4,16 +4,17 @@ import model.*;
 import model.CircleTarget;
 import model.Session;
 import model.CircleSession;
-import model.Record;
 import model.Target;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 // aim trainer object that produces the targets
 public class AimTrainer {
 
     private boolean stop;
-    private static final Record sessions = new Record();
+    private static final List<Session> sessions = new ArrayList<Session>();
     private static final int DIM_X = 500;
     private static final int DIM_Y = 500;
     private static final int DEFAULT_DISTANCE = 100; //meters
@@ -27,12 +28,12 @@ public class AimTrainer {
         this.stop = false;
         //this.mode = DEFAULT_MODE;
         this.distance = DEFAULT_DISTANCE;
-        target = new CircleTarget();
+        target = new CircleTarget(0,0);
     }
 
     public void start() {
         Session s = new CircleSession();
-        sessions.addSession(s);
+        sessions.add(s);
         while (!stop) {
             askChangeDist();
             target = generateTarget();
@@ -72,10 +73,10 @@ public class AimTrainer {
         if (nextRecords.equals("Y")) {
             System.out.println("Which session number would you like to see? Please enter a positive integer.");
             int indexPlusOne = SCN.nextInt();
-            if (indexPlusOne >= sessions.getNumSessions() && indexPlusOne >= 1) {
+            if (indexPlusOne >= sessions.size() && indexPlusOne >= 1) {
                 System.out.println("Invalid index number, session closing. Thank you for training with us today!");
             } else {
-                Suggestion summary = sessions.getSession(indexPlusOne - 1).getSummarySuggestion();
+                Suggestion summary = sessions.get(indexPlusOne - 1).getSummarySuggestion();
                 System.out.println("Session " + indexPlusOne + " feedback: " + summary.giveSuggestion());
             }
         } else {
