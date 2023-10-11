@@ -5,7 +5,6 @@ import java.util.List;
 
 public class CircleSession implements Session {
     private List<Suggestion> allSuggestions;
-    private Suggestion summarySuggestion;
     private int hit;
     private int shots;
     private double accuracy;
@@ -14,7 +13,6 @@ public class CircleSession implements Session {
     // suggestions recorded.
     public CircleSession() {
         allSuggestions = new ArrayList<Suggestion>();
-        summarySuggestion = null;
         hit = 0;
         shots = 0;
         accuracy = 0;
