@@ -4,13 +4,11 @@ public class Vector {
     private double compX;
     private double compY;
     private double length;
-    private Vector unit;
 
     public Vector(double x, double y) {
         this.compX = x;
         this.compY = y;
         this.length = getVectorLength();
-        this.unit = getUnitVector();
     }
 
     public double getCompX() {
@@ -23,10 +21,6 @@ public class Vector {
 
     public double getLength() {
         return length;
-    }
-
-    public Vector getUnit() {
-        return unit;
     }
 
     public double getVectorLength() {

@@ -16,6 +16,10 @@ public class CircleTarget implements Target {
         this.centerY = cenY;
     }
 
+    public CircleTarget() {
+        this.radius = DEFAULT_SIZE;
+    }
+
     @Override
     public boolean hitTarget(double x, double y) {
         if (dist(x, y) <= this.radius) {
@@ -30,8 +34,9 @@ public class CircleTarget implements Target {
         return dist;
     }
 
-    public void changeSize(double radius) {
-        this.radius = radius;
+    //REQUIRES: dist is from 1 to 500
+    public void changeDist(double dist) { // 100m is default size
+        this.radius = (dist / 100) * DEFAULT_SIZE;
     }
 
     public double getCenterX() {

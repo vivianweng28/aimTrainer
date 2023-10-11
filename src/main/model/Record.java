@@ -15,4 +15,12 @@ public class Record {
     public void addSession(Session s) {
         sessions.add(s);
     }
+
+    public Session getSession(int index) {
+        return sessions.get(index);
+    }
+
+    public int getNumSessions () {
+        return sessions.size();
+    }
 }

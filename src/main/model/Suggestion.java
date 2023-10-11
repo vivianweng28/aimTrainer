@@ -25,9 +25,9 @@ public class Suggestion extends Shot {
     public String giveSuggestion() {
         String suggestion = "";
         if (dirX.equals("right")) {
-            suggestion = "Shoot more to the right!";
-        } else if (dirX.equals("left")) {
             suggestion = "Shoot more to the left!";
+        } else if (dirX.equals("left")) {
+            suggestion = "Shoot more to the right!";
         }
 
         if (dirY.equals("up")) {
