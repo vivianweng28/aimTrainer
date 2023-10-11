@@ -24,6 +24,8 @@ public class AimTrainer {
     // private static final String DEFAULT_MODE = "circle";
     // private String mode;  ADD BACK IN IF ADD HUMAN SHAPED TARGET
 
+    // EFFECT: create aim trainer that is programmed to continue running, has a default distance, and has a dummy
+    // target
     public AimTrainer() {
         this.stop = false;
         //this.mode = DEFAULT_MODE;
@@ -31,6 +33,9 @@ public class AimTrainer {
         target = new CircleTarget(0,0);
     }
 
+    // MODIFIES: this
+    // EFFECTS: starts the aim trainer program, asks if distance is changed, generate random target, and adds new
+    // session to list of sessions
     public void start() {
         Session s = new CircleSession();
         sessions.add(s);
@@ -41,6 +46,9 @@ public class AimTrainer {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: gets shot input from user, records suggestion if did not hit target, asks if the user wants to
+    // continue the session after every shot. If the user ends the session, session feedback is given.
     public void runGame(Session s, Target target) {
         boolean hit = false;
         while (!hit) {
@@ -68,6 +76,9 @@ public class AimTrainer {
         }
     }
 
+    // EFFECTS: asks user if they want to see past records, and shows record for the requested session, including the
+    // total accuracy rate, each shot the user took in that session, and all the suggestions given for each shot.
+    // Thanks the user for training with the program.
     public void askSeeAllStatistics() {
         System.out.println("Would you like to see past records? (Y for yes, anything else for no)");
         String nextRecords = SCN.nextLine();
@@ -94,6 +105,10 @@ public class AimTrainer {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: asks the user if they want to change the distance they are shooting from, if so, changes
+    // the distance accordingly
+
     public void askChangeDist() {
         System.out.println("Would you like to change the distance you are shooting from? (Y/N)");
         String changeDist = SCN.nextLine();
@@ -103,16 +118,20 @@ public class AimTrainer {
         }
     }
 
+    // EFFECTS: gets the x coordinate of the user shot from user
     public double getXFromUser() {
         System.out.println("Please enter the x coordinate");
         return SCN.nextDouble();
     }
 
+    // EFFECTS: gets the y coordinate of the user shot from user
     public double getYFromUser() {
         System.out.println("Please enter the y coordinate");
         return SCN.nextDouble();
     }
 
+    // MODIFIES: this
+    // EFFECTS: generates a new target for the aim training system
     public Target generateTarget() {
         double x = 0;
         double y = 0;

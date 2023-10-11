@@ -4,6 +4,7 @@ public class Shot {
     private double compX;
     private double compY;
 
+    // EFFECTS: creates a shot with x coordinate at compX and y coordinate at compY
     public Shot(double compX, double compY) {
         this.compX = compX;
         this.compY = compY;

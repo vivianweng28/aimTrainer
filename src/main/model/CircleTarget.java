@@ -10,6 +10,7 @@ public class CircleTarget implements Target {
     private double centerY;
     private static final int DEFAULT_SIZE = 5;
 
+    // EFFECTS: creates a circular target with default radius of 5, and a given center
     public CircleTarget(double cenX, double cenY) {
         this.radius = DEFAULT_SIZE;
         this.centerX = cenX;
