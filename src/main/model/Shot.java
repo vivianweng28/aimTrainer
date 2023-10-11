@@ -1,19 +1,19 @@
 package model;
 
 public class Shot {
-    private double dirX;
-    private double dirY;
+    private double compX;
+    private double compY;
 
-    public Shot(double dirX, double dirY) {
-        this.dirX = dirX;
-        this.dirY = dirY;
+    public Shot(double compX, double compY) {
+        this.compX = compX;
+        this.compY = compY;
     }
 
-    public double getDirX() {
-        return dirX;
+    public double getCompX() {
+        return compX;
     }
 
-    public double getDirY() {
-        return dirY;
+    public double getCompY() {
+        return compY;
     }
 }

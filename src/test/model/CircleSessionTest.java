@@ -5,5 +5,153 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CircleSessionTest {
+    private CircleSession cs;
 
+    @BeforeEach
+    public void runBefore() {
+            cs = new CircleSession();
+    }
+
+    @Test void testGetClosestShot() {
+        Vector vector = new Vector(90, 90);
+        Shot closestShot = cs.getClosestShot(vector, 5, 10, 10);
+        //TODO
+    }
+
+    @Test
+    public void testAnalyzeOnlyXLeft() {
+        cs.analyze(1, 10, 10, 10, 5);
+        Suggestion generatedSuggestion = cs.getLastSuggestion();
+
+        assertEquals("left", generatedSuggestion.getDirX());
+        assertEquals("perfect", generatedSuggestion.getDirY());
+        assertEquals(4, generatedSuggestion.getAmtX());
+        assertEquals(0, generatedSuggestion.getAmtY());
+    }
+
+    @Test
+    public void testAnalyzeOnlyXRight() {
+        cs.analyze(100, 10, 10, 10, 5);
+        Suggestion generatedSuggestion = cs.getLastSuggestion();
+
+        assertEquals( "right",generatedSuggestion.getDirX());
+        assertEquals("perfect", generatedSuggestion.getDirY());
+        assertEquals(85, generatedSuggestion.getAmtX());
+        assertEquals(0, generatedSuggestion.getAmtY());
+    }
+
+    @Test
+    public void testAnalyzeOnlyYUp() {
+        cs.analyze(10, 100, 10, 10, 5);
+        Suggestion generatedSuggestion = cs.getLastSuggestion();
+
+        assertEquals("perfect", generatedSuggestion.getDirX());
+        assertEquals("up", generatedSuggestion.getDirY());
+        assertEquals(0, generatedSuggestion.getAmtX());
+        assertEquals(85, generatedSuggestion.getAmtY());
+    }
+
+    @Test
+    public void testAnalyzeOnlyYDown() {
+        cs.analyze(10, 1, 10, 10, 5);
+        Suggestion generatedSuggestion = cs.getLastSuggestion();
+
+        assertEquals("perfect", generatedSuggestion.getDirX());
+        assertEquals("down", generatedSuggestion.getDirY());
+        assertEquals(0, generatedSuggestion.getAmtX());
+        assertEquals(4, generatedSuggestion.getAmtY());
+    }
+
+    @Test
+    public void testAnalyzeRightUp() { //TODO
+        cs.analyze(100, 100, 10, 10, 5);
+        Suggestion generatedSuggestion = cs.getLastSuggestion();
+        double correctDist = 100 - (5 / Math.sqrt(2) + 10);
+
+        assertEquals("right", generatedSuggestion.getDirX());
+        assertEquals("up", generatedSuggestion.getDirY());
+        assertEquals(correctDist, generatedSuggestion.getAmtX());
+        assertEquals(correctDist, generatedSuggestion.getAmtY());
+    }
+
+    @Test
+    public void testAnalyzeRightDown() { //TODO
+        cs.analyze(100, 1, 10, 10, 5);
+        Suggestion generatedSuggestion = cs.getLastSuggestion();
+
+        double length = Math.sqrt(Math.pow(90, 2) + Math.pow(9, 2));
+        double unitX = 90 / length;
+        double unitY = -9 / length;
+
+        assertEquals("right", generatedSuggestion.getDirX());
+        assertEquals("down", generatedSuggestion.getDirY());
+        assertEquals(Math.abs(100 - (10 + unitX * 5)), generatedSuggestion.getAmtX());
+        assertEquals(Math.abs(1 - (10 + unitY * 5)), generatedSuggestion.getAmtY());
+    }
+
+    @Test
+    public void testAnalyzeLeftUp() { //TODO
+        cs.analyze(1, 100, 10, 10, 5);
+        Suggestion generatedSuggestion = cs.getLastSuggestion();
+
+        double length = Math.sqrt(Math.pow(90, 2) + Math.pow(9, 2));
+        double unitX = -9 / length;
+        double unitY = 90 / length;
+
+        assertEquals("left", generatedSuggestion.getDirX());
+        assertEquals("up", generatedSuggestion.getDirY());
+        assertEquals(Math.abs(1 - (10 + unitX * 5)), generatedSuggestion.getAmtX());
+        assertEquals(Math.abs(100 - (10 + unitY * 5)), generatedSuggestion.getAmtY());
+    }
+
+    @Test
+    public void testAnalyzeLeftDown() { //TODO
+        cs.analyze(1, 1, 10, 10, 5);
+        Suggestion generatedSuggestion = cs.getLastSuggestion();
+        double correctDist = 10 - (5 / Math.sqrt(2)) - 1;
+
+        assertEquals("left", generatedSuggestion.getDirX());
+        assertEquals("down", generatedSuggestion.getDirY());
+        assertEquals(correctDist, generatedSuggestion.getAmtX());
+        assertEquals(correctDist, generatedSuggestion.getAmtY());
+    }
+
+    @Test
+    public void testUpdateSummarySuggestionWithOneSuggestion() {
+        cs.analyze(1, 1, 10, 10, 5);
+        Suggestion summary = cs.updateSummarySuggestion();
+        String suggestion = summary.giveSuggestion();
+
+        assertEquals("Shoot more to the right! Shoot more upwards!", suggestion);
+    }
+
+    @Test
+    public void testUpdateSummarySuggestionWithTwoSuggestion() {
+        cs.analyze(1, 1, 10, 10, 5);
+        cs.analyze(0.1, 0.1, 10, 10, 5);
+        Suggestion summary = cs.updateSummarySuggestion();
+        String suggestion = summary.giveSuggestion();
+
+        assertEquals("Shoot more to the right! Shoot more upwards!", suggestion);
+    }
+
+    @Test
+    public void testUpdateSummarySuggestionWithLotsSuggestion() {
+        cs.analyze(1, 1, 10, 10, 5);
+        cs.analyze(0.1, 0.1, 10, 10, 5);
+        cs.analyze(400, 400, 10, 10, 5);
+        cs.analyze(400, 400, 10, 10, 5);
+        Suggestion summary = cs.updateSummarySuggestion();
+        String suggestion = summary.giveSuggestion();
+
+        assertEquals("Shoot more to the left! Shoot more downwards!", suggestion);
+    }
+
+    @Test
+    public void testHit() {
+        int before = cs.getHit();
+        cs.hit();
+        //TODO
+
+    }
 }

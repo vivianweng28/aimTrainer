@@ -49,6 +49,7 @@ public class AimTrainer {
             hit = target.hitTarget(x, y);
             if (hit) {
                 System.out.println("Target hit! Next target appearing");
+                s.hit();
             } else {
                 System.out.println("Target not hit! Keep trying!");
                 s.analyze(x, y, target.getCenterX(), target.getCenterY(), target.getRadius());
@@ -73,11 +74,20 @@ public class AimTrainer {
         if (nextRecords.equals("Y")) {
             System.out.println("Which session number would you like to see? Please enter a positive integer.");
             int indexPlusOne = SCN.nextInt();
-            if (indexPlusOne >= sessions.size() && indexPlusOne >= 1) {
+            if (indexPlusOne >= sessions.size() && indexPlusOne < 1) {
                 System.out.println("Invalid index number, session closing. Thank you for training with us today!");
             } else {
-                Suggestion summary = sessions.get(indexPlusOne - 1).getSummarySuggestion();
+                Session sessionSelected = sessions.get(indexPlusOne - 1);
+                Suggestion summary = sessionSelected.updateSummarySuggestion();
                 System.out.println("Session " + indexPlusOne + " feedback: " + summary.giveSuggestion());
+                System.out.println("Total accuracy: " + sessionSelected.getAccuracy() + "%");
+                List<Suggestion> allSuggestions = sessionSelected.getAllSuggestions();
+                int count = 1;
+                for (Suggestion s : allSuggestions) {
+                    System.out.println("Shot " + count + ": x = " + s.getCompX() + ", y = " + s.getCompY());
+                    System.out.println("Shot " + count + " suggestion: " + s.giveSuggestion());
+                    count++;
+                }
             }
         } else {
             System.out.println("Thank you for training with us today!");

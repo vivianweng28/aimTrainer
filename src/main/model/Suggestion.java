@@ -22,6 +22,14 @@ public class Suggestion extends Shot {
         return amtY;
     }
 
+    public String getDirX() {
+        return dirX;
+    }
+
+    public String getDirY() {
+        return dirY;
+    }
+
     public String giveSuggestion() {
         String suggestion = "";
         if (dirX.equals("right")) {
