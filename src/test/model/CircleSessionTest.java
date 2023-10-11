@@ -15,7 +15,11 @@ class CircleSessionTest {
     @Test void testGetClosestShot() {
         Vector vector = new Vector(90, 90);
         Shot closestShot = cs.getClosestShot(vector, 5, 10, 10);
-        //TODO
+
+        double comp = 90 / Math.sqrt(Math.pow(90,2) + Math.pow(90,2)) * 5 + 10;
+
+        assertEquals(comp, closestShot.getCompX());
+        assertEquals(comp, closestShot.getCompY());
     }
 
     @Test
@@ -148,10 +152,23 @@ class CircleSessionTest {
     }
 
     @Test
-    public void testHit() {
+    public void testHitOnce() {
         int before = cs.getHit();
         cs.hit();
-        //TODO
+        int after = cs.getHit();
 
+        assertEquals(0, before);
+        assertEquals(1, after);
+    }
+
+    @Test
+    public void testHitMultiple() {
+        int before = cs.getHit();
+        cs.hit();
+        cs.hit();
+        int after = cs.getHit();
+
+        assertEquals(0, before);
+        assertEquals(2, after);
     }
 }
