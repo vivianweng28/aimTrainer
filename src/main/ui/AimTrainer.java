@@ -55,6 +55,7 @@ public class AimTrainer {
             }
             System.out.println("Continue the session? (N to stop, anything else to continue)");
 
+            SCN.nextLine();
             String cont = SCN.nextLine();
 
             if (cont.equals("N")) {
@@ -69,13 +70,13 @@ public class AimTrainer {
         System.out.println("Would you like to see past records? (Y for yes, anything else for no)");
         String nextRecords = SCN.nextLine();
         if (nextRecords.equals("Y")) {
-            System.out.println("Which session number would you like to see?");
-            int index = SCN.nextInt();
-            if (index > sessions.getNumSessions() && index >= 0) {
+            System.out.println("Which session number would you like to see? Please enter a positive integer.");
+            int indexPlusOne = SCN.nextInt();
+            if (indexPlusOne >= sessions.getNumSessions() && indexPlusOne >= 1) {
                 System.out.println("Invalid index number, session closing. Thank you for training with us today!");
             } else {
-                Suggestion summary = sessions.getSession(index).getSummarySuggestion();
-                System.out.println("Session " + (index + 1) + " feedback: " + summary.giveSuggestion());
+                Suggestion summary = sessions.getSession(indexPlusOne - 1).getSummarySuggestion();
+                System.out.println("Session " + indexPlusOne + " feedback: " + summary.giveSuggestion());
             }
         } else {
             System.out.println("Thank you for training with us today!");
