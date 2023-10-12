@@ -158,6 +158,22 @@ class CircleSessionTest {
     }
 
     @Test
+    public void testUpdateSummarySuggestionWithLotsSuggestionLeftDown() {
+        cs.analyze(1, 1, 10, 10, 5);
+        cs.analyze(0.1, 0.1, 10, 10, 5);
+        cs.analyze(1, 1, 10, 10, 5);
+        cs.analyze(1, 4, 10, 10, 5);
+        cs.analyze(1, 1, 10, 10, 5);
+        cs.analyze(1, 1, 10, 10, 5);
+        cs.analyze(1, 1, 10, 10, 5);
+        cs.analyze(2, 1, 10, 10, 5);
+        Suggestion summary = cs.updateSummarySuggestion();
+        String suggestion = summary.giveSuggestion();
+
+        assertEquals("Shoot more to the right! Shoot more upwards!", suggestion);
+    }
+
+    @Test
     public void testHitOnce() {
         int before = cs.getHit();
         cs.hit();
