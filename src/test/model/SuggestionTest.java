@@ -74,6 +74,6 @@ class SuggestionTest {
         Suggestion down = new Suggestion (10, 10, "perfect", "perfect", 0, 10);
         String suggestion = down.giveSuggestion();
 
-        assertEquals("Perfect shot!", suggestion);
+        assertEquals("Perfect!", suggestion);
     }
 }

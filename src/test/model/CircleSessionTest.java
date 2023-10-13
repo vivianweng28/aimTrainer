@@ -123,22 +123,39 @@ class CircleSessionTest {
     }
 
     @Test
-    public void testUpdateSummarySuggestionWithOneSuggestion() {
-        cs.analyze(1, 1, 10, 10, 5);
+    public void testUpdateSummarySuggestionWithOneSuggestionLeft() {
+        cs.analyze(1, 10, 10, 10, 5);
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
 
-        assertEquals("Shoot more to the right! Shoot more upwards!", suggestion);
+        assertEquals("Shoot more to the right!", suggestion);
     }
 
     @Test
-    public void testUpdateSummarySuggestionWithTwoSuggestion() {
-        cs.analyze(1, 1, 10, 10, 5);
-        cs.analyze(0.1, 0.1, 10, 10, 5);
+    public void testUpdateSummarySuggestionWithOneSuggestionDown() {
+        cs.analyze(10, 1, 10, 10, 5);
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
 
-        assertEquals("Shoot more to the right! Shoot more upwards!", suggestion);
+        assertEquals(" Shoot more upwards!", suggestion);
+    }
+
+    @Test
+    public void testUpdateSummarySuggestionWithOneSuggestionRight() {
+        cs.analyze(100, 10, 10, 10, 5);
+        Suggestion summary = cs.updateSummarySuggestion();
+        String suggestion = summary.giveSuggestion();
+
+        assertEquals("Shoot more to the left!", suggestion);
+    }
+
+    @Test
+    public void testUpdateSummarySuggestionWithOneSuggestionUp() {
+        cs.analyze(10, 100, 10, 10, 5);
+        Suggestion summary = cs.updateSummarySuggestion();
+        String suggestion = summary.giveSuggestion();
+
+        assertEquals(" Shoot more downwards!", suggestion);
     }
 
     @Test
@@ -208,17 +225,76 @@ class CircleSessionTest {
 
     @Test
     public void testUpdateSummarySuggestionWithLotsSuggestionPerfect() {
-        cs.analyze(10, 10, 10, 10, 5);
-        cs.analyze(10, 10, 10, 10, 5);
-        cs.analyze(10, 10, 10, 10, 5);
-        cs.analyze(10, 10, 10, 10, 5);
-        cs.analyze(10, 10, 10, 10, 5);
-        cs.analyze(10, 10, 10, 10, 5);
+        cs.analyze(16, 10, 10, 10, 5);
+        cs.analyze(4, 10, 10, 10, 5);
+        cs.analyze(16, 10, 10, 10, 5);
+        cs.analyze(4, 10, 10, 10, 5);
+        cs.analyze(16, 10, 10, 10, 5);
+        cs.analyze(4, 10, 10, 10, 5);
 
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
 
         assertEquals("Perfect!", suggestion);
+    }
+
+    @Test
+    public void testUpdateSummarySuggestionWithLotsSuggestionJustUp() {
+        cs.analyze(10, 100, 10, 10, 5);
+        cs.analyze(10, 100, 10, 10, 5);
+        cs.analyze(10, 100, 10, 10, 5);
+        cs.analyze(10, 100, 10, 10, 5);
+        cs.analyze(10, 100, 10, 10, 5);
+        cs.analyze(10, 100, 10, 10, 5);
+
+        Suggestion summary = cs.updateSummarySuggestion();
+        String suggestion = summary.giveSuggestion();
+
+        assertEquals(" Shoot more downwards!", suggestion);
+    }
+
+    @Test
+    public void testUpdateSummarySuggestionWithLotsSuggestionJustDown() {
+        cs.analyze(10, 2, 10, 10, 5);
+        cs.analyze(10, 1, 10, 10, 5);
+        cs.analyze(10, 7, 10, 10, 5);
+        cs.analyze(10, 1, 10, 10, 5);
+        cs.analyze(10, 1, 10, 10, 5);
+        cs.analyze(10, 1, 10, 10, 5);
+
+        Suggestion summary = cs.updateSummarySuggestion();
+        String suggestion = summary.giveSuggestion();
+
+        assertEquals(" Shoot more upwards!", suggestion);
+    }
+
+    @Test
+    public void testUpdateSummarySuggestionWithLotsSuggestionJustLeft() {
+        cs.analyze(1, 10, 10, 10, 5);
+        cs.analyze(1, 10, 10, 10, 5);
+        cs.analyze(3, 10, 10, 10, 5);
+        cs.analyze(1, 10, 10, 10, 5);
+        cs.analyze(1, 10, 10, 10, 5);
+        cs.analyze(1, 10, 10, 10, 5);
+
+        Suggestion summary = cs.updateSummarySuggestion();
+        String suggestion = summary.giveSuggestion();
+
+        assertEquals("Shoot more to the right!", suggestion);
+    }
+
+    @Test
+    public void testUpdateSummarySuggestionWithLotsSuggestionJustRight() {
+        cs.analyze(100, 10, 10, 10, 5);
+        cs.analyze(100, 10, 10, 10, 5);
+        cs.analyze(300, 10, 10, 10, 5);
+        cs.analyze(100, 10, 10, 10, 5);
+        cs.analyze(100, 10, 10, 10, 5);
+
+        Suggestion summary = cs.updateSummarySuggestion();
+        String suggestion = summary.giveSuggestion();
+
+        assertEquals("Shoot more to the left!", suggestion);
     }
 
     @Test

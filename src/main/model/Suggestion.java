@@ -51,7 +51,7 @@ public class Suggestion extends Shot {
         }
 
         if (dirX.equals("perfect") && dirY.equals("perfect")) {
-            suggestion = "Perfect shot!";
+            suggestion = "Perfect!";
         }
 
         return suggestion;
