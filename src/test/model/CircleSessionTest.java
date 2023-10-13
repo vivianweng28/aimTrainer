@@ -142,7 +142,7 @@ class CircleSessionTest {
     }
 
     @Test
-    public void testUpdateSummarySuggestionWithLotsSuggestion() {
+    public void testUpdateSummarySuggestionWithLotsSuggestionRightUp() {
         cs.analyze(1, 1, 10, 10, 5);
         cs.analyze(0.1, 0.1, 10, 10, 5);
         cs.analyze(400, 400, 10, 10, 5);
@@ -155,6 +155,22 @@ class CircleSessionTest {
         String suggestion = summary.giveSuggestion();
 
         assertEquals("Shoot more to the left! Shoot more downwards!", suggestion);
+    }
+
+    @Test
+    public void testUpdateSummarySuggestionWithLotsSuggestionRightDown() {
+        cs.analyze(400, 1, 10, 10, 5);
+        cs.analyze(0.1, 0.1, 10, 10, 5);
+        cs.analyze(400, 1, 10, 10, 5);
+        cs.analyze(400, 4, 10, 10, 5);
+        cs.analyze(400, 4, 10, 10, 5);
+        cs.analyze(400, 1, 10, 10, 5);
+        cs.analyze(1, 4, 10, 10, 5);
+        cs.analyze(400, 1, 10, 10, 5);
+        Suggestion summary = cs.updateSummarySuggestion();
+        String suggestion = summary.giveSuggestion();
+
+        assertEquals("Shoot more to the left! Shoot more upwards!", suggestion);
     }
 
     @Test
@@ -171,6 +187,23 @@ class CircleSessionTest {
         String suggestion = summary.giveSuggestion();
 
         assertEquals("Shoot more to the right! Shoot more upwards!", suggestion);
+    }
+
+
+    @Test
+    public void testUpdateSummarySuggestionWithLotsSuggestionLeftUp() {
+        cs.analyze(0, 100, 10, 10, 5);
+        cs.analyze(0.1, 300, 10, 10, 5);
+        cs.analyze(4, 499, 10, 10, 5);
+        cs.analyze(4, 400, 10, 10, 5);
+        cs.analyze(4, 400, 10, 10, 5);
+        cs.analyze(4, 100, 10, 10, 5);
+        cs.analyze(1, 477, 10, 10, 5);
+        cs.analyze(1, 132, 10, 10, 5);
+        Suggestion summary = cs.updateSummarySuggestion();
+        String suggestion = summary.giveSuggestion();
+
+        assertEquals("Shoot more to the right! Shoot more downwards!", suggestion);
     }
 
     @Test

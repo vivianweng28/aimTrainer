@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO : CLASS LEVEL COMMENTS
 public class CircleSession implements Session {
     private List<Suggestion> allSuggestions;
     private int hit;
