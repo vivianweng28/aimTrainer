@@ -1,9 +1,6 @@
 package model;
 
-import model.Target;
-
 // represents a target in the shape of a circle that the user hits
-
 public class CircleTarget implements Target {
     private double radius;
     private double centerX;

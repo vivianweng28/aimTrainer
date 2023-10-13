@@ -3,9 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-// represents a aim training session where the targets are circles
+// represents an aim training session where the targets are circles
 public class CircleSession implements Session {
-    private List<Suggestion> allSuggestions;
+    private final List<Suggestion> allSuggestions;
     private int hit;
     private int shots;
     private double accuracy;

@@ -3,10 +3,12 @@ package model;
 // represents a mathematical vector, this is used for the mathematical calculations of the aim training program to
 // generate feedback
 public class Vector {
-    private double compX;
-    private double compY;
-    private double length;
+    private final double compX;
+    private final double compY;
+    private final double length;
 
+    // EFFECTS: creates a mathematical vector with give x and y components, and calculates and assigns the vector's
+    // length
     public Vector(double x, double y) {
         this.compX = x;
         this.compY = y;

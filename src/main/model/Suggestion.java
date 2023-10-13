@@ -2,10 +2,10 @@ package model;
 
 // represents a suggestion that the system generates based on the user's performance in the aim training
 public class Suggestion extends Shot {
-    private String dirX;
-    private String dirY;
-    private double amtX;
-    private double amtY;
+    private final String dirX;
+    private final String dirY;
+    private final double amtX;
+    private final double amtY;
 
     // EFFECTS: creates a suggestion that records the shot taken, and the deviance from the target
     public Suggestion(double shotX, double shotY, String dirX, String dirY, double amtX, double amtY) {

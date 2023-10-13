@@ -34,14 +34,15 @@ public class AimTrainer {
     }
 
     // MODIFIES: this
-    // EFFECTS: starts the aim trainer program, asks if distance is changed, generate random target, and adds new
-    // session to list of sessions
+    // EFFECTS: starts the aim trainer program, asks if distance is changed, prints out current distance from target,
+    // generates a random target, and adds new session to list of sessions
     public void start() {
         Session s = new CircleSession();
         sessions.add(s);
         while (!stop) {
             askChangeDist();
             target = generateTarget();
+            System.out.println("Current distance from target: " + distance + "m");
             runGame(s, target);
         }
     }
@@ -69,6 +70,7 @@ public class AimTrainer {
             String cont = SCN.nextLine();
 
             if (cont.equals("N")) {
+                hit = true;
                 stop = true;
                 System.out.println("Session feedback: " + s.updateSummarySuggestion().giveSuggestion());
                 askSeeAllStatistics();
@@ -100,9 +102,8 @@ public class AimTrainer {
                     count++;
                 }
             }
-        } else {
-            System.out.println("Thank you for training with us today!");
         }
+        System.out.println("Thank you for training with us today!");
     }
 
     // MODIFIES: this
@@ -150,6 +151,4 @@ public class AimTrainer {
 
         return target;
     }
-
-
 }

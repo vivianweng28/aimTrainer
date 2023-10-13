@@ -2,8 +2,8 @@ package model;
 
 // represents a theoretical shot that the user could take on the target
 public class Shot {
-    private double compX;
-    private double compY;
+    private final double compX;
+    private final double compY;
 
     // EFFECTS: creates a shot with x coordinate at compX and y coordinate at compY
     public Shot(double compX, double compY) {

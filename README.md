@@ -24,11 +24,13 @@ As a user, I want to be able to :
 - choose a point where my bullet is going (for console, it could be typed coordinates, for
 the visualized program, it could be where the mouse taps on the interface) and have it be recorded
 - adjust the distance between targets and my avatar
-- view past and current accuracy rates
-- analyze past games and get aim adjustment feedback (for example, "aim down" if I tend to 
+- analyze past shots in current session and get aim adjustment feedback (for example, "aim down" if I tend to 
 shoot above my target)
 - adjust my mouse sensitivity
 - start a new training session and add it to the record of all training sessions
 - view a list of the every session and its relating statistics (for example, session 1 could be
 on Oct 1, 2023, with a headshot percentage of 10%, body shot percentage of 40%, and leg shot 
 percentage of 10%, with the final aim adjustment feedback being "aim higher")
+- add multiple (all) shots taken to a list of shots taken by the user in every session
+- be able to view a list of all shots and suggestions given after ending the current session, as well as the final accuracy and summary 
+suggestion given
