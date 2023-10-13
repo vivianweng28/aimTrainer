@@ -207,6 +207,21 @@ class CircleSessionTest {
     }
 
     @Test
+    public void testUpdateSummarySuggestionWithLotsSuggestionPerfect() {
+        cs.analyze(10, 10, 10, 10, 5);
+        cs.analyze(10, 10, 10, 10, 5);
+        cs.analyze(10, 10, 10, 10, 5);
+        cs.analyze(10, 10, 10, 10, 5);
+        cs.analyze(10, 10, 10, 10, 5);
+        cs.analyze(10, 10, 10, 10, 5);
+
+        Suggestion summary = cs.updateSummarySuggestion();
+        String suggestion = summary.giveSuggestion();
+
+        assertEquals("Perfect!", suggestion);
+    }
+
+    @Test
     public void testHitOnce() {
         int before = cs.getHit();
         cs.hit();
