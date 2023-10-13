@@ -1,5 +1,7 @@
 package model;
 
+// represents a mathematical vector, this is used for the mathematical calculations of the aim training program to
+// generate feedback
 public class Vector {
     private double compX;
     private double compY;

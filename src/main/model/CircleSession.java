@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO : CLASS LEVEL COMMENTS
+// represents a aim training session where the targets are circles
 public class CircleSession implements Session {
     private List<Suggestion> allSuggestions;
     private int hit;
@@ -20,7 +20,7 @@ public class CircleSession implements Session {
     }
 
     // REQUIRES: x, y >= 0, centerX, centerY, and radius > 0, point (x,y) is not in the circular target with center at
-    // (centerX, centerY) and a radius of radius.
+    // (centerX, centerY) and a radius of length radius.
     // MODIFIES: this
     // EFFECTS: compares shot that missed the target taken by player to the closest shot on the target and generates
     // suggestion, adds that suggestion to list of all suggestions
@@ -56,7 +56,7 @@ public class CircleSession implements Session {
         allSuggestions.add(suggest);
     }
 
-    // REQUIRES: radius, centerX and centerY > 0.
+    // REQUIRES: radius, centerX and centerY > 0
     // EFFECTS: generates closest shot on the target from the user shot
     public Shot getClosestShot(Vector vector, double radius, double centerX, double centerY) {
         double x = centerX + radius * vector.getUnitVector().getCompX();
@@ -67,7 +67,7 @@ public class CircleSession implements Session {
 
     // MODIFIES: this
     // EFFECTS: increases the number of times the user's shot hits the target by one, increases the total number of
-    // shots by one, and calculates the new accuracy.
+    // shots by one, and calculates the new accuracy
     public void hit() {
         hit++;
         shots++;

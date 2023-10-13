@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+// test for CircleSession class
 class CircleSessionTest {
     private CircleSession cs;
 

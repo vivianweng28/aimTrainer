@@ -1,5 +1,6 @@
 package model;
 
+// represents a theoretical shot that the user could take on the target
 public class Shot {
     private double compX;
     private double compY;

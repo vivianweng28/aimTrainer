@@ -2,7 +2,7 @@ package model;
 
 import model.Target;
 
-// a target that the user hits
+// represents a target in the shape of a circle that the user hits
 
 public class CircleTarget implements Target {
     private double radius;
@@ -36,7 +36,7 @@ public class CircleTarget implements Target {
         return dist;
     }
 
-    // REQUIRES: dist is from 1 to 500
+    // REQUIRES: dist is from 1 to 500, inclusive
     // MODIFIES: this
     // EFFECTS: adjusts the radius of the target from the point of view of the user depending on the distance between
     // the target and user

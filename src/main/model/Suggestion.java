@@ -1,5 +1,6 @@
 package model;
 
+// represents a suggestion that the system generates based on the user's performance in the aim training
 public class Suggestion extends Shot {
     private String dirX;
     private String dirY;

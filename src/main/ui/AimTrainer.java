@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// aim trainer object that produces the targets
+// represents an aim trainer program that produces the targets
 public class AimTrainer {
 
     private boolean stop;
