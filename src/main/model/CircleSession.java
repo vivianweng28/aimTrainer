@@ -1,9 +1,10 @@
 package model;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.*;
+import persistence.JsonReader;
 import persistence.Writable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class CircleSession implements Session, Writable {
     private int shots;
     private double accuracy;
     private int sessionNum;
+    private JSONObject pastSessions;
 
     // EFFECTS: creates new circle target session with no hits, shots, accuracy or summary suggestion, and has no
     // suggestions recorded.
@@ -168,13 +170,34 @@ public class CircleSession implements Session, Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("Session Number", sessionNum);
-        json.put("Target Type", "circle");
-        json.put("Suggestions", suggestionsToJson());
+        json = getPastSessions();
+        json.put("Session " + getSessionNum(), sessionPropertiesToJson());
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    public JSONObject getPastSessions() {
+        return pastSessions;
+    }
+
+    public void addOldSessionsToPastSessions(JsonReader reader) throws IOException {
+        JSONObject old = reader.retrieveOldSessions();
+
+        for (int i = 0; i < old.length(); i++) { // TODO: replace 4 with size of JSONObject
+            pastSessions.put("Session " + i, old.getJSONArray("Session " + i));
+        }
+    }
+
+    // EFFECTS: returns session properties in this session as a JSON array
+    public JSONObject sessionPropertiesToJson() {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("Target Type", "circle");
+        jsonObject.put("Suggestions", suggestionsToJson());
+
+        return jsonObject;
+    }
+
+    // EFFECTS: returns suggestions in this session as a JSON array
     private JSONArray suggestionsToJson() {
         JSONArray jsonArray = new JSONArray();
 

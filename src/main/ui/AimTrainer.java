@@ -31,7 +31,6 @@ public class AimTrainer {
     private static final Scanner SCN = new Scanner(System.in);
     private Target target;
     private Session currentSession;
-    private JSONArray allSessions;
 
     // private static final String DEFAULT_MODE = "circle";
     // private String mode;  ADD BACK IN IF ADD HUMAN SHAPED TARGET
@@ -165,24 +164,18 @@ public class AimTrainer {
         return target;
     }
 
-    public JSONArray toJson() {
-        JSONObject json = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.put(currentSession.toJson());
-        json.put("Sessions", jsonArray);
-        return json;
-    }
-
     // EFFECTS: saves the workroom to file
     private void saveWorkRoom() {
         Session current = sessions.get(sessions.size() - 1);
         try {
             jsonWriter.open();
-            jsonWriter.write(current);
+            jsonWriter.write(current, jsonReader);
             jsonWriter.close();
             System.out.println("Saved Session" + current.getSessionNum() + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read old data: " + JSON_STORE);
         }
     }
 

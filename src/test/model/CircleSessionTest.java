@@ -12,7 +12,7 @@ class CircleSessionTest {
 
     @BeforeEach
     public void runBefore() {
-            cs = new CircleSession();
+            cs = new CircleSession(1);
     }
 
     @Test void testGetClosestShot() {

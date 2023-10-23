@@ -28,6 +28,12 @@ public class JsonReader {
         return parseSession(jsonObject);
     }
 
+    public JSONObject retrieveOldSessions() throws IOException {
+        String jsonData = readFile(source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return jsonObject;
+    }
+
     // EFFECTS: reads source file as string and returns it
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
@@ -49,15 +55,11 @@ public class JsonReader {
         } else {
             s = new CircleSession(number); //CHANGE TO OTHER TARGET TYPE LATER
         }
-
-        int count = 0;
-        if (count == )
-        addAllSuggestions(s, jsonObject);
         return s;
     }
 
     // MODIFIES: s
-    // EFFECTS: parses thingies from JSON object and adds them to workroom
+    // EFFECTS: parses Suggestions from JSON object and adds them to Session
     private void addAllSuggestions(Session s, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("Suggestions");
         for (Object json : jsonArray) {

@@ -1,7 +1,9 @@
 package model;
 
+import java.io.IOException;
 import java.util.List;
 import org.json.JSONObject;
+import persistence.JsonReader;
 
 // represents an aim training session
 public interface Session {
@@ -35,5 +37,7 @@ public interface Session {
     int getSessionNum();
 
     JSONObject toJson();
+
+    void addOldSessionsToPastSessions(JsonReader reader) throws IOException;
 
 }

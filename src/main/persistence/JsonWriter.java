@@ -7,6 +7,7 @@ import ui.AimTrainer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 // "Code influenced by the JsonSerizalizationDemo link_to_demo
@@ -30,8 +31,9 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of session to file
-    public void write(AimTrainer a) {
-        JSONArray json = a.toJson();
+    public void write(Session s, JsonReader reader) throws IOException {
+        s.addOldSessionsToPastSessions(reader);
+        JSONObject json = s.toJson();
         saveToFile(json.toString(TAB));
     }
 
