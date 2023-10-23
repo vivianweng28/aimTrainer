@@ -5,7 +5,13 @@ import model.CircleTarget;
 import model.Session;
 import model.CircleSession;
 import model.Target;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,6 +19,9 @@ import java.util.Scanner;
 // represents an aim trainer program that produces the targets
 public class AimTrainer {
 
+    private static final String JSON_STORE = "./data/session.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
     private boolean stop;
     private static final List<Session> sessions = new ArrayList<Session>();
     private static final int DIM_X = 500;
@@ -21,6 +30,9 @@ public class AimTrainer {
     private int distance;
     private static final Scanner SCN = new Scanner(System.in);
     private Target target;
+    private Session currentSession;
+    private JSONArray allSessions;
+
     // private static final String DEFAULT_MODE = "circle";
     // private String mode;  ADD BACK IN IF ADD HUMAN SHAPED TARGET
 
@@ -31,13 +43,14 @@ public class AimTrainer {
         //this.mode = DEFAULT_MODE;
         this.distance = DEFAULT_DISTANCE;
         target = new CircleTarget(0,0);
+        currentSession = new CircleSession(sessions.size() + 1);
+        allSessions = new JSONArray();
     }
 
     // MODIFIES: this
     // EFFECTS: starts the aim trainer program, asks if distance is changed, prints out current distance from target,
     // generates a random target, and adds new session to list of sessions
     public void start() {
-        Session s = new CircleSession();
         sessions.add(s);
         while (!stop) {
             askChangeDist();
@@ -150,5 +163,37 @@ public class AimTrainer {
         target = new CircleTarget(x,y);
 
         return target;
+    }
+
+    public JSONArray toJson() {
+        JSONObject json = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(currentSession.toJson());
+        json.put("Sessions", jsonArray);
+        return json;
+    }
+
+    // EFFECTS: saves the workroom to file
+    private void saveWorkRoom() {
+        Session current = sessions.get(sessions.size() - 1);
+        try {
+            jsonWriter.open();
+            jsonWriter.write(current);
+            jsonWriter.close();
+            System.out.println("Saved Session" + current.getSessionNum() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadWorkRoom() {
+        try {
+            currentSession = jsonReader.read();
+            System.out.println("Loaded Session" + currentSession.getSessionNum() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 }

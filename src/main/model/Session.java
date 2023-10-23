@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import org.json.JSONObject;
 
 // represents an aim training session
 public interface Session {
@@ -11,6 +12,8 @@ public interface Session {
     // EFFECTS: generates suggestion based off of a user's shot that did not hit the target and adds suggestion
     // to list of all suggestions generated in this session
     void analyze(double x, double y, double centerX, double centerY, double radius);
+
+    void addSuggestion(Suggestion s);
 
     // EFFECTS: gets the last suggestion made by the system
     Suggestion getLastSuggestion();
@@ -28,5 +31,9 @@ public interface Session {
 
     // EFFECTS: gets the total session accuracy in percentage
     double getAccuracy();
+
+    int getSessionNum();
+
+    JSONObject toJson();
 
 }

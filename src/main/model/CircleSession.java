@@ -1,22 +1,28 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // represents an aim training session where the targets are circles
-public class CircleSession implements Session {
+public class CircleSession implements Session, Writable {
     private final List<Suggestion> allSuggestions;
     private int hit;
     private int shots;
     private double accuracy;
+    private int sessionNum;
 
     // EFFECTS: creates new circle target session with no hits, shots, accuracy or summary suggestion, and has no
     // suggestions recorded.
-    public CircleSession() {
+    public CircleSession(int sessionNum) {
         allSuggestions = new ArrayList<Suggestion>();
         hit = 0;
         shots = 0;
         accuracy = 0;
+        this.sessionNum = sessionNum;
     }
 
     // REQUIRES: x, y >= 0, centerX, centerY, and radius > 0, point (x,y) is not in the circular target with center at
@@ -147,5 +153,35 @@ public class CircleSession implements Session {
         Suggestion summary = new Suggestion(avgX, avgY, dirX, dirY, Math.abs(avgX), Math.abs(avgY));
 
         return summary;
+    }
+
+    public int getSessionNum() {
+        return sessionNum;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds in a pre-existing Suggestion to list of all suggestions
+    public void addSuggestion(Suggestion suggestion) {
+        allSuggestions.add(suggestion);
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Session Number", sessionNum);
+        json.put("Target Type", "circle");
+        json.put("Suggestions", suggestionsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray suggestionsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Suggestion s : allSuggestions) {
+            jsonArray.put(s.toJson());
+        }
+
+        return jsonArray;
     }
 }

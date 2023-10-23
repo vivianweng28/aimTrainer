@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // represents a suggestion that the system generates based on the user's performance in the aim training
-public class Suggestion extends Shot {
+public class Suggestion extends Shot implements Writable {
     private final String dirX;
     private final String dirY;
     private final double amtX;
@@ -39,23 +42,35 @@ public class Suggestion extends Shot {
     // EFFECTS: gives written suggestion for the shot taken regarding how to hit the target
     public String giveSuggestion() {
         String suggestion = "";
-        if (dirX.equals("right")) {
+        if (getDirX().equals("right")) {
             suggestion = "Shoot more to the left!";
-        } else if (dirX.equals("left")) {
+        } else if (getDirX().equals("left")) {
             suggestion = "Shoot more to the right!";
         }
 
-        if (dirY.equals("up")) {
+        if (getDirY().equals("up")) {
             suggestion += " Shoot more downwards!";
-        } else if (dirY.equals("down")) {
+        } else if (getDirY().equals("down")) {
             suggestion += " Shoot more upwards!";
         }
 
-        if (dirX.equals("perfect") && dirY.equals("perfect")) {
+        if (getDirX().equals("perfect") && getDirY().equals("perfect")) {
             suggestion = "Perfect!";
         }
 
         return suggestion;
 
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Shot X", getCompX());
+        json.put("Shot Y", getCompY());
+        json.put("Direction X", getDirY());
+        json.put("Direction Y", getDirY());
+        json.put("Error Amount X", getAmtX());
+        json.put("Error Amount X", getAmtY());
+        return json;
     }
 }
