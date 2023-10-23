@@ -36,6 +36,8 @@ public interface Session {
 
     int getSessionNum();
 
+    String getSessionType();
+
     JSONObject toJson();
 
     void addOldSessionsToPastSessions(JsonReader reader) throws IOException;

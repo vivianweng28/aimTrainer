@@ -14,6 +14,7 @@ public class CircleSession implements Session, Writable {
     private int hit;
     private int shots;
     private double accuracy;
+    private static final String SESSION_TYPE = "circle";
     private int sessionNum;
     private JSONObject pastSessions;
 
@@ -159,6 +160,10 @@ public class CircleSession implements Session, Writable {
 
     public int getSessionNum() {
         return sessionNum;
+    }
+
+    public String getSessionType() {
+        return SESSION_TYPE;
     }
 
     // MODIFIES: this

@@ -43,7 +43,6 @@ public class AimTrainer {
         this.distance = DEFAULT_DISTANCE;
         target = new CircleTarget(0,0);
         currentSession = new CircleSession(sessions.size() + 1);
-        allSessions = new JSONArray();
     }
 
     // MODIFIES: this
