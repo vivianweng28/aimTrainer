@@ -2,6 +2,7 @@ package model;
 
 import org.json.*;
 import persistence.JsonReader;
+import persistence.JsonWriter;
 import persistence.Writable;
 
 import java.io.IOException;
@@ -174,8 +175,7 @@ public class CircleSession implements Session, Writable {
 
     @Override
     public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json = getPastSessions();
+        JSONObject json = getPastSessions();
         json.put("Session " + getSessionNum(), sessionPropertiesToJson());
         return json;
     }
@@ -185,11 +185,7 @@ public class CircleSession implements Session, Writable {
     }
 
     public void addOldSessionsToPastSessions(JsonReader reader) throws IOException {
-        JSONObject old = reader.retrieveOldSessions();
-
-        for (int i = 0; i < old.length(); i++) { // TODO: replace 4 with size of JSONObject
-            pastSessions.put("Session " + i, old.getJSONArray("Session " + i));
-        }
+        pastSessions = reader.retrieveOldSessions();
     }
 
     // EFFECTS: returns session properties in this session as a JSON array

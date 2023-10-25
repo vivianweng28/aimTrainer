@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import model.CircleSession;
@@ -22,7 +24,7 @@ public class JsonReader {
 
     // EFFECTS: reads workroom from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public Session read() throws IOException {
+    public List<Session> read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseSession(jsonObject);
@@ -46,16 +48,27 @@ public class JsonReader {
     }
 
     // EFFECTS: parses session from JSON object and returns it
-    private Session parseSession(JSONObject jsonObject) {
-        int number = jsonObject.getInt("Session Number");
-        String targetType = jsonObject.getString("Target Type");
+    private List<Session> parseSession(JSONObject jsonObject) {
+        List<Session> allSessions = new ArrayList<Session>();
         Session s;
-        if (targetType.equals("circle")) {
-            s = new CircleSession(number);
-        } else {
-            s = new CircleSession(number); //CHANGE TO OTHER TARGET TYPE LATER
+
+        for (int i = 1; i <= jsonObject.length(); i++) {
+            JSONObject currentSession = jsonObject.getJSONObject("Session " + i); // get the JSONObject that holds
+                                                                                      // each session
+            String targetType = currentSession.getString("Target Type"); // get target type of selected session
+
+            if (targetType.equals("circle")) { // create circle session
+                s = new CircleSession(i);
+                allSessions.add(s);
+            } else {
+                s = new CircleSession(i);
+                allSessions.add(s); //CHANGE TO OTHER TARGET TYPE LATER
+            }
+
+            addAllSuggestions(s, currentSession); // add in suggestions for selected session
         }
-        return s;
+
+        return allSessions;
     }
 
     // MODIFIES: s
@@ -68,10 +81,9 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: wr
+    // MODIFIES: s
     // EFFECTS: parses thingy from JSON object and adds it to workroom
     private void addSuggestion(Session s, JSONObject jsonObject) {
-        String name = jsonObject.getString("name");
         double shotX = jsonObject.getDouble("Shot X");
         double shotY = jsonObject.getDouble("Shot Y");
         String dirX = jsonObject.getString("Direction X");

@@ -1,5 +1,8 @@
 package persistence;
 
+import model.CircleSession;
+import model.Session;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -12,10 +15,16 @@ class JsonWriterTest extends JsonTest {
     //write data to a file and then use the reader to read it back in and check that we
     //read in a copy of what was written out.
 
+    Session session;
+
+    @BeforeEach
+    void runBefore() {
+        session = new CircleSession(1);
+    }
+
     @Test
-    void testWriterInvalidFile() {  // TODO
+    void testWriterInvalidFile() {
         try {
-            WorkRoom wr = new WorkRoom("My work room");
             JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");
             writer.open();
             fail("IOException was expected");
@@ -27,14 +36,13 @@ class JsonWriterTest extends JsonTest {
     @Test
     void testWriterEmptyWorkroom() {  // TODO
         try {
-            WorkRoom wr = new WorkRoom("My work room");
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyWorkroom.json");
+            JsonReader reader = new JsonReader("./data/testWriterEmptyWorkroom.json");
             writer.open();
-            writer.write(wr);
+            writer.write(session, reader);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/testWriterEmptyWorkroom.json");
-            wr = reader.read();
+            session = reader.read();
             assertEquals("My work room", wr.getName());
             assertEquals(0, wr.numThingies());
         } catch (IOException e) {
