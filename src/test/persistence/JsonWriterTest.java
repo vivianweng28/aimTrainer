@@ -1,9 +1,6 @@
 package persistence;
 
-import model.CircleSession;
-import model.Session;
-import model.Suggestion;
-import org.json.JSONObject;
+import model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,6 +37,7 @@ class JsonWriterTest extends JsonTest {
     void testWriterEmptySession() {
         try {
             Session s = new CircleSession(2);
+            s.setTarget(new CircleTarget(49,49));
             JsonReader reader = new JsonReader("./data/testWriterEmptySession.json");
             s.addOldSessionsToPastSessions(reader);
             JsonWriter writer = new JsonWriter("./data/testWriterEmptySession.json");
@@ -50,7 +48,7 @@ class JsonWriterTest extends JsonTest {
             sessions = reader.read();
             List <Suggestion> s2Suggestions = sessions.get(1).getAllSuggestions();
             assertEquals(2, sessions.size());
-            checkSessionNumAndType(2, "circle", s);
+            checkSessionNumTypeDistanceAndTarget(2, "circle", 100, 49, 49, s);
             assertEquals(0, s2Suggestions.size());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
@@ -58,9 +56,10 @@ class JsonWriterTest extends JsonTest {
     }
 
     @Test
-    void testWriterGeneralWorkroomAddNewSession() {
+    void testWriterGeneralSessionsAddNewSession() {
         try {
             Session s = new CircleSession(2);
+            s.setTarget(new CircleTarget(49,49));
             Suggestion first = new Suggestion(10, 10, "right", "up", 2, 2);
             Suggestion second = new Suggestion(11, 11, "right", "up", 1, 1);
             s.addSuggestion(first);
@@ -76,12 +75,12 @@ class JsonWriterTest extends JsonTest {
 
             sessions = reader.read();
             assertEquals(2, sessions.size());
-            checkSessionNumAndType(1, "circle", sessions.get(0));
+            checkSessionNumTypeDistanceAndTarget(1, "circle", 100, 49, 49, sessions.get(0));
             List <Suggestion> s1Suggestions = sessions.get(0).getAllSuggestions();
             checkSuggestion(50,50,"right", "up", 1, 1, s1Suggestions.get(0));
-            checkSuggestion(51,51,"perfect", "perfect", 0, 0, s1Suggestions.get(1));
+            checkSuggestion(49,49,"perfect", "perfect", 0, 0, s1Suggestions.get(1));
 
-            checkSessionNumAndType(2, "circle", sessions.get(1));
+            checkSessionNumTypeDistanceAndTarget(2, "circle",100, 49, 49, sessions.get(1));
             List <Suggestion> s2Suggestions = sessions.get(1).getAllSuggestions();
             checkSuggestion(10, 10, "right", "up", 2, 2, s2Suggestions.get(0));
             checkSuggestion(11, 11, "right", "up", 1, 1, s2Suggestions.get(1));
@@ -92,11 +91,12 @@ class JsonWriterTest extends JsonTest {
     }
 
     @Test
-    void testWriterGeneralWorkroomAddNewSessionReplace() {
+    void testWriterGeneralSessionsAddNewSessionReplace() {
         try {
             JsonReader reader = new JsonReader("./data/testWriterGeneralSessionReplace.json");
             sessions = reader.read();
             Session s = sessions.get(0);
+
             s.addOldSessionsToPastSessions(reader);
             Suggestion first = new Suggestion(10, 10, "right", "up", 2, 2);
             Suggestion second = new Suggestion(11, 11, "right", "up", 1, 1);
@@ -112,10 +112,10 @@ class JsonWriterTest extends JsonTest {
 
             sessions = reader.read();
             assertEquals(1, sessions.size());
-            checkSessionNumAndType(1, "circle", sessions.get(0));
+            checkSessionNumTypeDistanceAndTarget(1, "circle", 100, 49,49, sessions.get(0));
             List <Suggestion> s1Suggestions = sessions.get(0).getAllSuggestions();
             checkSuggestion(50,50,"right", "up", 1, 1, s1Suggestions.get(0));
-            checkSuggestion(51,51,"perfect", "perfect", 0, 0, s1Suggestions.get(1));
+            checkSuggestion(49,49,"perfect", "perfect", 0, 0, s1Suggestions.get(1));
             checkSuggestion(10, 10, "right", "up", 2, 2, s1Suggestions.get(2));
             checkSuggestion(11, 11, "right", "up", 1, 1, s1Suggestions.get(3));
 

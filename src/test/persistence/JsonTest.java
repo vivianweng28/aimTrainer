@@ -4,8 +4,6 @@ package persistence;
 import model.Session;
 import model.Suggestion;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonTest {
@@ -18,8 +16,12 @@ public class JsonTest {
         assertEquals(amtX, suggestion.getAmtX());
         assertEquals(amtY, suggestion.getAmtY());
     }
-    protected void checkSessionNumAndType(double sessionNum, String sessionType, Session session) {
+    protected void checkSessionNumTypeDistanceAndTarget(double sessionNum, String sessionType, int dist, double targetX,
+                                                        double targetY, Session session) {
         assertEquals(sessionNum, session.getSessionNum());
         assertEquals(sessionType, session.getSessionType());
+        assertEquals(dist, session.getDistance());
+        assertEquals(targetX, session.getTarget().getCenterX());
+        assertEquals(targetY, session.getTarget().getCenterY());
     }
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import model.CircleSession;
+import model.CircleTarget;
 import model.Session;
 import model.Suggestion;
 import org.json.*;
@@ -57,8 +58,17 @@ public class JsonReader {
                                                                                       // each session
             String targetType = currentSession.getString("Target Type"); // get target type of selected session
 
+            int targetDist = currentSession.getInt("Target Distance");
+
+            int targetX = currentSession.getInt("Target X");
+
+            int targetY = currentSession.getInt("Target Y");
+
  //           if (targetType.equals("circle")) { // create circle session
             s = new CircleSession(i);
+            s.setDistance(targetDist);
+            s.setTarget(new CircleTarget(targetX, targetY));
+
             allSessions.add(s);
   //          } else {
   //              s = new CircleSession(i);

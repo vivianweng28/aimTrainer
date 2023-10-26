@@ -2,6 +2,9 @@
   "Session 1":
     {
       "Target Type": "circle",
+      "Target Distance" : 100,
+      "Target X" : 49,
+      "Target Y" : 49,
       "Suggestions": [
         {
           "Shot X" : 50,
@@ -12,8 +15,8 @@
           "Error Amount Y" : 1
         },
         {
-          "Shot X" : 51,
-          "Shot Y" : 51,
+          "Shot X" : 49,
+          "Shot Y" : 49,
           "Direction X" : "perfect",
           "Direction Y" : "perfect",
           "Error Amount X" : 0,
@@ -24,6 +27,9 @@
     "Session 2":
       {
         "Target Type": "circle",
+        "Target Distance" : 100,
+        "Target X" : 39,
+        "Target Y" : 39,
         "Suggestions": [
           {
             "Shot X" : 40,

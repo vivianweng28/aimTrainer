@@ -42,5 +42,11 @@ public interface Session {
 
     void addOldSessionsToPastSessions(JsonReader reader) throws IOException;
 
+    int getDistance();
 
+    void setDistance(int newDistance);
+
+    void setTarget(Target t);
+
+    Target getTarget();
 }

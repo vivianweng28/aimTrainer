@@ -41,11 +41,11 @@ class JsonReaderTest extends JsonTest {
             assertEquals(2, sessions.size());
             List<Suggestion> suggestions1 = sessions.get(0).getAllSuggestions();
             List<Suggestion> suggestions2 = sessions.get(1).getAllSuggestions();
-            checkSessionNumAndType(1, "circle", sessions.get(0));
+            checkSessionNumTypeDistanceAndTarget(1, "circle", 100, 49, 49, sessions.get(0));
             assertEquals(2, suggestions1.size());
             checkSuggestion(50,50,"right", "up", 1, 1, suggestions1.get(0));
-            checkSuggestion(51,51,"perfect", "perfect", 0, 0, suggestions1.get(1));
-            checkSessionNumAndType(2, "circle", sessions.get(1));
+            checkSuggestion(49,49,"perfect", "perfect", 0, 0, suggestions1.get(1));
+            checkSessionNumTypeDistanceAndTarget(2, "circle", 100, 39, 39, sessions.get(1));
             assertEquals(1, suggestions2.size());
             checkSuggestion(40,40,"right", "up", 1, 1, suggestions2.get(0));
         } catch (IOException e) {

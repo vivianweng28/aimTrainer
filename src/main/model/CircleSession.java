@@ -16,8 +16,11 @@ public class CircleSession implements Session, Writable {
     private int shots;
     private double accuracy;
     private static final String SESSION_TYPE = "circle";
+    private static final int DEFAULT_DISTANCE = 100;
+    private int distance;
     private int sessionNum;
     private JSONObject pastSessions;
+    private Target currentTarget;
 
     // EFFECTS: creates new circle target session with no hits, shots, accuracy or summary suggestion, and has no
     // suggestions recorded.
@@ -27,6 +30,23 @@ public class CircleSession implements Session, Writable {
         shots = 0;
         accuracy = 0;
         this.sessionNum = sessionNum;
+        distance = DEFAULT_DISTANCE;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int newDistance) {
+        this.distance = newDistance;
+    }
+
+    public void setTarget(Target t) {
+        currentTarget = t;
+    }
+
+    public Target getTarget() {
+        return currentTarget;
     }
 
     // REQUIRES: x, y >= 0, centerX, centerY, and radius > 0, point (x,y) is not in the circular target with center at
@@ -175,8 +195,10 @@ public class CircleSession implements Session, Writable {
 
     @Override
     public JSONObject toJson() {
-        if (pastSessions.length() >= sessionNum) {
+        if (pastSessions != null && pastSessions.length() <= sessionNum) {
             pastSessions.remove("Session " + sessionNum);
+        } else {
+            pastSessions = new JSONObject();
         }
         pastSessions.put("Session " + getSessionNum(), sessionPropertiesToJson());
         return pastSessions;
@@ -191,6 +213,9 @@ public class CircleSession implements Session, Writable {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("Target Type", "circle");
+        jsonObject.put("Target Distance", distance);
+        jsonObject.put("Target X", getTarget().getCenterX());
+        jsonObject.put("Target Y", getTarget().getCenterY());
         jsonObject.put("Suggestions", suggestionsToJson());
 
         return jsonObject;

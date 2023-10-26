@@ -1,0 +1,24 @@
+{"Session 1": {
+    "Suggestions": [
+        {
+            "Error Amount Y": 257.4709910060458,
+            "Error Amount X": 52.37843713398655,
+            "Direction X": "left",
+            "Shot Y": 30,
+            "Shot X": 30,
+            "Direction Y": "down"
+        },
+        {
+            "Error Amount Y": 61.58887496741198,
+            "Error Amount X": 184.76717773458228,
+            "Direction X": "left",
+            "Shot Y": 292,
+            "Shot X": 83,
+            "Direction Y": "down"
+        }
+    ],
+    "Target Distance": 100,
+    "Target Y": 355,
+    "Target Type": "circle",
+    "Target X": 272
+}}
