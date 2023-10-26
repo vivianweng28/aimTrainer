@@ -123,7 +123,7 @@ class JsonWriterTest extends JsonTest {
     }
 
     @Test
-    void testWriterPastSessionNull() {
+    void testWriterEmptyPastSession() {
         try {
             JsonReader reader = new JsonReader("./data/testWriterEmptyPastSessions.json");
             sessions = reader.read();

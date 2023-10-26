@@ -1,66 +1,14 @@
-{
-    "Session 2": {
-        "Suggestions": [
-            {
-                "Error Amount Y": 273.87346279266575,
-                "Error Amount X": 294.9766987059866,
-                "Direction X": "left",
-                "Shot Y": 40,
-                "Shot X": 40,
-                "Direction Y": "down"
-            },
-            {
-                "Error Amount Y": 22.12412826998856,
-                "Error Amount X": 92.70285526063158,
-                "Direction X": "left",
-                "Shot Y": 20,
-                "Shot X": 20,
-                "Direction Y": "down"
-            },
-            {
-                "Error Amount Y": 26.67641509109415,
-                "Error Amount X": 97.17836926041441,
-                "Direction X": "left",
-                "Shot Y": 15,
-                "Shot X": 15,
-                "Direction Y": "down"
-            }
-        ],
-        "Target Distance": 200,
-        "Target Y": 43,
-        "Target Type": "circle",
-        "Target X": 117
-    },
-    "Session 1": {
-        "Suggestions": [
-            {
-                "Error Amount Y": 257.4709910060458,
-                "Error Amount X": 52.37843713398655,
-                "Direction X": "left",
-                "Shot Y": 30,
-                "Shot X": 30,
-                "Direction Y": "down"
-            },
-            {
-                "Error Amount Y": 61.58887496741198,
-                "Error Amount X": 184.76717773458228,
-                "Direction X": "left",
-                "Shot Y": 292,
-                "Shot X": 83,
-                "Direction Y": "down"
-            },
-            {
-                "Error Amount Y": 320.9896586851359,
-                "Error Amount X": 239.01383815939352,
-                "Direction X": "left",
-                "Shot Y": 30,
-                "Shot X": 30,
-                "Direction Y": "down"
-            }
-        ],
-        "Target Distance": 100,
-        "Target Y": 355,
-        "Target Type": "circle",
-        "Target X": 272
-    }
-}
+{"Session 1": {
+    "Suggestions": [{
+        "Error Amount Y": 197.1313455332545,
+        "Error Amount X": 70.72037359769888,
+        "Direction X": "left",
+        "Shot Y": 100,
+        "Shot X": 200,
+        "Direction Y": "down"
+    }],
+    "Target Distance": 100,
+    "Target Y": 301.8376583358382,
+    "Target Type": "circle",
+    "Target X": 272.4087514595048
+}}

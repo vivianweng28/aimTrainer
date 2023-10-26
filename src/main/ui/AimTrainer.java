@@ -161,7 +161,7 @@ public class AimTrainer {
         } else {
             currentSession = new CircleSession(sessionNum);
         }
-        System.out.println("This is session " + sessionNum);
+        System.out.println("This is session " + currentSession.getSessionNum());
         try {
             currentSession.addOldSessionsToPastSessions(jsonReader);
         } catch (IOException e) {

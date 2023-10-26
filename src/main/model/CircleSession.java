@@ -195,7 +195,7 @@ public class CircleSession implements Session, Writable {
 
     @Override
     public JSONObject toJson() {
-        if (pastSessions != null && pastSessions.length() <= sessionNum) {
+        if (pastSessions.length() <= sessionNum) {
             pastSessions.remove("Session " + sessionNum);
         } else {
             pastSessions = new JSONObject();
