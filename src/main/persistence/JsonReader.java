@@ -57,13 +57,13 @@ public class JsonReader {
                                                                                       // each session
             String targetType = currentSession.getString("Target Type"); // get target type of selected session
 
-            if (targetType.equals("circle")) { // create circle session
-                s = new CircleSession(i);
-                allSessions.add(s);
-            } else {
-                s = new CircleSession(i);
-                allSessions.add(s); //CHANGE TO OTHER TARGET TYPE LATER
-            }
+ //           if (targetType.equals("circle")) { // create circle session
+            s = new CircleSession(i);
+            allSessions.add(s);
+  //          } else {
+  //              s = new CircleSession(i);
+  //             allSessions.add(s); //CHANGE TO OTHER TARGET TYPE LATER
+  //          }
 
             addAllSuggestions(s, currentSession); // add in suggestions for selected session
         }
