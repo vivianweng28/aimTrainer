@@ -42,7 +42,5 @@ public interface Session {
 
     void addOldSessionsToPastSessions(JsonReader reader) throws IOException;
 
-    JSONObject getPastSessions();
-
 
 }

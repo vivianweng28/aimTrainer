@@ -65,8 +65,6 @@ class JsonWriterTest extends JsonTest {
             Suggestion second = new Suggestion(11, 11, "right", "up", 1, 1);
             s.addSuggestion(first);
             s.addSuggestion(second);
-            Suggestion origFirst = new Suggestion(50,50,"right", "up", 1, 1);
-            Suggestion origSecond = new Suggestion(51,51,"perfect", "perfect", 0, 0);
 
             JsonReader reader = new JsonReader("./data/testWriterGeneralSession.json");
             s.addOldSessionsToPastSessions(reader);
@@ -87,6 +85,39 @@ class JsonWriterTest extends JsonTest {
             List <Suggestion> s2Suggestions = sessions.get(1).getAllSuggestions();
             checkSuggestion(10, 10, "right", "up", 2, 2, s2Suggestions.get(0));
             checkSuggestion(11, 11, "right", "up", 1, 1, s2Suggestions.get(1));
+
+        } catch (IOException e) {
+            fail("Exception should not have been thrown");
+        }
+    }
+
+    @Test
+    void testWriterGeneralWorkroomAddNewSessionReplace() {
+        try {
+            JsonReader reader = new JsonReader("./data/testWriterGeneralSessionReplace.json");
+            sessions = reader.read();
+            Session s = sessions.get(0);
+            s.addOldSessionsToPastSessions(reader);
+            Suggestion first = new Suggestion(10, 10, "right", "up", 2, 2);
+            Suggestion second = new Suggestion(11, 11, "right", "up", 1, 1);
+            s.addSuggestion(first);
+            s.addSuggestion(second);
+            Suggestion origFirst = new Suggestion(50,50,"right", "up", 1, 1);
+            Suggestion origSecond = new Suggestion(51,51,"perfect", "perfect", 0, 0);
+
+            JsonWriter writer = new JsonWriter("./data/testWriterGeneralSessionReplace.json");
+            writer.open();
+            writer.write(s);
+            writer.close();
+
+            sessions = reader.read();
+            assertEquals(1, sessions.size());
+            checkSessionNumAndType(1, "circle", sessions.get(0));
+            List <Suggestion> s1Suggestions = sessions.get(0).getAllSuggestions();
+            checkSuggestion(50,50,"right", "up", 1, 1, s1Suggestions.get(0));
+            checkSuggestion(51,51,"perfect", "perfect", 0, 0, s1Suggestions.get(1));
+            checkSuggestion(10, 10, "right", "up", 2, 2, s1Suggestions.get(2));
+            checkSuggestion(11, 11, "right", "up", 1, 1, s1Suggestions.get(3));
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");

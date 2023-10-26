@@ -186,10 +186,6 @@ public class CircleSession implements Session, Writable {
         pastSessions = reader.retrieveOldSessions();
     }
 
-    public JSONObject getPastSessions() {
-        return pastSessions;
-    }
-
     // EFFECTS: returns session properties in this session as a JSON array
     public JSONObject sessionPropertiesToJson() {
         JSONObject jsonObject = new JSONObject();
