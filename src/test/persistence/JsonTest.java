@@ -18,9 +18,8 @@ public class JsonTest {
         assertEquals(amtX, suggestion.getAmtX());
         assertEquals(amtY, suggestion.getAmtY());
     }
-    protected void checkSession(double sessionNum, String sessionType, List<Suggestion> suggestions, Session session) {
+    protected void checkSessionNumAndType(double sessionNum, String sessionType, Session session) {
         assertEquals(sessionNum, session.getSessionNum());
         assertEquals(sessionType, session.getSessionType());
-        assertEquals(suggestions, session.getAllSuggestions());
     }
 }

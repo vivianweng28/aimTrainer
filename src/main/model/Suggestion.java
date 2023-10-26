@@ -67,10 +67,10 @@ public class Suggestion extends Shot implements Writable {
         JSONObject json = new JSONObject();
         json.put("Shot X", getCompX());
         json.put("Shot Y", getCompY());
-        json.put("Direction X", getDirY());
+        json.put("Direction X", getDirX());
         json.put("Direction Y", getDirY());
         json.put("Error Amount X", getAmtX());
-        json.put("Error Amount X", getAmtY());
+        json.put("Error Amount Y", getAmtY());
         return json;
     }
 }

@@ -175,17 +175,19 @@ public class CircleSession implements Session, Writable {
 
     @Override
     public JSONObject toJson() {
-        JSONObject json = getPastSessions();
-        json.put("Session " + getSessionNum(), sessionPropertiesToJson());
-        return json;
-    }
-
-    public JSONObject getPastSessions() {
+        if (pastSessions.length() >= sessionNum) {
+            pastSessions.remove("Session " + sessionNum);
+        }
+        pastSessions.put("Session " + getSessionNum(), sessionPropertiesToJson());
         return pastSessions;
     }
 
     public void addOldSessionsToPastSessions(JsonReader reader) throws IOException {
         pastSessions = reader.retrieveOldSessions();
+    }
+
+    public JSONObject getPastSessions() {
+        return pastSessions;
     }
 
     // EFFECTS: returns session properties in this session as a JSON array

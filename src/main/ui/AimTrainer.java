@@ -40,6 +40,8 @@ public class AimTrainer {
         //this.mode = DEFAULT_MODE;
         this.distance = DEFAULT_DISTANCE;
         target = new CircleTarget(0,0);
+        jsonReader = new JsonReader("./data/testWriterEmptySession.json");
+        jsonWriter = new JsonWriter("./data/testWriterEmptySession.json");
     }
 
     // MODIFIES: this
@@ -73,19 +75,21 @@ public class AimTrainer {
                 System.out.println("Immediate Feedback: " + currentSession.getLastSuggestion().giveSuggestion());
             }
             System.out.println("Continue the session? (N to stop, anything else to continue)");
-
             SCN.nextLine();
             String cont = SCN.nextLine();
-
             if (cont.equals("N")) {
                 hit = true;
                 stop = true;
-                System.out.println("Session feedback: " + currentSession.updateSummarySuggestion().giveSuggestion());
-                askSeeAllStatistics();
-                askSave();
-                System.out.println("Thank you for training with us today!");
+                doNotContinue();
             }
         }
+    }
+
+    public void doNotContinue() {
+        System.out.println("Session feedback: " + currentSession.updateSummarySuggestion().giveSuggestion());
+        askSeeAllStatistics();
+        askSave();
+        System.out.println("Thank you for training with us today!");
     }
 
     // EFFECTS: asks user if they want to see past records, and shows record for the requested session, including the
@@ -130,15 +134,21 @@ public class AimTrainer {
                 +  "(N for new session, anything else for old session");
         String newSession = SCN.nextLine();
         loadSessions();
+        try {
+            currentSession.addOldSessionsToPastSessions(jsonReader);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         if (! newSession.equals("N")) {
             System.out.println("Please enter the session number of the past session you would like to open");
             sessionNum = SCN.nextInt();
             SCN.nextLine();
 
             currentSession = sessions.get(sessionNum);
+
+            System.out.println("Loaded Session" + currentSession.getSessionNum() + " from " + JSON_STORE);
         } else {
             currentSession = new CircleSession(sessionNum);
-            sessions.add(currentSession);
         }
 
         System.out.println("This is session " + sessionNum);
@@ -192,12 +202,11 @@ public class AimTrainer {
 
     // EFFECTS: saves all sessions to file
     private void saveSessions() {
-        Session current = sessions.get(sessions.size() - 1);
         try {
             jsonWriter.open();
-            jsonWriter.write(current, jsonReader);
+            jsonWriter.write(currentSession);
             jsonWriter.close();
-            System.out.println("Saved Session" + current.getSessionNum() + " to " + JSON_STORE);
+            System.out.println("Saved Session" + currentSession.getSessionNum() + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         } catch (IOException e) {
@@ -210,7 +219,6 @@ public class AimTrainer {
     private void loadSessions() {
         try {
             sessions = jsonReader.read();
-            System.out.println("Loaded Session" + currentSession.getSessionNum() + " from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }

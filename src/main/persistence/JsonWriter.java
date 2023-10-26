@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 // "Code influenced by the JsonSerizalizationDemo link_to_demo
 // Represents a writer that writes JSON representation of session to file
@@ -31,9 +32,8 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of session to file
-    public void write(Session s, JsonReader reader) throws IOException {
-        s.addOldSessionsToPastSessions(reader);
-        JSONObject json = s.toJson();
+    public void write(Session s) {
+        JSONObject json = s.toJson(); // add in new session
         saveToFile(json.toString(TAB));
     }
 

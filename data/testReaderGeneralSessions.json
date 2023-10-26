@@ -1,0 +1,38 @@
+{
+  "Session 1":
+    {
+      "Target Type": "circle",
+      "Suggestions": [
+        {
+          "Shot X" : 50,
+          "Shot Y" : 50,
+          "Direction X" : "right",
+          "Direction Y" : "up",
+          "Error Amount X" : 1,
+          "Error Amount Y" : 1
+        },
+        {
+          "Shot X" : 51,
+          "Shot Y" : 51,
+          "Direction X" : "perfect",
+          "Direction Y" : "perfect",
+          "Error Amount X" : 0,
+          "Error Amount Y" : 0
+        }
+      ]
+    },
+    "Session 2":
+      {
+        "Target Type": "circle",
+        "Suggestions": [
+          {
+            "Shot X" : 40,
+            "Shot Y" : 40,
+            "Direction X" : "right",
+            "Direction Y" : "up",
+            "Error Amount X" : 1,
+            "Error Amount Y" : 1
+          }
+        ]
+      }
+}
