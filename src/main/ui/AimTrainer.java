@@ -101,6 +101,8 @@ public class AimTrainer {
     // Thanks the user for training with the program.
     public void askSeeAllStatistics() {
         System.out.println("Would you like to see past sessions? (Y for yes, anything else for no)");
+        System.out.println("Note that any changes made to past sessions will be reflected here, but will not be saved");
+        System.out.println("unless manually saved.");
         String nextRecords = SCN.nextLine();
         if (nextRecords.equals("Y")) {
             if (sessions.size() == 0) {
@@ -149,8 +151,7 @@ public class AimTrainer {
         if (! newSession.equals("N")) {
             oldSession = true;
             System.out.println("Please enter the session number of the past session you would like to open");
-            sessionNum = SCN.nextInt();
-            SCN.nextLine();
+            sessionNum = getNextInt();
             if (sessionNum <= sessions.size() && sessionNum > 0) {
                 currentSession = sessions.get(sessionNum - 1);
                 System.out.println("Loaded Session" + currentSession.getSessionNum() + " from " + JSON_STORE);
@@ -161,13 +162,19 @@ public class AimTrainer {
             currentSession = new CircleSession(sessionNum);
         }
         System.out.println("This is session " + sessionNum);
-
         try {
             currentSession.addOldSessionsToPastSessions(jsonReader);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (NullPointerException n) {            //it's ok if there's nothing in file
         }
+    }
+
+    public int getNextInt() {
+        int answer = SCN.nextInt();
+        SCN.nextLine();
+
+        return answer;
     }
 
     public String askNewSession() {
