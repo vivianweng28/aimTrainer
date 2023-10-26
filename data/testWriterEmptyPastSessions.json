@@ -1,3 +1,24 @@
-{
-
-}
+{"Session 1": {
+    "Suggestions": [
+        {
+            "Error Amount Y": 2,
+            "Error Amount X": 2,
+            "Direction X": "right",
+            "Shot Y": 10,
+            "Shot X": 10,
+            "Direction Y": "up"
+        },
+        {
+            "Error Amount Y": 1,
+            "Error Amount X": 1,
+            "Direction X": "right",
+            "Shot Y": 9,
+            "Shot X": 9,
+            "Direction Y": "up"
+        }
+    ],
+    "Target Distance": 100,
+    "Target Y": 8,
+    "Target Type": "circle",
+    "Target X": 8
+}}
