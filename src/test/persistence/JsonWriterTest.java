@@ -10,6 +10,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// "Code influenced by the JsonSerizalizationDemo link_to_demo
+// test for JsonWriter class
 class JsonWriterTest extends JsonTest {
     //NOTE TO CPSC 210 STUDENTS: the strategy in designing tests for the JsonWriter is to
     //write data to a file and then use the reader to read it back in and check that we
@@ -48,7 +50,7 @@ class JsonWriterTest extends JsonTest {
             sessions = reader.read();
             List <Suggestion> s2Suggestions = sessions.get(1).getAllSuggestions();
             assertEquals(2, sessions.size());
-            checkSessionNumTypeDistanceAndTarget(2, "circle", 100, 49, 49, s);
+            checkSessionProperties(2, "circle", 100, 49, 49, 0,0, s);
             assertEquals(0, s2Suggestions.size());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
@@ -63,7 +65,9 @@ class JsonWriterTest extends JsonTest {
             Suggestion first = new Suggestion(10, 10, "right", "up", 2, 2);
             Suggestion second = new Suggestion(9, 9, "right", "up", 1, 1);
             s.addSuggestion(first);
+            s.setShots(s.getShots() + 1);
             s.addSuggestion(second);
+            s.setShots(s.getShots() + 1);
 
             JsonReader reader = new JsonReader("./data/testWriterGeneralSession.json");
             s.addOldSessionsToPastSessions(reader);
@@ -75,12 +79,12 @@ class JsonWriterTest extends JsonTest {
 
             sessions = reader.read();
             assertEquals(2, sessions.size());
-            checkSessionNumTypeDistanceAndTarget(1, "circle", 100, 49, 49, sessions.get(0));
+            checkSessionProperties(1, "circle", 100, 49, 49, 1,2, sessions.get(0));
             List <Suggestion> s1Suggestions = sessions.get(0).getAllSuggestions();
             checkSuggestion(50,50,"right", "up", 1, 1, s1Suggestions.get(0));
             checkSuggestion(49,49,"perfect", "perfect", 0, 0, s1Suggestions.get(1));
 
-            checkSessionNumTypeDistanceAndTarget(2, "circle",100, 8, 8, sessions.get(1));
+            checkSessionProperties(2, "circle",100, 8, 8, 0, 2, sessions.get(1));
             List <Suggestion> s2Suggestions = sessions.get(1).getAllSuggestions();
             checkSuggestion(10, 10, "right", "up", 2, 2, s2Suggestions.get(0));
             checkSuggestion(9, 9, "right", "up", 1, 1, s2Suggestions.get(1));
@@ -91,26 +95,29 @@ class JsonWriterTest extends JsonTest {
     }
 
     @Test
-    void testWriterGeneralSessionsAddNewSessionReplace() {
+    void testWriterGeneralSessionsAddNewSessionContinue() {
         try {
-            JsonReader reader = new JsonReader("./data/testWriterGeneralSessionReplace.json");
+            JsonReader reader = new JsonReader("./data/testWriterGeneralSessionsContinue.json");
             sessions = reader.read();
             Session s = sessions.get(0);
 
             s.addOldSessionsToPastSessions(reader);
+
             Suggestion first = new Suggestion(60, 60, "right", "up", 11, 11);
             Suggestion second = new Suggestion(59, 59, "right", "up", 10, 10);
             s.addSuggestion(first);
+            s.setShots(s.getShots() + 1);
             s.addSuggestion(second);
+            s.setShots(s.getShots() + 1);
 
-            JsonWriter writer = new JsonWriter("./data/testWriterGeneralSessionReplace.json");
+            JsonWriter writer = new JsonWriter("./data/testWriterGeneralSessionsContinue.json");
             writer.open();
             writer.write(s);
             writer.close();
 
             sessions = reader.read();
             assertEquals(1, sessions.size());
-            checkSessionNumTypeDistanceAndTarget(1, "circle", 100, 49,49, sessions.get(0));
+            checkSessionProperties(1, "circle", 100, 49,49, 1, 4, sessions.get(0));
             List <Suggestion> s1Suggestions = sessions.get(0).getAllSuggestions();
             checkSuggestion(50,50,"right", "up", 1, 1, s1Suggestions.get(0));
             checkSuggestion(49,49,"perfect", "perfect", 0, 0, s1Suggestions.get(1));
@@ -135,6 +142,8 @@ class JsonWriterTest extends JsonTest {
             Suggestion second = new Suggestion(9, 9, "right", "up", 1, 1);
             s.addSuggestion(first);
             s.addSuggestion(second);
+            s.setHit(0);
+            s.setShots(2);
 
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyPastSessions.json");
             writer.open();
@@ -143,7 +152,7 @@ class JsonWriterTest extends JsonTest {
 
             sessions = reader.read();
             assertEquals(1, sessions.size());
-            checkSessionNumTypeDistanceAndTarget(1, "circle", 100, 8,8, sessions.get(0));
+            checkSessionProperties(1, "circle", 100, 8,8, 0,2, sessions.get(0));
             List <Suggestion> s1Suggestions = sessions.get(0).getAllSuggestions();
             checkSuggestion(10, 10, "right", "up", 2, 2, s1Suggestions.get(0));
             checkSuggestion(9, 9, "right", "up", 1, 1, s1Suggestions.get(1));

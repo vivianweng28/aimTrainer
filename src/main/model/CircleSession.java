@@ -14,7 +14,6 @@ public class CircleSession implements Session, Writable {
     private final List<Suggestion> allSuggestions;
     private int hit;
     private int shots;
-    private double accuracy;
     private static final String SESSION_TYPE = "circle";
     private static final int DEFAULT_DISTANCE = 100;
     private int distance;
@@ -28,23 +27,28 @@ public class CircleSession implements Session, Writable {
         allSuggestions = new ArrayList<Suggestion>();
         hit = 0;
         shots = 0;
-        accuracy = 0;
         this.sessionNum = sessionNum;
         distance = DEFAULT_DISTANCE;
     }
 
+    // EFFECTS: retrieves the distance from target
     public int getDistance() {
         return distance;
     }
 
+    // MODIFIES: this
+    // EFFECTS: changes the distance from target
     public void setDistance(int newDistance) {
         this.distance = newDistance;
     }
 
+    // MODIFIES: this
+    // EFFECTS: changes current target to a new target
     public void setTarget(Target t) {
         currentTarget = t;
     }
 
+    // EFFECTS: retrieves the current target
     public Target getTarget() {
         return currentTarget;
     }
@@ -52,7 +56,7 @@ public class CircleSession implements Session, Writable {
     // REQUIRES: x, y >= 0, centerX, centerY, and radius > 0, point (x,y) is not in the circular target with center at
     // (centerX, centerY) and a radius of length radius.
     // MODIFIES: this
-    // EFFECTS: compares shot that missed the target taken by player to the closest shot on the target and generates
+    // EFFECTS: compares shot taken by player to the closest shot on the target and generates
     // suggestion, adds that suggestion to list of all suggestions
     public void analyze(double x, double y, double centerX, double centerY, double radius) {
         shots++;
@@ -97,11 +101,9 @@ public class CircleSession implements Session, Writable {
 
     // MODIFIES: this
     // EFFECTS: increases the number of times the user's shot hits the target by one, increases the total number of
-    // shots by one, and calculates the new accuracy
+    // shots by one
     public void hit() {
         hit++;
-        shots++;
-        accuracy = (double) hit / (double) shots;
     }
 
     // EFFECTS: gets the list of all generated suggestions
@@ -111,12 +113,27 @@ public class CircleSession implements Session, Writable {
 
     // EFFECTS: gets the total session accuracy in percentage
     public double getAccuracy() {
-        return accuracy * 100;
+        return (double) hit / (double) shots * 100;
     }
 
     // EFFECTS: gets the total number of times the user's shot has hit the target
     public int getHit() {
         return hit;
+    }
+
+    // EFFECTS: gets the total number of times the user has taken a shot
+    public int getShots() {
+        return shots;
+    }
+
+    // EFFECTS: sets the total number of times the user's shot has hit the target
+    public void setHit(int hit) {
+        this.hit = hit;
+    }
+
+    // EFFECTS: sets the total number of times the user has taken a shot
+    public void setShots(int shots) {
+        this.shots = shots;
     }
 
     // EFFECTS: gets the last suggestion made by the system
@@ -179,10 +196,12 @@ public class CircleSession implements Session, Writable {
         return summary;
     }
 
+    // EFFECTS: retrieves session number of current session
     public int getSessionNum() {
         return sessionNum;
     }
 
+    // EFFECTS: retrieves session type of current session
     public String getSessionType() {
         return SESSION_TYPE;
     }
@@ -193,22 +212,29 @@ public class CircleSession implements Session, Writable {
         allSuggestions.add(suggestion);
     }
 
+    // MODIFIES: this
+    // EFFECTS: updates the JSONObject with the current session if it is new, or deleting the old version of an old
+    // session if the current session is a continuation of an old session
     @Override
     public JSONObject toJson() {
-        if (pastSessions.length() >= sessionNum) {
-            pastSessions.remove("Session " + sessionNum);
-        } else {
+        if (pastSessions.length() == 0) {
             pastSessions = new JSONObject();
+        } else if (pastSessions.length() >= sessionNum) {
+            pastSessions.remove("Session " + sessionNum);
         }
+
         pastSessions.put("Session " + getSessionNum(), sessionPropertiesToJson());
         return pastSessions;
     }
 
+    // MODIFIES: this
+    // EFFECTS: reads in past sessions from file (not including this current session) into a JSONObject for ease of
+    // updating the object if current session is saved
     public void addOldSessionsToPastSessions(JsonReader reader) throws IOException {
         pastSessions = reader.retrieveOldSessions();
     }
 
-    // EFFECTS: returns session properties in this session as a JSON array
+    // EFFECTS: turns session properties in this session to a JSONArray and returns it
     public JSONObject sessionPropertiesToJson() {
         JSONObject jsonObject = new JSONObject();
 
@@ -216,6 +242,8 @@ public class CircleSession implements Session, Writable {
         jsonObject.put("Target Distance", distance);
         jsonObject.put("Target X", getTarget().getCenterX());
         jsonObject.put("Target Y", getTarget().getCenterY());
+        jsonObject.put("Hits", hit);
+        jsonObject.put("Shots", shots);
         jsonObject.put("Suggestions", suggestionsToJson());
 
         return jsonObject;

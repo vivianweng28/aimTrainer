@@ -14,6 +14,7 @@ import model.Session;
 import model.Suggestion;
 import org.json.*;
 
+// "Code influenced by the JsonSerizalizationDemo link_to_demo
 // Represents a reader that reads workroom from JSON data stored in file
 public class JsonReader {
     private String source;
@@ -23,7 +24,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads past sessions from file and returns it as a list of Sessions
     // throws IOException if an error occurs reading data from file
     public List<Session> read() throws IOException {
         String jsonData = readFile(source);
@@ -31,6 +32,8 @@ public class JsonReader {
         return parseSession(jsonObject);
     }
 
+    // EFFECTS: reads past sessions from file and returns it in the format of a JSONObject
+    // throws IOException if an error occurs reading data from file
     public JSONObject retrieveOldSessions() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
@@ -48,7 +51,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses session from JSON object and returns it
+    // EFFECTS: parses qualities of a session from JSON object and returns it
     private List<Session> parseSession(JSONObject jsonObject) {
         List<Session> allSessions = new ArrayList<Session>();
         Session s;
@@ -64,10 +67,16 @@ public class JsonReader {
 
             int targetY = currentSession.getInt("Target Y");
 
+            int shots = currentSession.getInt("Shots");
+
+            int hit = currentSession.getInt("Hits");
+
  //           if (targetType.equals("circle")) { // create circle session
             s = new CircleSession(i);
             s.setDistance(targetDist);
             s.setTarget(new CircleTarget(targetX, targetY));
+            s.setHit(hit);
+            s.setShots(shots);
 
             allSessions.add(s);
   //          } else {
@@ -92,7 +101,7 @@ public class JsonReader {
     }
 
     // MODIFIES: s
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    // EFFECTS: parses all components of a Suggestion from JSON object and adds it to a Session
     private void addSuggestion(Session s, JSONObject jsonObject) {
         double shotX = jsonObject.getDouble("Shot X");
         double shotY = jsonObject.getDouble("Shot Y");

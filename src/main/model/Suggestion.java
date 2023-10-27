@@ -62,6 +62,7 @@ public class Suggestion extends Shot implements Writable {
 
     }
 
+    // EFFECTS: converts a Suggestion into a JSONObject and returns it
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

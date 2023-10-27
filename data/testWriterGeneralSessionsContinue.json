@@ -5,6 +5,8 @@
     "Target Distance" : 100,
     "Target X" : 49,
     "Target Y" : 49,
+    "Shots" : 2,
+    "Hits" : 1,
     "Suggestions": [
       {
         "Shot X" : 50,

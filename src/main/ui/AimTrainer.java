@@ -69,13 +69,13 @@ public class AimTrainer {
             double x = getXFromUser();
             double y = getYFromUser();
             hit = target.hitTarget(x, y);
+            currentSession.analyze(x, y, target.getCenterX(), target.getCenterY(), target.getRadius());
             if (hit) {
                 System.out.println("Target hit!");
                 currentSession.hit();
                 generateTarget();
             } else {
                 System.out.println("Target not hit! Keep trying!");
-                currentSession.analyze(x, y, target.getCenterX(), target.getCenterY(), target.getRadius());
                 System.out.println("Immediate Feedback: " + currentSession.getLastSuggestion().giveSuggestion());
             }
             System.out.println("Continue the session? (N to stop, anything else to continue)");
@@ -89,11 +89,34 @@ public class AimTrainer {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: when the session is over, asks if user wants to see statistics from current session, see statistics from
+    // past sessions, or save the current session. Thanks the user for using the aim trainer.
     public void doNotContinue() {
         System.out.println("Session feedback: " + currentSession.updateSummarySuggestion().giveSuggestion());
+        askSeeCurrentStats();
         askSeeAllStatistics();
         askSave();
         System.out.println("Thank you for training with us today!");
+    }
+
+    // EFFECTS: asks the user if they want to see the statistics from this session. If so, displays the statistics
+    public void askSeeCurrentStats() {
+        System.out.println("Would you like to see your statistics for this session? (\"Y\" to view)");
+        String answer = SCN.nextLine();
+        if (answer.equals("Y")) {
+            Suggestion summary = currentSession.updateSummarySuggestion();
+            System.out.println("Current session feedback: " + summary.giveSuggestion());
+            System.out.println("Total accuracy: " + currentSession.getAccuracy() + "%");
+            List<Suggestion> allSuggestions = currentSession.getAllSuggestions();
+            int count = 1;
+            for (Suggestion s : allSuggestions) {
+                System.out.println("Shot " + count + ": x = " + s.getCompX() + ", y = " + s.getCompY());
+                System.out.println("Shot " + count + " suggestion: " + s.giveSuggestion());
+                count++;
+            }
+            System.out.println();
+        }
     }
 
     // EFFECTS: asks user if they want to see past records, and shows record for the requested session, including the
@@ -112,16 +135,17 @@ public class AimTrainer {
                         + " saved sessions.");
                 int indexPlusOne = SCN.nextInt();
                 SCN.nextLine();
-                if (indexPlusOne >= sessions.size() && indexPlusOne < 1) {
+                if (indexPlusOne > sessions.size() || indexPlusOne < 1) {
                     System.out.println("Invalid index number, session closing. Thank you for training with us today!");
                 } else {
-                    askPastSession(indexPlusOne);
+                    displayPastSession(indexPlusOne);
                 }
             }
         }
     }
 
-    public void askPastSession(int indexPlusOne) {
+    // EFFECTS: displays the statistics of past session.
+    public void displayPastSession(int indexPlusOne) {
         Session sessionSelected = sessions.get(indexPlusOne - 1);
         Suggestion summary = sessionSelected.updateSummarySuggestion();
         System.out.println("Session " + indexPlusOne + " feedback: " + summary.giveSuggestion());
@@ -135,6 +159,7 @@ public class AimTrainer {
         }
     }
 
+    // EFFECTS: asks user if they want to save the session. If so, saves the session.
     public void askSave() {
         System.out.println("Would you like to save the current session? (Y to save, anything else to not save)");
         String save = SCN.nextLine();
@@ -144,6 +169,9 @@ public class AimTrainer {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: asks if the user wants to start a new session or load old session, loads old session if directed
+    // to do so by the user
     public void askSession() {
         String newSession = askNewSession();
         loadSessions();
@@ -154,7 +182,7 @@ public class AimTrainer {
             sessionNum = getNextInt();
             if (sessionNum <= sessions.size() && sessionNum > 0) {
                 currentSession = sessions.get(sessionNum - 1);
-                System.out.println("Loaded Session" + currentSession.getSessionNum() + " from " + JSON_STORE);
+                System.out.println("Loaded Session " + currentSession.getSessionNum() + " from " + JSON_STORE);
             } else {
                 fileDoesNotExist();
             }
@@ -170,6 +198,7 @@ public class AimTrainer {
         }
     }
 
+    // EFFECTS: gets the next integer user inputs
     public int getNextInt() {
         int answer = SCN.nextInt();
         SCN.nextLine();
@@ -177,12 +206,16 @@ public class AimTrainer {
         return answer;
     }
 
+    // EFFECTS: asks user if they want to load an old training session or start a new session
     public String askNewSession() {
         System.out.println("Would you like to load an old training session or start a new session? "
-                +  "(N for new session, anything else for old session");
+                +  "(N for new session, anything else for old session)");
         return SCN.nextLine();
     }
 
+    // MODIFIES: this
+    // EFFECTS: informs user that file they requested does not exist, so the program is starting a new session for them,
+    // updates oldSession to false
     public void fileDoesNotExist() {
         System.out.println("That file does not exist! Starting new session!");
         currentSession = new CircleSession(sessions.size() + 1);
@@ -192,13 +225,19 @@ public class AimTrainer {
     // MODIFIES: this
     // EFFECTS: asks the user if they want to change the distance they are shooting from, if so, changes
     // the distance accordingly
-
     public void askChangeDist() {
-        System.out.println("Would you like to change the distance you are shooting from? (Y/N)");
+        System.out.println("Would you like to change the distance you are shooting from? (\"Y\" to change)");
         String changeDist = SCN.nextLine();
         if (changeDist.equals("Y")) {
-            System.out.println("Please enter distance (in meters) from 1 to 500");
-            currentSession.setDistance(SCN.nextInt());
+            System.out.println("Please enter an integer distance (in meters) from 1 to 500");
+            int newDist = SCN.nextInt();
+            SCN.nextLine();
+            if (newDist >= 1 && newDist <= 500) {
+                currentSession.setDistance(newDist);
+            } else {
+                System.out.println("Invalid distance");
+                askChangeDist();
+            }
         }
     }
 

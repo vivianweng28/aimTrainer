@@ -34,5 +34,5 @@ percentage of 10%, with the final aim adjustment feedback being "aim higher")
 - add multiple (all) shots taken to a list of shots taken by the user in every session
 - be able to view a list of all shots and suggestions given after ending the current session, as well as the final accuracy and summary 
 suggestion given
-- be able to save my current session to file
-- be able to have the option to reload the file of a previous session and continue the session
+- be able to have the option to save my current session to file
+- be able to have the option to reload the file of a previous session and continue that session

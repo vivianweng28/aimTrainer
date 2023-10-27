@@ -32,6 +32,9 @@ public class Vector {
 
     // EFFECT: gets the vector in same direction but of length 1
     public Vector getUnitVector() {
+        if (length == 0) {
+            return new Vector(0,0);
+        }
         Vector unit = new Vector(this.compX / length, this.compY / length);
         return unit;
     }

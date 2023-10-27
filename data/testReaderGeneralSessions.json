@@ -5,6 +5,8 @@
       "Target Distance" : 100,
       "Target X" : 49,
       "Target Y" : 49,
+      "Hits" : 1,
+      "Shots" : 2,
       "Suggestions": [
         {
           "Shot X" : 50,
@@ -30,6 +32,8 @@
         "Target Distance" : 100,
         "Target X" : 39,
         "Target Y" : 39,
+        "Hits" : 0,
+        "Shots" : 1,
         "Suggestions": [
           {
             "Shot X" : 40,

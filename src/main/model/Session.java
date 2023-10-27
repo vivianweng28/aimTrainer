@@ -15,6 +15,8 @@ public interface Session {
     // to list of all suggestions generated in this session
     void analyze(double x, double y, double centerX, double centerY, double radius);
 
+    // MODIFIES: this
+    // EFFECTS: adds in a pre-existing Suggestion to list of all suggestions
     void addSuggestion(Suggestion s);
 
     // EFFECTS: gets the last suggestion made by the system
@@ -34,19 +36,45 @@ public interface Session {
     // EFFECTS: gets the total session accuracy in percentage
     double getAccuracy();
 
+    // EFFECTS: gets the session number of this session
     int getSessionNum();
 
+    // EFFECTS: gets the session type of the session
     String getSessionType();
 
+    // MODIFIES: this
+    // EFFECTS: updates the JSONObject with the current session if it is new, or deleting the old version of an old
+    // session if the current session is a continuation of an old session
     JSONObject toJson();
 
+    // MODIFIES: this
+    // EFFECTS: reads in past sessions from file (not including this current session) into a JSONObject for ease of
+    // updating the object if current session is saved
     void addOldSessionsToPastSessions(JsonReader reader) throws IOException;
 
+    // EFFECTS: retrieves the distance from target
     int getDistance();
 
+    // MODIFIES: this
+    // EFFECTS: changes the distance from target
     void setDistance(int newDistance);
 
+    // MODIFIES: this
+    // EFFECTS: changes current target to a new target
     void setTarget(Target t);
 
+    // EFFECTS: retrieves the current target
     Target getTarget();
+
+    // EFFECTS: gets the total number of times the user's shot has hit the target
+    int getHit();
+
+    // EFFECTS: gets the total number of times the user has taken a shot
+    int getShots();
+
+    // EFFECTS: sets the total number of times the user's shot has hit the target
+    void setHit(int hit);
+
+    // EFFECTS: sets the total number of times the user has taken a shot
+    void setShots(int shots);
 }
