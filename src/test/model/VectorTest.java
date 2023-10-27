@@ -56,7 +56,15 @@ public class VectorTest {
     }
 
     @Test
-    //zero vector not tested because no unit vector
+    //zero vector has no unit vector, but it should return zero for the sake of the code
+    public void testGetUnitVectorZero() {
+        Vector zeroUnitVector = zero.getUnitVector();
+
+        assertEquals(0, zeroUnitVector.getCompX());
+        assertEquals(0, zeroUnitVector.getCompY());
+    }
+
+    @Test
     public void testGetUnitVectorSame() {
         Vector sameValUnitVector = sameVal.getUnitVector();
 
