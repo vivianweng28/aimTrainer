@@ -30,7 +30,8 @@ public class Vector {
         return Math.sqrt(Math.pow(this.compX, 2) + Math.pow(this.compY, 2));
     }
 
-    // EFFECT: gets the vector in same direction but of length 1
+    // EFFECT: gets the vector in same direction but of length 1, returns zero vector for unit vector of zero vector
+    // for the purposes of this project
     public Vector getUnitVector() {
         if (length == 0) {
             return new Vector(0,0);

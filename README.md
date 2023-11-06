@@ -36,3 +36,7 @@ percentage of 10%, with the final aim adjustment feedback being "aim higher")
 suggestion given
 - be able to have the option to save my current session to file
 - be able to have the option to reload the file of a previous session and continue that session
+
+#Instructions for Grader 
+- You can start the training session by...
+- You can add shots to the training session by pressing the target
