@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import model.CircleSession;
-import model.CircleTarget;
 import model.Session;
 import model.Suggestion;
+import model.Target;
 import org.json.*;
 
 // "Code influenced by the JsonSerizalizationDemo link_to_demo
@@ -74,7 +74,7 @@ public class JsonReader {
  //           if (targetType.equals("circle")) { // create circle session
             s = new CircleSession(i);
             s.setDistance(targetDist);
-            s.setTarget(new CircleTarget(targetX, targetY));
+            s.setTarget(new Target(targetX, targetY));
             s.setHit(hit);
             s.setShots(shots);
 

@@ -1,7 +1,6 @@
 package ui;
 
 import model.*;
-import model.CircleTarget;
 import model.Session;
 import model.CircleSession;
 import model.Target;
@@ -22,12 +21,13 @@ public class AimTrainer {
     private JsonReader jsonReader;
     private boolean stop;
     private List<Session> sessions = new ArrayList<Session>();
-    private static final int DIM_X = 500;
-    private static final int DIM_Y = 500;
+    private static final int DIM_X = 800;
+    private static final int DIM_Y = 800;
     private static final Scanner SCN = new Scanner(System.in);
     private Target target;
     private Session currentSession;
     private boolean oldSession;
+    private boolean over;
 
     // private static final String DEFAULT_MODE = "circle";
     // private String mode;  ADD BACK IN IF ADD HUMAN SHAPED TARGET
@@ -37,10 +37,12 @@ public class AimTrainer {
     public AimTrainer() {
         this.stop = false;
         //this.mode = DEFAULT_MODE;
-        target = new CircleTarget(0,0);
+        target = new Target(0,0);
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
         oldSession = false;
+        over = false;
+        loadSessions();
     }
 
     // MODIFIES: this
@@ -98,6 +100,19 @@ public class AimTrainer {
         askSeeAllStatistics();
         askSave();
         System.out.println("Thank you for training with us today!");
+        over = true;
+    }
+
+    public boolean isOver() {
+        return over;
+    }
+
+    public int getDimX() {
+        return DIM_X;
+    }
+
+    public int getDimY() {
+        return DIM_Y;
     }
 
     // EFFECTS: asks the user if they want to see the statistics from this session. If so, displays the statistics
@@ -169,12 +184,23 @@ public class AimTrainer {
         }
     }
 
+    public Target getTarget() {
+        return target;
+    }
+
+    public boolean getOldSession() {
+        return oldSession;
+    }
+
+    public void setToOldSession() {
+        oldSession = true;
+    }
+
     // MODIFIES: this
     // EFFECTS: asks if the user wants to start a new session or load old session, loads old session if directed
     // to do so by the user
     public void askSession() {
         String newSession = askNewSession();
-        loadSessions();
         int sessionNum = sessions.size() + 1;
         if (! newSession.equals("N")) {
             oldSession = true;
@@ -198,6 +224,13 @@ public class AimTrainer {
         }
     }
 
+    public void setCurrentSession(int i) {
+        currentSession = sessions.get(i);
+    }
+
+    public int getNumSessions() {
+        return sessions.size();
+    }
     // EFFECTS: gets the next integer user inputs
     public int getNextInt() {
         int answer = SCN.nextInt();
@@ -269,7 +302,7 @@ public class AimTrainer {
             y = Math.random() * DIM_Y;
         }
 
-        target = new CircleTarget(x,y);
+        target = new Target((int)x,(int)y);
 
         currentSession.setTarget(target);
 

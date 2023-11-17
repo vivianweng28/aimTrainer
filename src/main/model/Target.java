@@ -1,29 +1,60 @@
 package model;
 
-// represents a target that the user is aiming for
-public interface Target {
+import java.awt.Color;
+
+// represents a target in the shape of a circle that the user hits
+public class Target {
+    public static final Color COLOR = new Color(250, 128, 20);
+    private int radius;
+    private static final int DEFAULT_SIZE = 5;
+    private int centerX;
+    private int centerY;
+
+    // EFFECTS: creates a circular target with default radius of 5, and a given center
+    public Target(int cenX, int cenY) {
+        centerX = cenX;
+        centerY = cenY;
+        this.radius = DEFAULT_SIZE;
+    }
 
     // REQUIRES: x and y are less than dimensions of the application and >= 0.
     // EFFECTS: determines whether the shot taken has hit the target (true if hit, false if not hit)
-    boolean hitTarget(double x, double y);
+    public boolean hitTarget(double x, double y) {
+        if (dist(x, y) <= this.radius) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     // REQUIRES: x and y are less than dimensions of the application and >= 0.
     // EFFECTS: calculate the distance between the point given and the center of this target
-    double dist(double pointOneX, double pointOneY);
+    public double dist(double pointOneX, double pointOneY) { // dist from point to the target
+        double dist = Math.sqrt(Math.pow(pointOneX - centerX, 2) + Math.pow(pointOneY - centerY, 2));
+        return dist;
+    }
 
     // REQUIRES: dist is from 1 to 500, inclusive
     // MODIFIES: this
     // EFFECTS: adjusts the radius of the target from the point of view of the user depending on the distance between
     // the target and user
-    void changeDist(double dist);
 
-    // EFFECTS: returns the x coordinate of the center of the target
-    double getCenterX();
-
-    // EFFECTS: returns the y coordinate of the center of the target
-    double getCenterY();
+    public void changeDist(int dist) { // 100m is default size
+        this.radius = (int) (dist / 100) * DEFAULT_SIZE;
+    }
 
     // EFFECTS: returns the radius of the target
-    double getRadius();
 
+    public int getRadius() {
+        return radius;
+    }
+
+
+    public int getCenterX() {
+        return centerX;
+    }
+
+    public int getCenterY() {
+        return centerY;
+    }
 }
