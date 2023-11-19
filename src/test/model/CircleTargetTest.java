@@ -5,13 +5,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 // tests the CircleTarget class
-class CircleTargetTest {
+class TargetTest {
 
-    private CircleTarget c;
+    private Target c;
 
     @BeforeEach
     public void runBefore() {
-        c = new CircleTarget(200, 200);
+        c = new Target(200, 200);
     }
 
     @Test

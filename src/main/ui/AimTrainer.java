@@ -28,6 +28,7 @@ public class AimTrainer {
     private Session currentSession;
     private boolean oldSession;
     private boolean over;
+    private MainGUI mg;
 
     // private static final String DEFAULT_MODE = "circle";
     // private String mode;  ADD BACK IN IF ADD HUMAN SHAPED TARGET
@@ -42,6 +43,7 @@ public class AimTrainer {
         jsonWriter = new JsonWriter(JSON_STORE);
         oldSession = false;
         over = false;
+        mg = new MainGUI();
         loadSessions();
     }
 
@@ -58,19 +60,19 @@ public class AimTrainer {
                 target = generateTarget();
             }
             System.out.println("Current distance from target: " + currentSession.getDistance() + "m");
-            runGame(target);
+            runGame();
         }
     }
 
     // MODIFIES: this
     // EFFECTS: gets shot input from user, records suggestion if did not hit target, asks if the user wants to
     // continue the session after every shot. If the user ends the session, session feedback is given.
-    public void runGame(Target target) {
+    public void runGame() {
         boolean hit = false;
         while (!hit) {
             double x = getXFromUser();
             double y = getYFromUser();
-            hit = target.hitTarget(x, y);
+            hit = target.hitTarget((int) x, (int) y);
             currentSession.analyze(x, y, target.getCenterX(), target.getCenterY(), target.getRadius());
             if (hit) {
                 System.out.println("Target hit!");
@@ -83,6 +85,26 @@ public class AimTrainer {
             System.out.println("Continue the session? (N to stop, anything else to continue)");
             SCN.nextLine();
             String cont = SCN.nextLine();
+            if (cont.equals("N")) {
+                hit = true;
+                stop = true;
+                doNotContinue();
+            }
+        }
+    }
+
+    public void runGameGUI(int x, int y) {
+        boolean hit = false;
+        while (!hit) {
+            hit = target.hitTarget(x, y);
+            currentSession.analyze(x, y, target.getCenterX(), target.getCenterY(), target.getRadius());
+            if (hit) {
+                currentSession.hit();
+                generateTarget();
+            } else {
+                mg.immediateFeedback(currentSession);
+//                System.out.println("Immediate Feedback: " + currentSession.getLastSuggestion().giveSuggestion());
+            }
             if (cont.equals("N")) {
                 hit = true;
                 stop = true;
@@ -192,8 +214,10 @@ public class AimTrainer {
         return oldSession;
     }
 
-    public void setToOldSession() {
+    public void setToOldSession(int i) {
         oldSession = true;
+        currentSession = sessions.get(i);
+        target = currentSession.getTarget();
     }
 
     // MODIFIES: this
@@ -224,6 +248,11 @@ public class AimTrainer {
         }
     }
 
+    public void newSession() {
+        currentSession = new CircleSession(sessions.size() + 1);
+        generateTarget();
+    }
+
     public void setCurrentSession(int i) {
         currentSession = sessions.get(i);
     }
@@ -231,6 +260,7 @@ public class AimTrainer {
     public int getNumSessions() {
         return sessions.size();
     }
+
     // EFFECTS: gets the next integer user inputs
     public int getNextInt() {
         int answer = SCN.nextInt();
@@ -274,6 +304,10 @@ public class AimTrainer {
         }
     }
 
+    public void changeDist(int dist) {
+        currentSession.setDistance(dist);
+    }
+
     // EFFECTS: gets the x coordinate of the user shot from user
     public double getXFromUser() {
         System.out.println("Please enter the x coordinate");
@@ -310,7 +344,7 @@ public class AimTrainer {
     }
 
     // EFFECTS: saves all sessions to file
-    private void saveSessions() {
+    public void saveSessions() {
         try {
             jsonWriter.open();
             jsonWriter.write(currentSession);
@@ -331,5 +365,9 @@ public class AimTrainer {
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
+    }
+
+    public Session getCurrentSession() {
+        return currentSession;
     }
 }

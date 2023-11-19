@@ -1,25 +1,22 @@
 package model;
 
-import java.awt.Color;
-
 // represents a target in the shape of a circle that the user hits
 public class Target {
-    public static final Color COLOR = new Color(250, 128, 20);
     private int radius;
-    private static final int DEFAULT_SIZE = 5;
     private int centerX;
     private int centerY;
+    private static final int DEFAULT_SIZE = 100;
 
     // EFFECTS: creates a circular target with default radius of 5, and a given center
     public Target(int cenX, int cenY) {
-        centerX = cenX;
-        centerY = cenY;
         this.radius = DEFAULT_SIZE;
+        this.centerX = cenX;
+        this.centerY = cenY;
     }
 
     // REQUIRES: x and y are less than dimensions of the application and >= 0.
     // EFFECTS: determines whether the shot taken has hit the target (true if hit, false if not hit)
-    public boolean hitTarget(double x, double y) {
+    public boolean hitTarget(int x, int y) {
         if (dist(x, y) <= this.radius) {
             return true;
         } else {
@@ -38,23 +35,22 @@ public class Target {
     // MODIFIES: this
     // EFFECTS: adjusts the radius of the target from the point of view of the user depending on the distance between
     // the target and user
-
-    public void changeDist(int dist) { // 100m is default size
+    public void changeDist(double dist) { // 100m is default size
         this.radius = (int) (dist / 100) * DEFAULT_SIZE;
     }
 
-    // EFFECTS: returns the radius of the target
-
-    public int getRadius() {
-        return radius;
-    }
-
-
+    // EFFECTS: returns the x coordinate of the center of the target
     public int getCenterX() {
         return centerX;
     }
 
+    // EFFECTS: returns the y coordinate of the center of the target
     public int getCenterY() {
         return centerY;
+    }
+
+    // EFFECTS: returns the radius of the target
+    public int getRadius() {
+        return radius;
     }
 }
