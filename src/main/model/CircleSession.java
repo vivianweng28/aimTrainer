@@ -113,7 +113,11 @@ public class CircleSession implements Session, Writable {
 
     // EFFECTS: gets the total session accuracy in percentage
     public double getAccuracy() {
-        return (double) hit / (double) shots * 100;
+        if (shots == 0) {
+            return 0;
+        } else {
+            return (double) hit / (double) shots * 100;
+        }
     }
 
     // EFFECTS: gets the total number of times the user's shot has hit the target

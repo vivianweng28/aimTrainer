@@ -110,6 +110,8 @@ public class MainGUI extends JFrame implements ActionListener {
     public void showAllStats() {
         // TODO: see design drawing on ipad
         sessionsList = new JFrame();
+        sessionsList.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        sessionsList.setLayout(new FlowLayout());
         sessionsList.setPreferredSize(new Dimension(500, 500));
         JLabel sessionNum = new JLabel("Please select a session number");
         String[] options = new String[aimTrainer.getNumSessions()];
@@ -128,8 +130,8 @@ public class MainGUI extends JFrame implements ActionListener {
         confirm.addActionListener(this);
         confirm.setActionCommand("confirm");
         confirm.setBounds(300, 650, 200, 50);
-        setVisible(true);
-        // JPopUpMenu to see each session's stats
+        sessionsList.pack();
+        sessionsList.setVisible(true);
     }
 
 
