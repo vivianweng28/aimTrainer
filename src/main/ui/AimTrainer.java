@@ -160,6 +160,10 @@ public class AimTrainer {
         }
     }
 
+    public Session getSession(int i) {
+        return sessions.get(i);
+    }
+
     // EFFECTS: asks user if they want to see past records, and shows record for the requested session, including the
     // total accuracy rate, each shot the user took in that session, and all the suggestions given for each shot.
     // Thanks the user for training with the program.
@@ -254,6 +258,11 @@ public class AimTrainer {
 
     public void newSession() {
         currentSession = new CircleSession(sessions.size() + 1);
+        try {
+            currentSession.addOldSessionsToPastSessions(jsonReader);
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
         generateTarget();
     }
 
