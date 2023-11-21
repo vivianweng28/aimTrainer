@@ -57,6 +57,7 @@ public class Menu extends JFrame implements ActionListener {
         newSession.addActionListener(this);
         newSession.setBounds(450, 300, 200, 50);
         add(newSession);
+        JMenuBar menuBar = new JMenuBar();
         setVisible(true);
     }
 

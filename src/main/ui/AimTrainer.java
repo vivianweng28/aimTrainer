@@ -43,8 +43,11 @@ public class AimTrainer {
         jsonWriter = new JsonWriter(JSON_STORE);
         oldSession = false;
         over = false;
-        mg = new MainGUI();
         loadSessions();
+    }
+
+    public void addGUI(MainGUI mainGUI) {
+        mg = mainGUI;
     }
 
     // MODIFIES: this
@@ -94,23 +97,24 @@ public class AimTrainer {
     }
 
     public void runGameGUI(int x, int y) {
-        boolean hit = false;
-        while (!hit) {
-            hit = target.hitTarget(x, y);
-            currentSession.analyze(x, y, target.getCenterX(), target.getCenterY(), target.getRadius());
-            if (hit) {
-                currentSession.hit();
-                generateTarget();
-            } else {
-                mg.immediateFeedback(currentSession);
+        while (!stop) {
+            boolean hit = false;
+            while (!hit) {
+                hit = target.hitTarget(x, y);
+                currentSession.analyze(x, y, target.getCenterX(), target.getCenterY(), target.getRadius());
+                if (hit) {
+                    currentSession.hit();
+                    generateTarget();
+                } else {
+                    mg.immediateFeedback(currentSession);
 //                System.out.println("Immediate Feedback: " + currentSession.getLastSuggestion().giveSuggestion());
-            }
-            if (cont.equals("N")) {
-                hit = true;
-                stop = true;
-                doNotContinue();
+                }
             }
         }
+    }
+
+    public void forceEnd() {
+        System. exit(0);
     }
 
     // MODIFIES: this

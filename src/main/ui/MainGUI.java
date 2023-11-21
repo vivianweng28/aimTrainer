@@ -14,7 +14,7 @@ import persistence.JsonWriter;
 import java.io.IOException;
 
 
-public class MainGUI extends JFrame {
+public class MainGUI extends JFrame implements ActionListener {
     // Constructs main window
     // effects: sets up window in which Space Invaders game will be played
 
@@ -29,35 +29,66 @@ public class MainGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
         setUndecorated(false);
+        setLayout(new FlowLayout());
         aimTrainer = new AimTrainer();
+        aimTrainer.addGUI(this);
         setPreferredSize(new Dimension(aimTrainer.getDimX() + 100, aimTrainer.getDimY() + 100));
         menu = new Menu(aimTrainer);
         gp = new GamePanel(aimTrainer);
-        JFrame thisFrame = this;
         menuPanel = new JPanel();
         menuPanel.setBounds(300, 50, 500, 100);
+        add(menuPanel);
         add(gp);
         pack();
-        WindowListener exitListener = new WindowAdapter() {
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-                showCurrentStats();
-                int confirm = JOptionPane.showOptionDialog(thisFrame,
-                        "Do you want to save this application?",
-                        "Save?", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, null, null);
-                if (confirm == JOptionPane.YES_OPTION) {
-                    aimTrainer.saveSessions();
-                    System.exit(0);
-                } else if (confirm == JOptionPane.NO_OPTION) {
-                    System.exit(0);
-                }
-            }
-        };
-        addWindowListener(exitListener);
+        menuBarSetUp();
+        setUp();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
+    }
 
+    public void menuBarSetUp() {
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu file = new JMenu(); // save
+        fileAddMenuItems(file);
+
+        JMenu edit = new JMenu(); // change distance
+        editAddMenuItems(edit);
+
+        JMenu view = new JMenu(); // view old sessions
+        viewAddMenuItems(view);
+
+        menuBar.add(file);
+        menuBar.add(edit);
+        menuBar.add(view);
+
+        menuBar.setVisible(true);
+        setJMenuBar(menuBar);
+        revalidate();
+    }
+
+    public void editAddMenuItems(JMenu edit) {
+        JMenuItem changeDistance = new JMenuItem();
+        changeDistance.addActionListener(this);
+        changeDistance.setActionCommand("changeDist");
+        edit.add(changeDistance);
+    }
+
+    public void viewAddMenuItems(JMenu view) {
+        JMenuItem oldSession = new JMenuItem();
+        oldSession.addActionListener(this);
+        oldSession.setActionCommand("viewOldSession");
+        view.add(oldSession);
+    }
+
+    public void fileAddMenuItems(JMenu file) {
+        JMenuItem save = new JMenuItem();
+        save.addActionListener(this);
+        save.setActionCommand("save");
+        file.add(save);
+    }
+
+    public void setUp() {
         while (! menu.getOver()) {
             gp.waitFor(1000);
         }
@@ -65,9 +96,6 @@ public class MainGUI extends JFrame {
             addDistance();
             showAllStats();
         }
-        //centreOnScreen();
-        setVisible(true);
-        //addTimer();
     }
 
     public void showCurrentStats() {
@@ -88,16 +116,15 @@ public class MainGUI extends JFrame {
         for (int i = 0; i < options.length; i++) {
             options[i] = (i + 1) + "m";
         }
-        distOptions = new JComboBox(options);
-        distOptions.setBounds(200, 50, 100, 50); // TODO: CHANGE
-        menuPanel.add(distOptions);
+//        distOptions = new JComboBox(options);
+//        distOptions.setBounds(200, 50, 100, 50); // TODO: CHANGE
+//        menuPanel.add(distOptions);
+//
+//        JButton changeDist = new JButton("Change distance");
+//        changeDist.setActionCommand("changeDist");
+//        changeDist.setBounds(400, 50, 200, 50);
+//        menuPanel.add(changeDist);
 
-        JButton changeDist = new JButton("Change distance");
-        changeDist.setActionCommand("changeDist");
-        changeDist.setBounds(400, 50, 200, 50);
-        menuPanel.add(changeDist);
-
-        add(menuPanel);
     }
 
     public void actionPerformed(ActionEvent e) {
