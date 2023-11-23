@@ -26,6 +26,7 @@ public class MainGUI extends JFrame implements ActionListener {
     private JPanel menuPanel;
     private JFrame sessionsList;
     private JComboBox sessions;
+    JLabel dist;
 
     public MainGUI() {
         super("Aim Trainer");
@@ -136,7 +137,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
     public void addDistance() {
-        JLabel dist = new JLabel();
+        dist = new JLabel();
         dist.setText("Current distance: " + aimTrainer.getCurrentSession().getDistance() + "m");
         menuPanel.add(dist);
 
@@ -150,6 +151,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
         JButton changeDist = new JButton("Change distance");
         changeDist.setActionCommand("changeDistance");
+        changeDist.addActionListener(this);
         changeDist.setBounds(400, 50, 200, 50);
         menuPanel.add(changeDist);
 
@@ -158,6 +160,7 @@ public class MainGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("changeDistance")) {
             aimTrainer.changeDist(distOptions.getSelectedIndex() + 1);
+            dist.setText("Current distance: " + aimTrainer.getCurrentSession().getDistance() + "m");
             repaint();
         } else if (e.getActionCommand().equals("confirm")) {
             Session selected = aimTrainer.getSession(sessions.getSelectedIndex());

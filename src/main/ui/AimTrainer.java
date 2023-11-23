@@ -29,6 +29,8 @@ public class AimTrainer {
     private boolean oldSession;
     private boolean over;
     private MainGUI mg;
+    private int userX;
+    private int userY;
 
     // private static final String DEFAULT_MODE = "circle";
     // private String mode;  ADD BACK IN IF ADD HUMAN SHAPED TARGET
@@ -96,12 +98,12 @@ public class AimTrainer {
         }
     }
 
-    public void runGameGUI(int x, int y) {
+    public void runGameGUI() {
         while (!stop) {
             boolean hit = false;
             while (!hit) {
-                hit = target.hitTarget(x, y);
-                currentSession.analyze(x, y, target.getCenterX(), target.getCenterY(), target.getRadius());
+                hit = target.hitTarget(userX, userY);
+                currentSession.analyze(userX, userY, target.getCenterX(), target.getCenterY(), target.getRadius());
                 if (hit) {
                     currentSession.hit();
                     generateTarget();
@@ -111,6 +113,11 @@ public class AimTrainer {
                 }
             }
         }
+    }
+
+    public void changeUserCoords(int x, int y) {
+        userX = x;
+        userY = y;
     }
 
     public void forceEnd() {
@@ -319,6 +326,7 @@ public class AimTrainer {
 
     public void changeDist(int dist) {
         currentSession.setDistance(dist);
+        target.changeDist(dist);
     }
 
     // EFFECTS: gets the x coordinate of the user shot from user

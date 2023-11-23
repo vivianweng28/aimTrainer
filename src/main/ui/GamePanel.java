@@ -41,7 +41,7 @@ public class GamePanel extends JPanel implements MouseListener {
         if (e.getX() > 50 && e.getX() < 550 && e.getY() > 100 && e.getY() < 600) { // mouse is in game panel
             currentX = e.getX();
             currentY = e.getY();
-            aimTrainer.runGameGUI(currentX, currentY);
+            aimTrainer.changeUserCoords(currentX, currentY);
         }
     }
 
@@ -75,7 +75,9 @@ public class GamePanel extends JPanel implements MouseListener {
     public void drawTarget(Graphics g) {
         Target t = aimTrainer.getTarget();
         Color savedCol = Color.red;
-        g.fillOval(t.getCenterX(), t.getCenterY(), t.getRadius(), t.getRadius());
+        int x = t.getCenterX() - (t.getRadius() / 2);
+        int y = t.getCenterY() - (t.getRadius() / 2);
+        g.fillOval(x, y, t.getRadius(), t.getRadius());
         g.setColor(savedCol);
     }
 
