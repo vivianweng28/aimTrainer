@@ -27,6 +27,7 @@ public class MainGUI extends JFrame implements ActionListener {
     private JFrame sessionsList;
     private JComboBox sessions;
     JLabel dist;
+    JLabel feedback;
 
     public MainGUI() {
         super("Aim Trainer");
@@ -46,6 +47,9 @@ public class MainGUI extends JFrame implements ActionListener {
         pack();
         menuBarSetUp();
         setUp();
+        feedback = new JLabel();
+        feedback.setBounds(200, 50, 200, 50);
+        menuPanel.add(feedback);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
     }
@@ -197,9 +201,8 @@ public class MainGUI extends JFrame implements ActionListener {
     }
 
     public void immediateFeedback(Session s) {
-        JLabel feedback = new JLabel();
-        feedback.setBounds(200, 50, 200, 50);
-        feedback.setText("Immediate Feedback: " + s.getLastSuggestion().giveSuggestion());
-        menuPanel.add(feedback);
+        if (feedback != null) {
+            feedback.setText("Immediate Feedback: " + s.getLastSuggestion().giveSuggestion());
+        }
     }
 }

@@ -13,7 +13,7 @@ public interface Session {
     // MODIFIES: this
     // EFFECTS: generates suggestion based off of a user's shot that did not hit the target and adds suggestion
     // to list of all suggestions generated in this session
-    void analyze(double x, double y, double centerX, double centerY, double radius);
+    void analyze(int x, int y, double centerX, double centerY, double radius);
 
     // MODIFIES: this
     // EFFECTS: adds in a pre-existing Suggestion to list of all suggestions

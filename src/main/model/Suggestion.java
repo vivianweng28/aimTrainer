@@ -51,7 +51,7 @@ public class Suggestion extends Shot implements Writable {
         if (getDirY().equals("up")) {
             suggestion += " Shoot more downwards!";
         } else if (getDirY().equals("down")) {
-            suggestion += " Shoot more upwards!";
+            suggestion += " Shoot more upwards!!";
         }
 
         if (getDirX().equals("perfect") && getDirY().equals("perfect")) {

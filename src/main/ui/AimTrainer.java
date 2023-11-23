@@ -29,8 +29,6 @@ public class AimTrainer {
     private boolean oldSession;
     private boolean over;
     private MainGUI mg;
-    private int userX;
-    private int userY;
 
     // private static final String DEFAULT_MODE = "circle";
     // private String mode;  ADD BACK IN IF ADD HUMAN SHAPED TARGET
@@ -78,7 +76,7 @@ public class AimTrainer {
             double x = getXFromUser();
             double y = getYFromUser();
             hit = target.hitTarget((int) x, (int) y);
-            currentSession.analyze(x, y, target.getCenterX(), target.getCenterY(), target.getRadius());
+            currentSession.analyze((int) x, (int) y, target.getCenterX(), target.getCenterY(), target.getRadius());
             if (hit) {
                 System.out.println("Target hit!");
                 currentSession.hit();
@@ -98,26 +96,15 @@ public class AimTrainer {
         }
     }
 
-    public void runGameGUI() {
-        while (!stop) {
-            boolean hit = false;
-            while (!hit) {
-                hit = target.hitTarget(userX, userY);
-                currentSession.analyze(userX, userY, target.getCenterX(), target.getCenterY(), target.getRadius());
-                if (hit) {
-                    currentSession.hit();
-                    generateTarget();
-                } else {
-                    mg.immediateFeedback(currentSession);
-//                System.out.println("Immediate Feedback: " + currentSession.getLastSuggestion().giveSuggestion());
-                }
-            }
+    public void update(int x, int y) {
+        boolean hit = target.hitTarget(x, y);
+        currentSession.analyze(x, y, target.getCenterX(), target.getCenterY(), target.getRadius());
+        if (hit) {
+            currentSession.hit();
+            generateTarget();
+        } else {
+            mg.immediateFeedback(currentSession);
         }
-    }
-
-    public void changeUserCoords(int x, int y) {
-        userX = x;
-        userY = y;
     }
 
     public void forceEnd() {

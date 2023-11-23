@@ -39,7 +39,7 @@ class JsonWriterTest extends JsonTest {
     void testWriterEmptySession() {
         try {
             Session s = new CircleSession(2);
-            s.setTarget(new CircleTarget(49,49));
+            s.setTarget(new Target(49,49));
             JsonReader reader = new JsonReader("./data/testWriterEmptySession.json");
             s.addOldSessionsToPastSessions(reader);
             JsonWriter writer = new JsonWriter("./data/testWriterEmptySession.json");
@@ -61,7 +61,7 @@ class JsonWriterTest extends JsonTest {
     void testWriterGeneralSessionsAddNewSession() {
         try {
             Session s = new CircleSession(2);
-            s.setTarget(new CircleTarget(8,8));
+            s.setTarget(new Target(8,8));
             Suggestion first = new Suggestion(10, 10, "right", "up", 2, 2);
             Suggestion second = new Suggestion(9, 9, "right", "up", 1, 1);
             s.addSuggestion(first);
@@ -135,7 +135,7 @@ class JsonWriterTest extends JsonTest {
             JsonReader reader = new JsonReader("./data/testWriterEmptyPastSessions.json");
             sessions = reader.read();
             Session s = new CircleSession(1);
-            s.setTarget(new CircleTarget(8, 8));
+            s.setTarget(new Target(8, 8));
 
             s.addOldSessionsToPastSessions(reader);
             Suggestion first = new Suggestion(10, 10, "right", "up", 2, 2);

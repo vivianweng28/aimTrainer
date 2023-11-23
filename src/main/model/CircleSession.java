@@ -2,7 +2,6 @@ package model;
 
 import org.json.*;
 import persistence.JsonReader;
-import persistence.JsonWriter;
 import persistence.Writable;
 
 import java.io.IOException;
@@ -58,12 +57,20 @@ public class CircleSession implements Session, Writable {
     // MODIFIES: this
     // EFFECTS: compares shot taken by player to the closest shot on the target and generates
     // suggestion, adds that suggestion to list of all suggestions
-    public void analyze(double x, double y, double centerX, double centerY, double radius) {
+    public void analyze(int x, int y, double centerX, double centerY, double radius) {
+        Suggestion suggest;
+        if (currentTarget.hitTarget(x, y)) {
+            suggest = new Suggestion(x, y, "perfect", "perfect", 0, 0);
+        } else {
+            suggest = notPerfect(x, y, centerX, centerY, radius);
+        }
+        allSuggestions.add(suggest);
+    }
+
+    public Suggestion notPerfect(int x, int y, double centerX, double centerY, double radius){
         shots++;
-        Vector vec = new Vector(x - centerX, y - centerY);
 
-        Shot closestShot = getClosestShot(vec, radius, centerX, centerY);
-
+        Shot closestShot = getClosestShot(new Vector(x - centerX, y - centerY), radius, centerX, centerY);
         double adjustX = x - closestShot.getCompX();
         double adjustY = y - closestShot.getCompY();
 
@@ -71,23 +78,26 @@ public class CircleSession implements Session, Writable {
         String dirY = "perfect";
 
         if (adjustX > 0) {
-            dirX = "right";
+            dirX = "right"; // right of the closest shot
         } else if (adjustX < 0) {
             dirX = "left";
         }
 
         if (adjustY > 0) {
-            dirY = "up";
-        } else if (adjustY < 0) {
             dirY = "down";
+        } else if (adjustY < 0) {
+            dirY = "up";
         }
 
-        adjustX = Math.abs(adjustX);
-        adjustY = Math.abs(adjustY);
+        if (x >= centerX - radius && x <= centerX + radius) {
+            dirX = "perfect";
+        }
 
-        Suggestion suggest = new Suggestion(x, y, dirX, dirY, adjustX, adjustY);
+        if (y >= centerY - radius && y <= centerY + radius) {
+            dirY = "perfect";
+        }
 
-        allSuggestions.add(suggest);
+        return new Suggestion(x, y, dirX, dirY, Math.abs(adjustX), Math.abs(adjustY));
     }
 
     // REQUIRES: radius, centerX and centerY > 0

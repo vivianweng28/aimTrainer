@@ -38,10 +38,11 @@ public class GamePanel extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getX() > 50 && e.getX() < 550 && e.getY() > 100 && e.getY() < 600) { // mouse is in game panel
+        if (e.getX() > 0 && e.getX() < 800 && e.getY() > 0 && e.getY() < 800) { // mouse is in game panel
             currentX = e.getX();
             currentY = e.getY();
-            aimTrainer.changeUserCoords(currentX, currentY);
+            aimTrainer.update(currentX, currentY);
+            repaint();
         }
     }
 
