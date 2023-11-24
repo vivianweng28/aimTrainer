@@ -68,7 +68,7 @@ public class AimTrainer {
 
     // MODIFIES: this
     // EFFECTS: gets shot input from user, records suggestion if did not hit target, asks if the user wants to
-    // continue the session after every shot. If the user ends the session, session feedback is given.
+    // continue the session after every shot. If the user ends the session, session feedback is given. For CONSOLE
     public void runGame() {
         boolean hit = false;
         while (!hit) {
@@ -95,14 +95,19 @@ public class AimTrainer {
         }
     }
 
+    // EFFECTS: returns a list of all the saved sessions
     public List<Session> getAllSessions() {
         return sessions;
     }
 
+    // EFFECTS: sets target to a new randomly generated target
     public void setTarget() {
         target = generateTarget();
     }
 
+    // MODIFIES: this
+    // EFFECTS: for GUI based program. Receives an input of a user's shot, records whether the shot hit the target, and
+    // create feedback based on the shots. If the target was hit, a new target is randomly generated.
     public void update(int x, int y) {
         boolean hit = target.hitTarget(x, y);
         currentSession.analyze(x, y, target.getCenterX(), target.getCenterY(), target.getRadius());
@@ -111,10 +116,6 @@ public class AimTrainer {
             generateTarget();
         }
         mg.immediateFeedback(currentSession);
-    }
-
-    public void forceEnd() {
-        System. exit(0);
     }
 
     // MODIFIES: this
@@ -129,14 +130,12 @@ public class AimTrainer {
         over = true;
     }
 
-    public boolean isOver() {
-        return over;
-    }
-
+    // EFFECTS: returns the DIM_X of the game.
     public int getDimX() {
         return DIM_X;
     }
 
+    // EFFECTS: returns the DIM_Y of the game.
     public int getDimY() {
         return DIM_Y;
     }
@@ -160,6 +159,7 @@ public class AimTrainer {
         }
     }
 
+    // EFFECTS: returns session at the specified index
     public Session getSession(int i) {
         return sessions.get(i);
     }
@@ -214,12 +214,9 @@ public class AimTrainer {
         }
     }
 
+    // EFFECTS: returns the target of the game.
     public Target getTarget() {
         return target;
-    }
-
-    public boolean getOldSession() {
-        return oldSession;
     }
 
     public void setToOldSession(int i) {
@@ -256,6 +253,8 @@ public class AimTrainer {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a new session for the gui
     public void newSession() {
         currentSession = new Session(sessions.size() + 1);
         try {
@@ -266,10 +265,13 @@ public class AimTrainer {
         generateTarget();
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets current session to a specified saved session
     public void setCurrentSession(int i) {
         currentSession = sessions.get(i);
     }
 
+    // EFFECTS: returns the number of saved sessions
     public int getNumSessions() {
         return sessions.size();
     }
@@ -317,6 +319,8 @@ public class AimTrainer {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: changes the distance of the session and the target
     public void changeDist(int dist) {
         currentSession.setDistance(dist);
         target.changeDist(dist);
@@ -387,6 +391,7 @@ public class AimTrainer {
         }
     }
 
+    // EFFECTS: returns the current session
     public Session getCurrentSession() {
         return currentSession;
     }

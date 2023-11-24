@@ -4,24 +4,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import model.Target;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-/*
- * The panel in which the game is rendered.
- */
-
+// represents a menu that allows user to either start a new session or load a saved session
 public class Menu extends JFrame implements ActionListener {
 
     private AimTrainer game;
     private JComboBox sessions;
     private boolean over;
 
-    // Constructs a game panel
-    // effects:  sets size and background colour of panel,
-    //           updates this with the game to be displayed
+    // EFFECTS: Constructs a menu frame and sets size and background colour of the frame
     public Menu(AimTrainer a) {
         super("Menu");
         this.game = a;
@@ -60,7 +53,8 @@ public class Menu extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    //This is the method that is called when the JButton btn is clicked
+    // MODFIES: this
+    // EFFECTS:
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("oldSession")) {
             oldSession();

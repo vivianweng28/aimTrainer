@@ -49,7 +49,8 @@ public class MainGUI extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: creates the menu panel that will appear at the top of the main window
     public void menuPanelSetUp() {
         menuPanel = new JPanel();
         menuPanel.setBounds(300, 50, 500, 100);
@@ -66,7 +67,8 @@ public class MainGUI extends JFrame implements ActionListener {
     }
 
 
-
+    // MODIFIES: this
+    // EFFECTS: creates the menu bar of the main window
     public void menuBarSetUp() {
         JMenuBar menuBar = new JMenuBar();
 
@@ -85,6 +87,8 @@ public class MainGUI extends JFrame implements ActionListener {
         this.setJMenuBar(menuBar);
     }
 
+    // MODIFIES:this
+    // EFFECTS: adds options under the view option on the menu bar
     public void viewAddMenuItems(JMenu view) {
         JMenuItem savedSession = new JMenuItem("View saved sessions");
         savedSession.addActionListener(this);
@@ -107,6 +111,8 @@ public class MainGUI extends JFrame implements ActionListener {
         view.add(filteredShots);
     }
 
+    // MODIFIES:this
+    // EFFECTS: adds options under the file option on the menu bar
     public void fileAddMenuItems(JMenu file) {
         JMenuItem save = new JMenuItem("Save");
         save.addActionListener(this);
@@ -114,6 +120,8 @@ public class MainGUI extends JFrame implements ActionListener {
         file.add(save);
     }
 
+    // MODIFIES:this
+    // EFFECTS: sets up the main aim trainer window after the menu window has closed
     public void setUp() {
         while (! menu.getOver()) {
             gp.waitFor(100);
@@ -125,12 +133,17 @@ public class MainGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES:this
+    // EFFECTS: sets up the window that will display all the saved sessions and their statistics
     public void showAllStats() {
         viewSavedSessions = new JFrame();
         viewSessionSetUp(viewSavedSessions, "confirmView");
     }
 
 
+    // MODIFIES:this
+    // EFFECTS: creates the basic framework for having a scroll wheel to select a
+    // saved session number and confirm button
     public void viewSessionSetUp(JFrame frame, String confirmActionCommand) {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(new FlowLayout());
@@ -154,6 +167,8 @@ public class MainGUI extends JFrame implements ActionListener {
         frame.setVisible(true);
     }
 
+    // MODIFIES:this
+    // EFFECTS: creates a scroll wheel with all the saved sessions as the options
     public String[] createSessionOptions() {
         String[] options = new String[aimTrainer.getNumSessions()];
         for (int i = 0; i < options.length; i++) {
@@ -162,12 +177,16 @@ public class MainGUI extends JFrame implements ActionListener {
         return options;
     }
 
+    // MODIFIES:this
+    // EFFECTS: sets up confirm button to make it clickable and viewable
     public void confirmSetUp(JButton confirm, String confirmActionCommand) {
         confirm.addActionListener(this);
         confirm.setActionCommand(confirmActionCommand);
         confirm.setBounds(300, 650, 200, 50);
     }
 
+    // MODIFIES:this
+    // EFFECTS: creates a panel with the current the option to change distance to the menu panel and returns said panel
     public JPanel addDistance() {
         JPanel distance = new JPanel();
         distance.setLayout(new BoxLayout(distance, BoxLayout.X_AXIS));
@@ -192,6 +211,8 @@ public class MainGUI extends JFrame implements ActionListener {
         return distance;
     }
 
+    // MODIFIES:this
+    // EFFECTS: creates and returns a label with the current session number
     public JLabel addSessionNum() {
         JLabel sessionNum = new JLabel();
         sessionNum.setText("Session " + aimTrainer.getCurrentSession().getSessionNum() + ": ");
@@ -199,6 +220,8 @@ public class MainGUI extends JFrame implements ActionListener {
         return sessionNum;
     }
 
+    // MODIFIES: this
+    // EFFECTS: directs different actions to their consequences in the program
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("changeDistance")) {
             aimTrainer.changeDist(distOptions.getSelectedIndex() + 1);
@@ -223,10 +246,9 @@ public class MainGUI extends JFrame implements ActionListener {
         }
     }
 
-    public void filteredShots() {
-        displaySelectedSessionStat(aimTrainer.getCurrentSession(), true);
-    }
-
+    // MODIFIES: this
+    // EFFECTS: creates a display of the statistics and all the shots for the whole current session if filtered is
+    // false. otherwise, displays the statistics and shots for only perfect shots
     public void currentSession(boolean filtered) {
         if (everything != null && text != null) {
             everything.remove(text);
@@ -241,6 +263,8 @@ public class MainGUI extends JFrame implements ActionListener {
         displaySelectedSessionStat(aimTrainer.getCurrentSession(), filtered);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a display for the filtered sessions that is above the user inputted accuracy
     public void filterSessions() {
         if (filteredLabels != null) {
             filtered.remove(filteredLabels);
@@ -261,6 +285,9 @@ public class MainGUI extends JFrame implements ActionListener {
         filtered.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a display to let the user input an accuracy threshold to view all the sessions with an accuracy
+    // above the inputted threshold.
     public void filter() {
         filtered = new JFrame();
         filtered.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -287,27 +314,22 @@ public class MainGUI extends JFrame implements ActionListener {
         filtered.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up display for all the statistics of a selected session if filtered is true. Otherwise,
+    // only displays statistics for perfect shots.
     public void displaySelectedSessionStat(Session selected, boolean filtered) {
         if (sessionStats != null) {
             everything.remove(sessionStats);
         }
         viewSavedSessions.repaint();
         sessionStatsSetUp();
-        Suggestion summary = selected.updateSummarySuggestion();
-        JLabel summaryFeedback = new JLabel();
-        summaryFeedback.setText("Session " + selected.getSessionNum() + " feedback: "
-                + summary.giveSuggestion());
-        summaryFeedback.setBounds(300, 300, 300, 50);
-        sessionStats.add(summaryFeedback);
+        summaryFeedback(selected);
         JLabel totalAccuracy = new JLabel();
         totalAccuracy.setText("Total accuracy: " + selected.getAccuracy() + "%");
         totalAccuracy.setBounds(300, 400, 300, 50);
         sessionStats.add(totalAccuracy);
         if (filtered) {
-            JLabel perfectShots = new JLabel();
-            perfectShots.setText("These are the perfect shots: ");
-            perfectShots.setBounds(300, 400, 300, 50);
-            sessionStats.add(perfectShots);
+            filteredAction();
         }
         JComboBox shotsAndSuggestion = new JComboBox(generateShotAndSuggestions(selected, filtered));
         shotsAndSuggestion.setBounds(350, 300, 300, 50);
@@ -318,6 +340,30 @@ public class MainGUI extends JFrame implements ActionListener {
         viewSavedSessions.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: generates and adds a label for the summary feedback and adds it to the panel that contains all the
+    // sessions stats.
+    public void summaryFeedback(Session selected) {
+        Suggestion summary = selected.updateSummarySuggestion();
+        JLabel summaryFeedback = new JLabel();
+        summaryFeedback.setText("Session " + selected.getSessionNum() + " feedback: "
+                + summary.giveSuggestion());
+        summaryFeedback.setBounds(300, 300, 300, 50);
+        sessionStats.add(summaryFeedback);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets up additional display to differentiate the gui for a filtered perfect shot list and normal list.
+    public void filteredAction() {
+        JLabel perfectShots = new JLabel();
+        perfectShots.setText("These are the perfect shots: ");
+        perfectShots.setBounds(300, 400, 300, 50);
+        sessionStats.add(perfectShots);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: generates and returns an array of all shots and suggestions if filtered is true. Otherwise, the array
+    // only contains the statistics of a perfect shot.
     public String[] generateShotAndSuggestions(Session selected, boolean filtered) {
         String[] options;
         if (filtered) {
@@ -344,12 +390,16 @@ public class MainGUI extends JFrame implements ActionListener {
         return options;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up basic display features for the panel that contains all the statistics
     public void sessionStatsSetUp() {
         sessionStats = new JPanel();
         sessionStats.setBounds(100, 300, 400, 400);
         sessionStats.setLayout(new BoxLayout(sessionStats, BoxLayout.Y_AXIS));
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays the feedback for the last shot taken.
     public void immediateFeedback(Session s) {
         feedback.setText("Immediate Feedback: " + s.getLastSuggestion().giveSuggestion());
     }

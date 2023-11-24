@@ -44,14 +44,14 @@ system" by filtering out sessions where your accuracy is lower than a certain in
 feature by navigating to the menu bar on the AimTrainer window, clicking "View", and then "View filtered sessions". From 
 there, you can use the scroll wheel to choose the accuracy threshold. Another action related to the user story "adding 
 multiple shots to a session" is that you can view a filtered list of your perfect shots of the current session by 
-navigating to the menu bar of the aimtrainer window, clicking on "View", then "View perfect shots for this session".
+navigating to the menu bar of the aim trainer window, clicking on "View", then "View perfect shots for this session".
 - You can locate my visual component by looking at the gray game panel. There should be a target that you 
 should aim at. This target will move once you hit it.
 - You can save the state of my application by going to the menu bar and clicking File, then clicking Save in the drop
 down menu.
 - You can reload the state of my application by selecting "Old Session" and then selecting the desired session number 
 after using the scroll box. 
-- Please also keep in mind when clicking on the aimtrainer that the program some times will not register the user's 
+- Please also keep in mind when clicking on the aim trainer that the program some times will not register the user's 
 clicks: this is not because of a coding error, but because of java swing's mouse listener limitations. You can test this
 claim by clicking on the exact same place if it did not register the first time (after thorough testing, I have found 
 that if you are interval between two clicks is too short or if the click duration was too short, the program might not 
