@@ -32,7 +32,8 @@ public class GamePanel extends JPanel implements MouseListener {
     }
 
     public void updateGame(MouseEvent e) {
-        if (e.getX() > 0 && e.getX() < aimTrainer.getDimX() && e.getY() > 0 && e.getY() < aimTrainer.getDimY()) { // mouse is in game panel
+        if (e.getX() > 0 && e.getX() < aimTrainer.getDimX()
+                && e.getY() > 0 && e.getY() < aimTrainer.getDimY()) { // mouse is in game panel
             currentX = e.getX();
             currentY = e.getY();
             aimTrainer.update(currentX, currentY);
