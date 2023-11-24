@@ -125,7 +125,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
     public void viewSessionSetUp(JFrame frame, String confirmActionCommand) {
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(new FlowLayout());
         frame.setPreferredSize(new Dimension(700, 700));
         everything = new JPanel();
@@ -134,23 +134,31 @@ public class MainGUI extends JFrame implements ActionListener {
         text = new JPanel();
         text.setLayout(new BoxLayout(text, BoxLayout.X_AXIS));
         text.setBounds(100, 500, 400, 100);
-        String[] options = new String[aimTrainer.getNumSessions()];
-        for (int i = 0; i < options.length; i++) {
-            options[i] = "Session " + (i + 1);
-        }
-        sessions = new JComboBox(options);
+        sessions = new JComboBox(createSessionOptions());
         sessions.setBounds(300, 300, 100, 50);
         text.add(sessions);
         text.add(sessionNum);
         JButton confirm = new JButton("Confirm");
         text.add(confirm);
         everything.add(text);
-        confirm.addActionListener(this);
-        confirm.setActionCommand(confirmActionCommand);
-        confirm.setBounds(300, 650, 200, 50);
+        confirmSetUp(confirm, confirmActionCommand);
         frame.add(everything);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    public String[] createSessionOptions() {
+        String[] options = new String[aimTrainer.getNumSessions()];
+        for (int i = 0; i < options.length; i++) {
+            options[i] = "Session " + (i + 1);
+        }
+        return options;
+    }
+
+    public void confirmSetUp(JButton confirm, String confirmActionCommand) {
+        confirm.addActionListener(this);
+        confirm.setActionCommand(confirmActionCommand);
+        confirm.setBounds(300, 650, 200, 50);
     }
 
     public JPanel addDistance() {
@@ -165,7 +173,7 @@ public class MainGUI extends JFrame implements ActionListener {
             options[i] = (i + 1) + "m";
         }
         distOptions = new JComboBox(options);
-        distOptions.setBounds(200, 50, 100, 50); // TODO: CHANGE
+        distOptions.setBounds(200, 50, 100, 50);
         distance.add(distOptions);
 
         JButton changeDist = new JButton("Change distance");
@@ -228,7 +236,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
     public void filter() {
         filtered = new JFrame();
-        filtered.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
+        filtered.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         filtered.setLayout(new FlowLayout());
         filtered.setPreferredSize(new Dimension(500, 500));
         JLabel sessionNum = new JLabel("View all sessions above this accuracy: ");
@@ -257,10 +265,7 @@ public class MainGUI extends JFrame implements ActionListener {
             everything.remove(sessionStats);
         }
         viewSavedSessions.repaint();
-        sessionStats = new JPanel();
-        sessionStats.setBounds(100, 300, 400, 400);
-        sessionStats.setLayout(new BoxLayout(sessionStats, BoxLayout.Y_AXIS));
-
+        sessionStatsSetUp();
         Suggestion summary = selected.updateSummarySuggestion();
         JLabel summaryFeedback = new JLabel();
         summaryFeedback.setText("Session " + selected.getSessionNum() + " feedback: "
@@ -271,19 +276,27 @@ public class MainGUI extends JFrame implements ActionListener {
         totalAccuracy.setText("Total accuracy: " + selected.getAccuracy() + "%");
         summaryFeedback.setBounds(300, 400, 300, 50);
         sessionStats.add(totalAccuracy);
+        JComboBox shotsAndSuggestion = new JComboBox(generateShotAndSuggestions(selected));
+        shotsAndSuggestion.setBounds(350, 300, 300, 50);
+        sessionStats.add(shotsAndSuggestion);
+        everything.add(sessionStats);
+        viewSavedSessions.setVisible(true);
+    }
 
+    public String[] generateShotAndSuggestions(Session selected) {
         String[] options = new String[selected.getAllSuggestions().size()];
         for (int i = 0; i < options.length; i++) {
             options[i] = "Shot " + (i + 1) + ": X= " + selected.getAllSuggestions().get(i).getCompX() + ", Y= "
                     + selected.getAllSuggestions().get(i).getCompY() + ", Suggestion: "
                     + selected.getAllSuggestions().get(i).giveSuggestion();
         }
+        return options;
+    }
 
-        JComboBox shotsAndSuggestion = new JComboBox(options);
-        shotsAndSuggestion.setBounds(350, 300, 300, 50);
-        sessionStats.add(shotsAndSuggestion);
-        everything.add(sessionStats);
-        viewSavedSessions.setVisible(true);
+    public void sessionStatsSetUp() {
+        sessionStats = new JPanel();
+        sessionStats.setBounds(100, 300, 400, 400);
+        sessionStats.setLayout(new BoxLayout(sessionStats, BoxLayout.Y_AXIS));
     }
 
     public void immediateFeedback(Session s) {
