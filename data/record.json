@@ -157,6 +157,48 @@
         "Target X": 339,
         "Shots": 2
     },
+    "Session 5": {
+        "Suggestions": [
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 343,
+                "Shot X": 208,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 149,
+                "Shot X": 103,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 274,
+                "Direction X": "left",
+                "Shot Y": 149,
+                "Shot X": 234,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 152,
+                "Shot X": 534,
+                "Direction Y": "perfect"
+            }
+        ],
+        "Target Distance": 100,
+        "Hits": 3,
+        "Target Y": 69,
+        "Target Type": "circle",
+        "Target X": 566,
+        "Shots": 4
+    },
     "Session 1": {
         "Suggestions": [
             {

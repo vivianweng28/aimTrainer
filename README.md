@@ -40,7 +40,11 @@ suggestion given
 - You can generate the first required action related to the user story "adding multiple shots to a session" by clicking
 your mouse on the grey game panel to shoot shots. It will be automatically recorded.
 - You can generate the second required action related to the user story "adding multiple sessions to an aim training 
-system" by filtering out sessions where your accuracy is lower than a certain inputted threshold
+system" by filtering out sessions where your accuracy is lower than a certain inputted threshold. You can access this 
+feature by navigating to the menu bar on the AimTrainer window, clicking "View", and then "View filtered sessions". From 
+there, you can use the scroll wheel to choose the accuracy threshold. Another action related to the user story "adding 
+multiple shots to a session" is that you can view a filtered list of your perfect shots of the current session by 
+navigating to the menu bar of the aimtrainer window, clicking on "View", then "View perfect shots for this session".
 - You can locate my visual component by looking at the gray game panel. There should be a target that you 
 should aim at. This target will move once you hit it.
 - You can save the state of my application by going to the menu bar and clicking File, then clicking Save in the drop

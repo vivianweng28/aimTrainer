@@ -4,6 +4,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Session;
 import model.Suggestion;
@@ -97,6 +100,11 @@ public class MainGUI extends JFrame implements ActionListener {
         filter.addActionListener(this);
         filter.setActionCommand("viewFilteredSession");
         view.add(filter);
+
+        JMenuItem filteredShots = new JMenuItem("View perfect shots for this session");
+        filteredShots.addActionListener(this);
+        filteredShots.setActionCommand("viewFilteredShots");
+        view.add(filteredShots);
     }
 
     public void fileAddMenuItems(JMenu file) {
@@ -198,22 +206,28 @@ public class MainGUI extends JFrame implements ActionListener {
             repaint();
         } else if (e.getActionCommand().equals("confirmView")) {
             Session selected = aimTrainer.getSession(sessions.getSelectedIndex());
-            displaySelectedSessionStat(selected);
+            displaySelectedSessionStat(selected, false);
         } else if (e.getActionCommand().equals("viewSavedSession")) {
             showAllStats();
         } else if (e.getActionCommand().equals("save")) {
             aimTrainer.saveSessions();
         } else if (e.getActionCommand().equals("viewCurrentSession")) {
-            currentSession();
-            displaySelectedSessionStat(aimTrainer.getCurrentSession());
+            currentSession(false);
+            displaySelectedSessionStat(aimTrainer.getCurrentSession(), false);
         } else if (e.getActionCommand().equals("viewFilteredSession")) {
             filter();
         } else if (e.getActionCommand().equals("confirmFiltered")) {
             filterSessions();
+        } else if (e.getActionCommand().equals("viewFilteredShots")) {
+            currentSession(true);
         }
     }
 
-    public void currentSession() {
+    public void filteredShots() {
+        displaySelectedSessionStat(aimTrainer.getCurrentSession(), true);
+    }
+
+    public void currentSession(boolean filtered) {
         if (everything != null && text != null) {
             everything.remove(text);
         } else {
@@ -224,7 +238,7 @@ public class MainGUI extends JFrame implements ActionListener {
             everything = new JPanel();
             everything.setLayout(new BoxLayout(everything, BoxLayout.Y_AXIS));
         }
-        displaySelectedSessionStat(aimTrainer.getCurrentSession());
+        displaySelectedSessionStat(aimTrainer.getCurrentSession(), filtered);
     }
 
     public void filterSessions() {
@@ -273,7 +287,7 @@ public class MainGUI extends JFrame implements ActionListener {
         filtered.setVisible(true);
     }
 
-    public void displaySelectedSessionStat(Session selected) {
+    public void displaySelectedSessionStat(Session selected, boolean filtered) {
         if (sessionStats != null) {
             everything.remove(sessionStats);
         }
@@ -287,9 +301,15 @@ public class MainGUI extends JFrame implements ActionListener {
         sessionStats.add(summaryFeedback);
         JLabel totalAccuracy = new JLabel();
         totalAccuracy.setText("Total accuracy: " + selected.getAccuracy() + "%");
-        summaryFeedback.setBounds(300, 400, 300, 50);
+        totalAccuracy.setBounds(300, 400, 300, 50);
         sessionStats.add(totalAccuracy);
-        JComboBox shotsAndSuggestion = new JComboBox(generateShotAndSuggestions(selected));
+        if (filtered) {
+            JLabel perfectShots = new JLabel();
+            perfectShots.setText("These are the perfect shots: ");
+            perfectShots.setBounds(300, 400, 300, 50);
+            sessionStats.add(perfectShots);
+        }
+        JComboBox shotsAndSuggestion = new JComboBox(generateShotAndSuggestions(selected, filtered));
         shotsAndSuggestion.setBounds(350, 300, 300, 50);
         sessionStats.add(shotsAndSuggestion);
         everything.add(sessionStats);
@@ -298,12 +318,28 @@ public class MainGUI extends JFrame implements ActionListener {
         viewSavedSessions.setVisible(true);
     }
 
-    public String[] generateShotAndSuggestions(Session selected) {
-        String[] options = new String[selected.getAllSuggestions().size()];
-        for (int i = 0; i < options.length; i++) {
-            options[i] = "Shot " + (i + 1) + ": X= " + selected.getAllSuggestions().get(i).getCompX() + ", Y= "
+    public String[] generateShotAndSuggestions(Session selected, boolean filtered) {
+        String[] options;
+        if (filtered) {
+            List<String> filteredShots = new ArrayList<String>();
+            for (int i = 0; i < selected.getAllSuggestions().size(); i++) {
+                if (selected.getAllSuggestions().get(i).giveSuggestion().equals("Perfect!")) {
+                    filteredShots.add("Shot " + (i + 1) + ": X= " + selected.getAllSuggestions().get(i).getCompX() + ", Y= "
+                            + selected.getAllSuggestions().get(i).getCompY() + ", Suggestion: "
+                            + selected.getAllSuggestions().get(i).giveSuggestion());
+                }
+            }
+            options = new String[filteredShots.size()];
+            for (int i = 0; i < options.length; i++) {
+                options[i] = filteredShots.get(i);
+            }
+        } else {
+            options = new String[selected.getAllSuggestions().size()];
+            for (int i = 0; i < options.length; i++) {
+                options[i] = "Shot " + (i + 1) + ": X= " + selected.getAllSuggestions().get(i).getCompX() + ", Y= "
                     + selected.getAllSuggestions().get(i).getCompY() + ", Suggestion: "
                     + selected.getAllSuggestions().get(i).giveSuggestion();
+            }
         }
         return options;
     }
