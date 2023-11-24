@@ -47,12 +47,12 @@ multiple shots to a session" is that you can view a filtered list of your perfec
 navigating to the menu bar of the aim trainer window, clicking on "View", then "View perfect shots for this session".
 - You can locate my visual component by looking at the gray game panel. There should be a target that you 
 should aim at. This target will move once you hit it.
-- You can save the state of my application by going to the menu bar and clicking File, then clicking Save in the drop
-down menu.
-- You can reload the state of my application by selecting "Old Session" and then selecting the desired session number 
-after using the scroll box. 
+- You can save the state of my application by going to the menu bar on the aim trainer frame and clicking File, then 
+clicking Save in the dropdown menu.
+- You can reload the state of my application by selecting "Old Session" on the menu frame and then selecting the desired
+session number after using the scroll box. 
 - Please also keep in mind when clicking on the aim trainer that the program some times will not register the user's 
 clicks: this is not because of a coding error, but because of java swing's mouse listener limitations. You can test this
 claim by clicking on the exact same place if it did not register the first time (after thorough testing, I have found 
-that if you are interval between two clicks is too short or if the click duration was too short, the program might not 
+that if your interval between two clicks is too short or if the click duration was too short, the program might not 
 register it as a click)
