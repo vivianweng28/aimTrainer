@@ -370,8 +370,8 @@ public class MainGUI extends JFrame implements ActionListener {
             List<String> filteredShots = new ArrayList<String>();
             for (int i = 0; i < selected.getAllSuggestions().size(); i++) {
                 if (selected.getAllSuggestions().get(i).giveSuggestion().equals("Perfect!")) {
-                    filteredShots.add("Shot " + (i + 1) + ": X= " + selected.getAllSuggestions().get(i).getCompX() + ", Y= "
-                            + selected.getAllSuggestions().get(i).getCompY() + ", Suggestion: "
+                    filteredShots.add("Shot " + (i + 1) + ": X= " + selected.getAllSuggestions().get(i).getCompX()
+                            + ", Y= " + selected.getAllSuggestions().get(i).getCompY() + ", Suggestion: "
                             + selected.getAllSuggestions().get(i).giveSuggestion());
                 }
             }
