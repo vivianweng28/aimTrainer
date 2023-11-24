@@ -40,7 +40,7 @@ public class Menu extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         over = false;
         setLayout(null);
-        setSize(game.getDimX(),game.getDimY());
+        setSize(game.getDimX() + 200,game.getDimY() + 200);
         JLabel l1 = new JLabel();
         l1.setText("Would you like to load an old session or start a new session?");
         JPanel text = new JPanel();

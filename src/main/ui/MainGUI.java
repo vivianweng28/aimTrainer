@@ -5,14 +5,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 
-import model.CircleSession;
 import model.Session;
 import model.Suggestion;
-import model.Target;
-import persistence.JsonReader;
-import persistence.JsonWriter;
-
-import java.io.IOException;
 
 
 public class MainGUI extends JFrame implements ActionListener {
@@ -24,10 +18,16 @@ public class MainGUI extends JFrame implements ActionListener {
     private JComboBox distOptions;
     private Menu menu;
     private JPanel menuPanel;
-    private JFrame sessionsList;
+    private JFrame viewSavedSessions;
     private JComboBox sessions;
-    JLabel dist;
-    JLabel feedback;
+    private JFrame filtered;
+    private JLabel dist;
+    private JLabel feedback;
+    private JComboBox accuracyOptions;
+    private JPanel filteredLabels;
+    private JPanel sessionStats;
+    private JPanel everything;
+    private JPanel text;
 
     public MainGUI() {
         super("Aim Trainer");
@@ -37,22 +37,33 @@ public class MainGUI extends JFrame implements ActionListener {
         setLayout(new FlowLayout());
         aimTrainer = new AimTrainer();
         aimTrainer.addGUI(this);
-        setPreferredSize(new Dimension(aimTrainer.getDimX() + 100, aimTrainer.getDimY() + 100));
+        setPreferredSize(new Dimension(aimTrainer.getDimX() + 100, aimTrainer.getDimY() + 200));
         menu = new Menu(aimTrainer);
         gp = new GamePanel(aimTrainer);
-        menuPanel = new JPanel();
-        menuPanel.setBounds(300, 50, 500, 100);
-        add(menuPanel); // TODO: add a this is session x to menu panel
-        add(gp);
-        pack();
         menuBarSetUp();
+        pack();
         setUp();
-        feedback = new JLabel();
-        feedback.setBounds(200, 50, 200, 50);
-        menuPanel.add(feedback);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
     }
+
+
+    public void menuPanelSetUp() {
+        menuPanel = new JPanel();
+        menuPanel.setBounds(300, 50, 500, 100);
+        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
+
+        menuPanel.add(addSessionNum());
+        menuPanel.add(addDistance());
+        feedback = new JLabel();
+        feedback.setBounds(200, 50, 200, 50);
+        feedback.setText("Immediate Feedback: Nothing yet");
+        menuPanel.add(feedback);
+
+        add(menuPanel);
+    }
+
+
 
     public void menuBarSetUp() {
         JMenuBar menuBar = new JMenuBar();
@@ -60,14 +71,10 @@ public class MainGUI extends JFrame implements ActionListener {
         JMenu file = new JMenu("File"); // save
         fileAddMenuItems(file);
 
-//        JMenu edit = new JMenu("Edit"); // change distance
-//        editAddMenuItems(edit);
-
-        JMenu view = new JMenu("View"); // view old sessions
+        JMenu view = new JMenu("View"); // view saved sessions
         viewAddMenuItems(view);
 
         menuBar.add(file);
-//        menuBar.add(edit);
         menuBar.add(view);
 
         menuBar.setPreferredSize(new Dimension(300,30));
@@ -76,23 +83,21 @@ public class MainGUI extends JFrame implements ActionListener {
         this.setJMenuBar(menuBar);
     }
 
-//    public void editAddMenuItems(JMenu edit) {
-//        JMenuItem changeDistance = new JMenuItem("Change Distance");
-//        changeDistance.addActionListener(this);
-//        changeDistance.setActionCommand("changeDist");
-//        edit.add(changeDistance);
-//    }
-
     public void viewAddMenuItems(JMenu view) {
-        JMenuItem oldSession = new JMenuItem("View old sessions");
-        oldSession.addActionListener(this);
-        oldSession.setActionCommand("viewOldSession");
-        view.add(oldSession);
+        JMenuItem savedSession = new JMenuItem("View saved sessions");
+        savedSession.addActionListener(this);
+        savedSession.setActionCommand("viewSavedSession");
+        view.add(savedSession);
 
         JMenuItem currentSession = new JMenuItem("View current session");
         currentSession.addActionListener(this);
         currentSession.setActionCommand("viewCurrentSession");
         view.add(currentSession);
+
+        JMenuItem filter = new JMenuItem("View filtered sessions");
+        filter.addActionListener(this);
+        filter.setActionCommand("viewFilteredSession");
+        view.add(filter);
     }
 
     public void fileAddMenuItems(JMenu file) {
@@ -104,46 +109,56 @@ public class MainGUI extends JFrame implements ActionListener {
 
     public void setUp() {
         while (! menu.getOver()) {
-            gp.waitFor(1000);
+            gp.waitFor(100);
         }
         if (menu.getOver()) {
-            addDistance();
-            showAllStats();
+            menuPanelSetUp();
+            add(gp);
+            aimTrainer.setTarget();
         }
     }
 
     public void showAllStats() {
-        // TODO: see design drawing on ipad
-        sessionsList = new JFrame();
-        sessionsList.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        sessionsList.setLayout(new FlowLayout());
-        sessionsList.setPreferredSize(new Dimension(500, 500));
+        viewSavedSessions = new JFrame();
+        viewSessionSetUp(viewSavedSessions, "confirmView");
+    }
+
+
+    public void viewSessionSetUp(JFrame frame, String confirmActionCommand) {
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
+        frame.setLayout(new FlowLayout());
+        frame.setPreferredSize(new Dimension(700, 700));
+        everything = new JPanel();
+        everything.setLayout(new BoxLayout(everything, BoxLayout.Y_AXIS));
         JLabel sessionNum = new JLabel("Please select a session number");
+        text = new JPanel();
+        text.setLayout(new BoxLayout(text, BoxLayout.X_AXIS));
+        text.setBounds(100, 500, 400, 100);
         String[] options = new String[aimTrainer.getNumSessions()];
         for (int i = 0; i < options.length; i++) {
             options[i] = "Session " + (i + 1);
         }
         sessions = new JComboBox(options);
         sessions.setBounds(300, 300, 100, 50);
-        sessionsList.add(sessions);
-        JPanel text = new JPanel();
-        text.setBounds(100, 500, 400, 100);
+        text.add(sessions);
         text.add(sessionNum);
-        sessionsList.add(text);
         JButton confirm = new JButton("Confirm");
-        sessionsList.add(confirm);
+        text.add(confirm);
+        everything.add(text);
         confirm.addActionListener(this);
-        confirm.setActionCommand("confirm");
+        confirm.setActionCommand(confirmActionCommand);
         confirm.setBounds(300, 650, 200, 50);
-        sessionsList.pack();
-        sessionsList.setVisible(true);
+        frame.add(everything);
+        frame.pack();
+        frame.setVisible(true);
     }
 
-
-    public void addDistance() {
+    public JPanel addDistance() {
+        JPanel distance = new JPanel();
+        distance.setLayout(new BoxLayout(distance, BoxLayout.X_AXIS));
         dist = new JLabel();
-        dist.setText("Current distance: " + aimTrainer.getCurrentSession().getDistance() + "m");
-        menuPanel.add(dist);
+        dist.setText("Current distance: " + aimTrainer.getCurrentSession().getDistance() + "m  ");
+        distance.add(dist);
 
         String[] options = new String[500];
         for (int i = 0; i < options.length; i++) {
@@ -151,14 +166,22 @@ public class MainGUI extends JFrame implements ActionListener {
         }
         distOptions = new JComboBox(options);
         distOptions.setBounds(200, 50, 100, 50); // TODO: CHANGE
-        menuPanel.add(distOptions);
+        distance.add(distOptions);
 
         JButton changeDist = new JButton("Change distance");
         changeDist.setActionCommand("changeDistance");
         changeDist.addActionListener(this);
         changeDist.setBounds(400, 50, 200, 50);
-        menuPanel.add(changeDist);
+        distance.add(changeDist);
 
+        return distance;
+    }
+
+    public JLabel addSessionNum() {
+        JLabel sessionNum = new JLabel();
+        sessionNum.setText("Session " + aimTrainer.getCurrentSession().getSessionNum() + ": ");
+        sessionNum.setBounds(100, 10, 100, 20);
+        return sessionNum;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -166,43 +189,104 @@ public class MainGUI extends JFrame implements ActionListener {
             aimTrainer.changeDist(distOptions.getSelectedIndex() + 1);
             dist.setText("Current distance: " + aimTrainer.getCurrentSession().getDistance() + "m");
             repaint();
-        } else if (e.getActionCommand().equals("confirm")) {
+        } else if (e.getActionCommand().equals("confirmView")) {
             Session selected = aimTrainer.getSession(sessions.getSelectedIndex());
             displaySelectedSessionStat(selected);
-        } else if (e.getActionCommand().equals("viewOldSession")) {
+        } else if (e.getActionCommand().equals("viewSavedSession")) {
             showAllStats();
         } else if (e.getActionCommand().equals("save")) {
             aimTrainer.saveSessions();
         } else if (e.getActionCommand().equals("viewCurrentSession")) {
+            everything.remove(text);
             displaySelectedSessionStat(aimTrainer.getCurrentSession());
+        } else if (e.getActionCommand().equals("viewFilteredSession")) {
+            filter();
+        } else if (e.getActionCommand().equals("confirmFiltered")) {
+            filterSessions();
         }
     }
 
+    public void filterSessions() {
+        if (filteredLabels != null) {
+            filtered.remove(filteredLabels);
+        }
+        filtered.repaint();
+        filteredLabels = new JPanel();
+        filteredLabels.setBounds(300, 300, 400, 400);
+        filteredLabels.setLayout(new BoxLayout(filteredLabels, BoxLayout.Y_AXIS));
+
+        for (Session s : aimTrainer.getAllSessions()) {
+            if (s.getAccuracy() > (accuracyOptions.getSelectedIndex() + 1)) {
+                JLabel sessionAccuracy = new JLabel();
+                sessionAccuracy.setText("Session " + s.getSessionNum() + " Accuracy: " + s.getAccuracy() + "%");
+                filteredLabels.add(sessionAccuracy);
+            }
+        }
+        filtered.add(filteredLabels);
+        filtered.setVisible(true);
+    }
+
+    public void filter() {
+        filtered = new JFrame();
+        filtered.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
+        filtered.setLayout(new FlowLayout());
+        filtered.setPreferredSize(new Dimension(500, 500));
+        JLabel sessionNum = new JLabel("View all sessions above this accuracy: ");
+        String[] options = new String[100];
+        for (int i = 0; i < options.length; i++) {
+            options[i] = (i + 1) + "%";
+        }
+        accuracyOptions = new JComboBox(options);
+        accuracyOptions.setBounds(300, 300, 100, 50);
+        filtered.add(accuracyOptions);
+        JPanel text = new JPanel();
+        text.setBounds(100, 500, 400, 100);
+        text.add(sessionNum);
+        filtered.add(text);
+        JButton confirm = new JButton("Confirm");
+        filtered.add(confirm);
+        confirm.addActionListener(this);
+        confirm.setActionCommand("confirmFiltered");
+        confirm.setBounds(300, 650, 200, 50);
+        filtered.pack();
+        filtered.setVisible(true);
+    }
+
     public void displaySelectedSessionStat(Session selected) {
+        if (sessionStats != null) {
+            everything.remove(sessionStats);
+        }
+        viewSavedSessions.repaint();
+        sessionStats = new JPanel();
+        sessionStats.setBounds(100, 300, 400, 400);
+        sessionStats.setLayout(new BoxLayout(sessionStats, BoxLayout.Y_AXIS));
+
         Suggestion summary = selected.updateSummarySuggestion();
         JLabel summaryFeedback = new JLabel();
         summaryFeedback.setText("Session " + selected.getSessionNum() + " feedback: "
                 + summary.giveSuggestion());
-        sessionsList.add(summaryFeedback);
+        summaryFeedback.setBounds(300, 300, 300, 50);
+        sessionStats.add(summaryFeedback);
         JLabel totalAccuracy = new JLabel();
         totalAccuracy.setText("Total accuracy: " + selected.getAccuracy() + "%");
-        sessionsList.add(totalAccuracy);
-        JComboBox shotsAndSuggestion = new JComboBox();
+        summaryFeedback.setBounds(300, 400, 300, 50);
+        sessionStats.add(totalAccuracy);
 
         String[] options = new String[selected.getAllSuggestions().size()];
         for (int i = 0; i < options.length; i++) {
-            options[i] = "Shot " + (i + 1) + ": X= " + selected.getAllSuggestions().get(i).getCompX() + "Y= "
-                    + selected.getAllSuggestions().get(i).getCompY() + "Suggestion: "
+            options[i] = "Shot " + (i + 1) + ": X= " + selected.getAllSuggestions().get(i).getCompX() + ", Y= "
+                    + selected.getAllSuggestions().get(i).getCompY() + ", Suggestion: "
                     + selected.getAllSuggestions().get(i).giveSuggestion();
         }
 
-        sessionsList.add(shotsAndSuggestion);
-        sessionsList.setVisible(true);
+        JComboBox shotsAndSuggestion = new JComboBox(options);
+        shotsAndSuggestion.setBounds(350, 300, 300, 50);
+        sessionStats.add(shotsAndSuggestion);
+        everything.add(sessionStats);
+        viewSavedSessions.setVisible(true);
     }
 
     public void immediateFeedback(Session s) {
-        if (feedback != null) {
-            feedback.setText("Immediate Feedback: " + s.getLastSuggestion().giveSuggestion());
-        }
+        feedback.setText("Immediate Feedback: " + s.getLastSuggestion().giveSuggestion());
     }
 }

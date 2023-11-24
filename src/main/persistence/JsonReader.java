@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import model.CircleSession;
 import model.Session;
 import model.Suggestion;
 import model.Target;
@@ -72,7 +71,7 @@ public class JsonReader {
             int hit = currentSession.getInt("Hits");
 
  //           if (targetType.equals("circle")) { // create circle session
-            s = new CircleSession(i);
+            s = new Session(i);
             s.setDistance(targetDist);
             s.setTarget(new Target(targetX, targetY));
             s.setHit(hit);

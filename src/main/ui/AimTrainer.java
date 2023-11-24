@@ -2,7 +2,6 @@ package ui;
 
 import model.*;
 import model.Session;
-import model.CircleSession;
 import model.Target;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -21,8 +20,8 @@ public class AimTrainer {
     private JsonReader jsonReader;
     private boolean stop;
     private List<Session> sessions = new ArrayList<Session>();
-    private static final int DIM_X = 800;
-    private static final int DIM_Y = 800;
+    private static final int DIM_X = 600;
+    private static final int DIM_Y = 600;
     private static final Scanner SCN = new Scanner(System.in);
     private Target target;
     private Session currentSession;
@@ -96,15 +95,22 @@ public class AimTrainer {
         }
     }
 
+    public List<Session> getAllSessions() {
+        return sessions;
+    }
+
+    public void setTarget() {
+        target = generateTarget();
+    }
+
     public void update(int x, int y) {
         boolean hit = target.hitTarget(x, y);
         currentSession.analyze(x, y, target.getCenterX(), target.getCenterY(), target.getRadius());
         if (hit) {
             currentSession.hit();
             generateTarget();
-        } else {
-            mg.immediateFeedback(currentSession);
         }
+        mg.immediateFeedback(currentSession);
     }
 
     public void forceEnd() {
@@ -239,7 +245,7 @@ public class AimTrainer {
                 fileDoesNotExist();
             }
         } else {
-            currentSession = new CircleSession(sessionNum);
+            currentSession = new Session(sessionNum);
         }
         System.out.println("This is session " + currentSession.getSessionNum());
         try {
@@ -251,7 +257,7 @@ public class AimTrainer {
     }
 
     public void newSession() {
-        currentSession = new CircleSession(sessions.size() + 1);
+        currentSession = new Session(sessions.size() + 1);
         try {
             currentSession.addOldSessionsToPastSessions(jsonReader);
         } catch (IOException e) {
@@ -288,7 +294,7 @@ public class AimTrainer {
     // updates oldSession to false
     public void fileDoesNotExist() {
         System.out.println("That file does not exist! Starting new session!");
-        currentSession = new CircleSession(sessions.size() + 1);
+        currentSession = new Session(sessions.size() + 1);
         oldSession = false;
     }
 
@@ -347,12 +353,18 @@ public class AimTrainer {
         target = new Target((int)x,(int)y);
 
         currentSession.setTarget(target);
+        target.changeDist(currentSession.getDistance());
 
         return target;
     }
 
+    public void delete(int i) {
+        sessions.remove(i);
+    }
+
     // EFFECTS: saves all sessions to file
     public void saveSessions() {
+        sessions.add(currentSession);
         try {
             jsonWriter.open();
             jsonWriter.write(currentSession);

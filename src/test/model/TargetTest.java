@@ -18,7 +18,7 @@ class TargetTest {
     public void testConstructor() {
         assertEquals(200, c.getCenterX());
         assertEquals(200, c.getCenterY());
-        assertEquals(5, c.getRadius());
+        assertEquals(50, c.getRadius());
     }
 
     @Test
@@ -45,7 +45,7 @@ class TargetTest {
     @Test
     public void changeDist() {
         c.changeDist(10);
-        assertEquals(0.5, c.getRadius());
+        assertEquals(250, c.getRadius());
     }
 
 

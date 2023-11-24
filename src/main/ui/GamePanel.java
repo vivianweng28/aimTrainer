@@ -12,13 +12,12 @@ import javax.swing.*;
 public class GamePanel extends JPanel implements MouseListener {
 
     private AimTrainer aimTrainer;
-    private int distance;
     private int currentX;
     private int currentY;
 
     public GamePanel(AimTrainer a) {
         setPreferredSize(new Dimension(a.getDimX(), a.getDimY()));
-        setBounds(300, 350, 500, 500);
+        setBounds(a.getDimX() / 2, a.getDimY() / 2, 400, 400);
         setBackground(Color.GRAY);
         this.aimTrainer = a;
         addMouseListener(this);
@@ -30,15 +29,10 @@ public class GamePanel extends JPanel implements MouseListener {
 
         drawGame(g);
 
-        if (aimTrainer.isOver()) {
-            gameOver(g);
-        }
     }
 
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        if (e.getX() > 0 && e.getX() < 800 && e.getY() > 0 && e.getY() < 800) { // mouse is in game panel
+    public void updateGame(MouseEvent e) {
+        if (e.getX() > 0 && e.getX() < aimTrainer.getDimX() && e.getY() > 0 && e.getY() < aimTrainer.getDimY()) { // mouse is in game panel
             currentX = e.getX();
             currentY = e.getY();
             aimTrainer.update(currentX, currentY);
@@ -46,14 +40,18 @@ public class GamePanel extends JPanel implements MouseListener {
         }
     }
 
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        updateGame(e);
+    }
+
     @Override
     public void mousePressed(MouseEvent e) {
-
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
     }
 
     @Override
@@ -80,16 +78,6 @@ public class GamePanel extends JPanel implements MouseListener {
         int y = t.getCenterY() - (t.getRadius() / 2);
         g.fillOval(x, y, t.getRadius(), t.getRadius());
         g.setColor(savedCol);
-    }
-
-//    //This is the method that is called when the JButton btn is clicked
-//    public void actionPerformed(ActionEvent e) {
-//        if (e.getActionCommand().equals("changeDist")) {
-//        }
-//    }
-
-    public void gameOver(Graphics g) {
-
     }
 
     synchronized void waitFor(int i) {

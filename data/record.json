@@ -1,20 +1,202 @@
 {
     "Session 2": {
-        "Suggestions": [],
+        "Suggestions": [
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 541,
+                "Shot X": 208,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 152.87396638003284,
+                "Error Amount X": 307.6122494232368,
+                "Direction X": "left",
+                "Shot Y": 264,
+                "Shot X": 322,
+                "Direction Y": "down"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 103,
+                "Shot X": 651,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 302.72601477514513,
+                "Error Amount X": 353.0221865089467,
+                "Direction X": "left",
+                "Shot Y": 252,
+                "Shot X": 240,
+                "Direction Y": "up"
+            }
+        ],
         "Target Distance": 100,
-        "Hits": 0,
-        "Target Y": 600,
+        "Hits": 2,
+        "Target Y": 571,
         "Target Type": "circle",
-        "Target X": 217,
-        "Shots": 0
+        "Target X": 612,
+        "Shots": 4
+    },
+    "Session 3": {
+        "Suggestions": [
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 323,
+                "Shot X": 410,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 77,
+                "Shot X": 356,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 439,
+                "Shot X": 245,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 13.681415362304165,
+                "Error Amount X": 259.0347975262921,
+                "Direction X": "left",
+                "Shot Y": 250,
+                "Shot X": 192,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 224,
+                "Shot X": 484,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 158.00596997113075,
+                "Error Amount X": 3.4536824037405722,
+                "Direction X": "perfect",
+                "Shot Y": 205,
+                "Shot X": 464,
+                "Direction Y": "up"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 388,
+                "Shot X": 481,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 71,
+                "Shot X": 232,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 441,
+                "Shot X": 272,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 35.539026183343395,
+                "Error Amount X": 254.24072577314882,
+                "Direction X": "left",
+                "Shot Y": 227,
+                "Shot X": 125,
+                "Direction Y": "down"
+            }
+        ],
+        "Target Distance": 100,
+        "Hits": 7,
+        "Target Y": 188,
+        "Target Type": "circle",
+        "Target X": 404,
+        "Shots": 10
+    },
+    "Session 4": {
+        "Suggestions": [
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 100,
+                "Shot X": 267,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 204.89553808514017,
+                "Error Amount X": 56.36864148193814,
+                "Direction X": "left",
+                "Shot Y": 105,
+                "Shot X": 276,
+                "Direction Y": "up"
+            }
+        ],
+        "Target Distance": 100,
+        "Hits": 1,
+        "Target Y": 334,
+        "Target Type": "circle",
+        "Target X": 339,
+        "Shots": 2
     },
     "Session 1": {
-        "Suggestions": [],
+        "Suggestions": [
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 191,
+                "Shot X": 56,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 463,
+                "Shot X": 300,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 373,
+                "Shot X": 462,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 333,
+                "Shot X": 313,
+                "Direction Y": "perfect"
+            }
+        ],
         "Target Distance": 100,
-        "Hits": 0,
-        "Target Y": 550,
+        "Hits": 4,
+        "Target Y": 83,
         "Target Type": "circle",
-        "Target X": 448,
-        "Shots": 0
+        "Target X": 516,
+        "Shots": 4
     }
 }
