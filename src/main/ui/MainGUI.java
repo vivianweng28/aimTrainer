@@ -205,13 +205,27 @@ public class MainGUI extends JFrame implements ActionListener {
         } else if (e.getActionCommand().equals("save")) {
             aimTrainer.saveSessions();
         } else if (e.getActionCommand().equals("viewCurrentSession")) {
-            everything.remove(text);
+            currentSession();
             displaySelectedSessionStat(aimTrainer.getCurrentSession());
         } else if (e.getActionCommand().equals("viewFilteredSession")) {
             filter();
         } else if (e.getActionCommand().equals("confirmFiltered")) {
             filterSessions();
         }
+    }
+
+    public void currentSession() {
+        if (everything != null && text != null) {
+            everything.remove(text);
+        } else {
+            viewSavedSessions = new JFrame();
+            viewSavedSessions.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewSavedSessions.setLayout(new FlowLayout());
+            viewSavedSessions.setPreferredSize(new Dimension(700, 700));
+            everything = new JPanel();
+            everything.setLayout(new BoxLayout(everything, BoxLayout.Y_AXIS));
+        }
+        displaySelectedSessionStat(aimTrainer.getCurrentSession());
     }
 
     public void filterSessions() {
@@ -280,6 +294,8 @@ public class MainGUI extends JFrame implements ActionListener {
         shotsAndSuggestion.setBounds(350, 300, 300, 50);
         sessionStats.add(shotsAndSuggestion);
         everything.add(sessionStats);
+        viewSavedSessions.add(everything);
+        viewSavedSessions.pack();
         viewSavedSessions.setVisible(true);
     }
 

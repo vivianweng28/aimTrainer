@@ -329,4 +329,11 @@ class SessionTest {
 
         assertEquals(100, accuracy);
     }
+
+    @Test
+    public void testAccuracyNoShots() {
+        double accuracy = cs.getAccuracy();
+
+        assertEquals(0, accuracy);
+    }
 }
