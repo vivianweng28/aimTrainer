@@ -8,10 +8,8 @@ import java.awt.event.*;
 import model.Session;
 import model.Suggestion;
 
-
+// represents the main GUI of the application
 public class MainGUI extends JFrame implements ActionListener {
-    // Constructs main window
-    // effects: sets up window in which Space Invaders game will be played
 
     private AimTrainer aimTrainer;
     private GamePanel gp;
@@ -29,6 +27,7 @@ public class MainGUI extends JFrame implements ActionListener {
     private JPanel everything;
     private JPanel text;
 
+    // EFFECTS: creates the main window that orchestrates all the windows of the application
     public MainGUI() {
         super("Aim Trainer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
