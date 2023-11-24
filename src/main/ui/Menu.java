@@ -53,8 +53,8 @@ public class Menu extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    // MODFIES: this
-    // EFFECTS:
+    // MODIFIES: this
+    // EFFECTS: directs different actions to their consequences in the program
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("oldSession")) {
             oldSession();
@@ -69,6 +69,8 @@ public class Menu extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays the selection of saved sessions and the confirm button
     public void oldSession() {
         JLabel sessionNum = new JLabel("Please select a session number");
         String[] options = new String[game.getNumSessions()];
@@ -92,6 +94,7 @@ public class Menu extends JFrame implements ActionListener {
         game.setToOldSession(sessions.getSelectedIndex());
     }
 
+    // EFFECTS: returns whether the user has finished using the menu window
     public boolean getOver() {
         return over;
     }

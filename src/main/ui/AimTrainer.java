@@ -45,6 +45,8 @@ public class AimTrainer {
         loadSessions();
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds a mainGUI to aimtrainer
     public void addGUI(MainGUI mainGUI) {
         mg = mainGUI;
     }
