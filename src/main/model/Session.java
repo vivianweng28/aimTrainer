@@ -38,7 +38,7 @@ public class Session implements Writable {
     // EFFECTS: changes the distance from target with logging
     public void setDistance(int newDistance) {
         this.distance = newDistance;
-        EventLog.getInstance().logEvent(new Event("Target is now set at a distance of:"  + distance));
+        EventLog.getInstance().logEvent(new Event("Target is now set at a distance of: "  + distance));
     }
 
     // MODIFIES: this
@@ -51,7 +51,7 @@ public class Session implements Writable {
     // EFFECTS: changes current target to a new target with logging
     public void setTarget(Target t) {
         currentTarget = t;
-        EventLog.getInstance().logEvent(new Event("New Target Generated at: (" + currentTarget.getCenterX()
+        EventLog.getInstance().logEvent(new Event("New target generated at: (" + currentTarget.getCenterX()
                 + ", " + currentTarget.getCenterY() + ")"));
     }
 

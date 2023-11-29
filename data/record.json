@@ -83,6 +83,90 @@
         "Target X": 389,
         "Shots": 4
     },
+    "Session 4": {
+        "Suggestions": [
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 87,
+                "Shot X": 178,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 388,
+                "Shot X": 107,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 81.35157358280753,
+                "Error Amount X": 71.09717355136121,
+                "Direction X": "left",
+                "Shot Y": 403,
+                "Shot X": 194,
+                "Direction Y": "up"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 524,
+                "Shot X": 303,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 5.380983412387593,
+                "Error Amount X": 30.74847664221477,
+                "Direction X": "right",
+                "Shot Y": 285,
+                "Shot X": 298,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 296,
+                "Shot X": 215,
+                "Direction Y": "perfect"
+            }
+        ],
+        "Target Distance": 50,
+        "Hits": 4,
+        "Target Y": 63,
+        "Target Type": "circle",
+        "Target X": 81,
+        "Shots": 6
+    },
+    "Session 5": {
+        "Suggestions": [
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 82,
+                "Shot X": 360,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 276.8275117697997,
+                "Error Amount X": 96.17059662132652,
+                "Direction X": "left",
+                "Shot Y": 229,
+                "Shot X": 193,
+                "Direction Y": "up"
+            }
+        ],
+        "Target Distance": 74,
+        "Hits": 1,
+        "Target Y": 537,
+        "Target Type": "circle",
+        "Target X": 300,
+        "Shots": 2
+    },
     "Session 1": {
         "Suggestions": [
             {

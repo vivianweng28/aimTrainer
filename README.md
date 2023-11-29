@@ -56,3 +56,13 @@ clicks: this is not because of a coding error, but because of java swing's mouse
 claim by clicking on the exact same place if it did not register the first time (after thorough testing, I have found 
 that if your interval between two clicks is too short or if the click duration was too short, the program might not 
 register it as a click)
+
+## Phase 4: Task 2
+Wed Nov 29 10:15:00 PST 2023: A new session is created: session 5 \
+Wed Nov 29 10:15:00 PST 2023: New target generated at: (360, 88) \
+Wed Nov 29 10:15:12 PST 2023: Target is now set at a distance of: 74 \
+Wed Nov 29 10:15:13 PST 2023: User has taken a shot at: (360, 82) \
+Wed Nov 29 10:15:13 PST 2023: A shot has hit the target \
+Wed Nov 29 10:15:13 PST 2023: New target generated at: (300, 537) \
+Wed Nov 29 10:15:15 PST 2023: User has taken a shot at: (193, 229) \
+Wed Nov 29 10:15:18 PST 2023: Session 5 saved by the user 
