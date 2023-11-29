@@ -8,6 +8,8 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Event;
+import model.EventLog;
 import model.Session;
 import model.Suggestion;
 
@@ -47,6 +49,11 @@ public class MainGUI extends JFrame implements ActionListener {
         setUp();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                EventLog.getInstance().printLog(EventLog.getInstance());
+            }
+        });
     }
 
     // MODIFIES: this
@@ -129,7 +136,7 @@ public class MainGUI extends JFrame implements ActionListener {
         if (menu.getOver()) {
             menuPanelSetUp();
             add(gp);
-            aimTrainer.setTarget();
+//            aimTrainer.setTarget();
         }
     }
 

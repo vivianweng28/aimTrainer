@@ -17,6 +17,7 @@ public class Target {
     // REQUIRES: x and y are less than dimensions of the application and >= 0.
     // EFFECTS: determines whether the shot taken has hit the target (true if hit, false if not hit)
     public boolean hitTarget(int x, int y) {
+        EventLog.getInstance().logEvent(new Event("User has taken a shot at: (" + x + ", " + y + ")"));
         if (dist(x, y) <= this.radius) {
             return true;
         } else {

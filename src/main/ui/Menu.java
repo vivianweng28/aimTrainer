@@ -90,8 +90,6 @@ public class Menu extends JFrame implements ActionListener {
         confirm.setActionCommand("confirm");
         confirm.setBounds(300, 650, 200, 50);
         setVisible(true);
-
-        game.setToOldSession(sessions.getSelectedIndex());
     }
 
     // EFFECTS: returns whether the user has finished using the menu window

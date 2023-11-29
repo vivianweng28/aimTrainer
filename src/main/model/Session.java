@@ -13,8 +13,7 @@ public class Session implements Writable {
     private final List<Suggestion> allSuggestions;
     private int hit;
     private int shots;
-    private static final String SESSION_TYPE = "circle";
-    private static final int DEFAULT_DISTANCE = 100;
+    private static final int DEFAULT_DISTANCE = 50;
     private int distance;
     private int sessionNum;
     private JSONObject pastSessions;
@@ -36,14 +35,29 @@ public class Session implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECTS: changes the distance from target
+    // EFFECTS: changes the distance from target with logging
     public void setDistance(int newDistance) {
+        this.distance = newDistance;
+        EventLog.getInstance().logEvent(new Event("Target is now set at a distance of:"  + distance));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes the distance from target with no logging
+    public void setOldDistance(int newDistance) {
         this.distance = newDistance;
     }
 
     // MODIFIES: this
-    // EFFECTS: changes current target to a new target
+    // EFFECTS: changes current target to a new target with logging
     public void setTarget(Target t) {
+        currentTarget = t;
+        EventLog.getInstance().logEvent(new Event("New Target Generated at: (" + currentTarget.getCenterX()
+                + ", " + currentTarget.getCenterY() + ")"));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes current target to a new target with no logging
+    public void setOldTarget(Target t) {
         currentTarget = t;
     }
 
@@ -57,10 +71,10 @@ public class Session implements Writable {
     // MODIFIES: this
     // EFFECTS: compares shot taken by player to the closest shot on the target and generates
     // suggestion, adds that suggestion to list of all suggestions
-    public void analyze(int x, int y, double centerX, double centerY, double radius) {
+    public void analyze(int x, int y, double centerX, double centerY, double radius, boolean hit) {
         shots++;
         Suggestion suggest;
-        if (currentTarget.hitTarget(x, y)) {
+        if (hit) {
             suggest = new Suggestion(x, y, "perfect", "perfect", 0, 0);
         } else {
             suggest = notPerfect(x, y, centerX, centerY, radius);
@@ -113,6 +127,7 @@ public class Session implements Writable {
     // shots by one
     public void hit() {
         hit++;
+        EventLog.getInstance().logEvent(new Event("A shot has hit the target"));
     }
 
     // EFFECTS: gets the list of all generated suggestions
@@ -206,17 +221,15 @@ public class Session implements Writable {
 
         Suggestion summary = new Suggestion(avgX, avgY, dirX, dirY, Math.abs(avgX), Math.abs(avgY));
 
+        EventLog.getInstance().logEvent(new Event("Session " +  getSessionNum()
+                + " viewed by the user"));
+
         return summary;
     }
 
     // EFFECTS: retrieves session number of current session
     public int getSessionNum() {
         return sessionNum;
-    }
-
-    // EFFECTS: retrieves session type of current session
-    public String getSessionType() {
-        return SESSION_TYPE;
     }
 
     // MODIFIES: this

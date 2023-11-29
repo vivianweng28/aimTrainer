@@ -1,5 +1,7 @@
 package persistence;
 
+import model.Event;
+import model.EventLog;
 import model.Session;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,6 +35,8 @@ public class JsonWriter {
     // MODIFIES: this
     // EFFECTS: writes JSON representation of session to file
     public void write(Session s) {
+        EventLog.getInstance().logEvent(new Event("Session " +  s.getSessionNum()
+                + " saved by the user"));
         JSONObject json = s.toJson(); // add in new session
         saveToFile(json.toString(TAB));
     }

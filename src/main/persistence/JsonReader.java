@@ -72,8 +72,8 @@ public class JsonReader {
 
  //           if (targetType.equals("circle")) { // create circle session
             s = new Session(i);
-            s.setDistance(targetDist);
-            s.setTarget(new Target(targetX, targetY));
+            s.setOldDistance(targetDist);
+            s.setOldTarget(new Target(targetX, targetY));
             s.setHit(hit);
             s.setShots(shots);
 

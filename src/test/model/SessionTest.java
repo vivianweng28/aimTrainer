@@ -28,7 +28,7 @@ class SessionTest {
 
     @Test
     public void testAnalyzeOnlyXLeft() {
-        cs.analyze(1, 10, 60, 60, 50);
+        cs.analyze(1, 10, 60, 60, 50, false);
         Suggestion generatedSuggestion = cs.getLastSuggestion();
 
         assertEquals("left", generatedSuggestion.getDirX());
@@ -39,7 +39,7 @@ class SessionTest {
 
     @Test
     public void testAnalyzeOnlyXRight() {
-        cs.analyze(1000, 60, 60, 60, 50);
+        cs.analyze(1000, 60, 60, 60, 50, false);
         Suggestion generatedSuggestion = cs.getLastSuggestion();
 
         assertEquals( "right",generatedSuggestion.getDirX());
@@ -50,7 +50,7 @@ class SessionTest {
 
     @Test
     public void testAnalyzeOnlyYUp() {
-        cs.analyze(60, 200, 60, 60, 50);
+        cs.analyze(60, 200, 60, 60, 50, false);
         Suggestion generatedSuggestion = cs.getLastSuggestion();
 
         assertEquals("perfect", generatedSuggestion.getDirX());
@@ -61,7 +61,7 @@ class SessionTest {
 
     @Test
     public void testAnalyzeOnlyYDown() {
-        cs.analyze(60, 1, 60, 60, 50);
+        cs.analyze(60, 1, 60, 60, 50, false);
         Suggestion generatedSuggestion = cs.getLastSuggestion();
 
         assertEquals("perfect", generatedSuggestion.getDirX());
@@ -72,7 +72,7 @@ class SessionTest {
 
     @Test
     public void testAnalyzeRightUp() {
-        cs.analyze(200, 200, 60, 60, 50);
+        cs.analyze(200, 200, 60, 60, 50, false);
         Suggestion generatedSuggestion = cs.getLastSuggestion();
         double correctDist = 100 - (5 / Math.sqrt(2) + 10);
 
@@ -84,7 +84,7 @@ class SessionTest {
 
     @Test
     public void testAnalyzeRightDown() {
-        cs.analyze(200, 1, 60, 60, 50);
+        cs.analyze(200, 1, 60, 60, 50, false);
         Suggestion generatedSuggestion = cs.getLastSuggestion();
 
         double length = Math.sqrt(Math.pow(90, 2) + Math.pow(9, 2));
@@ -99,7 +99,7 @@ class SessionTest {
 
     @Test
     public void testAnalyzeLeftUp() {
-        cs.analyze(1, 200, 60, 60, 50);
+        cs.analyze(1, 200, 60, 60, 50, false);
         Suggestion generatedSuggestion = cs.getLastSuggestion();
 
         double length = Math.sqrt(Math.pow(90, 2) + Math.pow(9, 2));
@@ -114,7 +114,7 @@ class SessionTest {
 
     @Test
     public void testAnalyzeLeftDown() {
-        cs.analyze(1, 1, 60, 60, 50);
+        cs.analyze(1, 1, 60, 60, 50, false);
         Suggestion generatedSuggestion = cs.getLastSuggestion();
         double correctDist = 10 - (5 / Math.sqrt(2)) - 1;
 
@@ -126,7 +126,7 @@ class SessionTest {
 
     @Test
     public void testUpdateSummarySuggestionWithOneSuggestionLeft() {
-        cs.analyze(1, 60, 60, 60, 50);
+        cs.analyze(1, 60, 60, 60, 50, false);
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
 
@@ -135,7 +135,7 @@ class SessionTest {
 
     @Test
     public void testUpdateSummarySuggestionWithOneSuggestionDown() {
-        cs.analyze(60, 1, 60, 60, 50);
+        cs.analyze(60, 1, 60, 60, 50, false);
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
 
@@ -144,7 +144,7 @@ class SessionTest {
 
     @Test
     public void testUpdateSummarySuggestionWithOneSuggestionRight() {
-        cs.analyze(200, 60, 60, 60, 50);
+        cs.analyze(200, 60, 60, 60, 50, false);
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
 
@@ -153,7 +153,7 @@ class SessionTest {
 
     @Test
     public void testUpdateSummarySuggestionWithOneSuggestionUp() {
-        cs.analyze(60, 200, 60, 60, 50);
+        cs.analyze(60, 200, 60, 60, 50, false);
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
 
@@ -162,11 +162,11 @@ class SessionTest {
 
     @Test
     public void testUpdateSummarySuggestionWithLotsSuggestionRightUp() {
-        cs.analyze(1, 1, 60, 60, 50);
-        cs.analyze(400, 400, 60, 60, 50);
-        cs.analyze(400, 400, 60, 60, 50);
-        cs.analyze(400, 400, 60, 60, 50);
-        cs.analyze(400, 400, 60, 60, 50);
+        cs.analyze(1, 1, 60, 60, 50, false);
+        cs.analyze(400, 400, 60, 60, 50, false);
+        cs.analyze(400, 400, 60, 60, 50, false);
+        cs.analyze(400, 400, 60, 60, 50, false);
+        cs.analyze(400, 400, 60, 60, 50, false);
 
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
@@ -176,11 +176,11 @@ class SessionTest {
 
     @Test
     public void testUpdateSummarySuggestionWithLotsSuggestionRightDown() {
-        cs.analyze(400, 1, 60, 60, 50);
-        cs.analyze(400, 1, 60, 60, 50);
-        cs.analyze(400, 4, 60, 60, 50);
-        cs.analyze(400, 1, 60, 60, 50);
-        cs.analyze(400, 1, 60, 60, 50);
+        cs.analyze(400, 1, 60, 60, 50, false);
+        cs.analyze(400, 1, 60, 60, 50, false);
+        cs.analyze(400, 4, 60, 60, 50, false);
+        cs.analyze(400, 1, 60, 60, 50, false);
+        cs.analyze(400, 1, 60, 60, 50, false);
 
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
@@ -190,12 +190,12 @@ class SessionTest {
 
     @Test
     public void testUpdateSummarySuggestionWithLotsSuggestionLeftDown() {
-        cs.analyze(1, 1, 60, 60, 50);
-        cs.analyze(1, 1, 60, 60, 50);
-        cs.analyze(1, 1, 60, 60, 50);
-        cs.analyze(1, 4, 60, 60, 50);
-        cs.analyze(1, 1, 60, 60, 50);
-        cs.analyze(1, 1, 60, 60, 50);
+        cs.analyze(1, 1, 60, 60, 50, false);
+        cs.analyze(1, 1, 60, 60, 50, false);
+        cs.analyze(1, 1, 60, 60, 50, false);
+        cs.analyze(1, 4, 60, 60, 50, false);
+        cs.analyze(1, 1, 60, 60, 50, false);
+        cs.analyze(1, 1, 60, 60, 50, false);
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
 
@@ -205,12 +205,12 @@ class SessionTest {
 
     @Test
     public void testUpdateSummarySuggestionWithLotsSuggestionLeftUp() {
-        cs.analyze(0, 400, 60, 60, 50);
-        cs.analyze(0, 400, 60, 60, 50);
-        cs.analyze(0, 400, 60, 60, 50);
-        cs.analyze(0, 400, 60, 60, 50);
-        cs.analyze(0, 400, 60, 60, 50);
-        cs.analyze(0, 400, 60, 60, 50);
+        cs.analyze(0, 400, 60, 60, 50, false);
+        cs.analyze(0, 400, 60, 60, 50, false);
+        cs.analyze(0, 400, 60, 60, 50, false);
+        cs.analyze(0, 400, 60, 60, 50, false);
+        cs.analyze(0, 400, 60, 60, 50, false);
+        cs.analyze(0, 400, 60, 60, 50, false);
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
 
@@ -219,10 +219,10 @@ class SessionTest {
 
     @Test
     public void testUpdateSummarySuggestionWithLotsSuggestionPerfect() {
-        cs.analyze(59, 61, 60, 60, 50);
-        cs.analyze(59, 61, 60, 60, 50);
-        cs.analyze(59, 61, 60, 60, 50);
-        cs.analyze(59, 61, 60, 60, 50);
+        cs.analyze(59, 61, 60, 60, 50, true);
+        cs.analyze(59, 61, 60, 60, 50, true);
+        cs.analyze(59, 61, 60, 60, 50, true);
+        cs.analyze(59, 61, 60, 60, 50, true);
 
 
         Suggestion summary = cs.updateSummarySuggestion();
@@ -233,11 +233,11 @@ class SessionTest {
 
     @Test
     public void testUpdateSummarySuggestionWithLotsSuggestionJustUp() {
-        cs.analyze(60, 300, 60, 60, 50);
-        cs.analyze(60, 300, 60, 60, 50);
-        cs.analyze(60, 300, 60, 60, 50);
-        cs.analyze(60, 300, 60, 60, 50);
-        cs.analyze(60, 300, 60, 60, 50);
+        cs.analyze(60, 300, 60, 60, 50, false);
+        cs.analyze(60, 300, 60, 60, 50, false);
+        cs.analyze(60, 300, 60, 60, 50, false);
+        cs.analyze(60, 300, 60, 60, 50, false);
+        cs.analyze(60, 300, 60, 60, 50, false);
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
 
@@ -246,11 +246,11 @@ class SessionTest {
 
     @Test
     public void testUpdateSummarySuggestionWithLotsSuggestionJustDown() {
-        cs.analyze(60, 2, 60, 60, 50);
-        cs.analyze(60, 2, 60, 60, 50);
-        cs.analyze(60, 2, 60, 60, 50);
-        cs.analyze(60, 2, 60, 60, 50);
-        cs.analyze(60, 2, 60, 60, 50);
+        cs.analyze(60, 2, 60, 60, 50, false);
+        cs.analyze(60, 2, 60, 60, 50, false);
+        cs.analyze(60, 2, 60, 60, 50, false);
+        cs.analyze(60, 2, 60, 60, 50, false);
+        cs.analyze(60, 2, 60, 60, 50, false);
 
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
@@ -260,11 +260,11 @@ class SessionTest {
 
     @Test
     public void testUpdateSummarySuggestionWithLotsSuggestionJustLeft() {
-        cs.analyze(1, 60, 60, 60, 50);
-        cs.analyze(1, 60, 60, 60, 50);
-        cs.analyze(1, 60, 60, 60, 50);
-        cs.analyze(1, 60, 60, 60, 50);
-        cs.analyze(1, 60, 60, 60, 50);
+        cs.analyze(1, 60, 60, 60, 50, false);
+        cs.analyze(1, 60, 60, 60, 50, false);
+        cs.analyze(1, 60, 60, 60, 50, false);
+        cs.analyze(1, 60, 60, 60, 50, false);
+        cs.analyze(1, 60, 60, 60, 50, false);
 
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
@@ -274,11 +274,11 @@ class SessionTest {
 
     @Test
     public void testUpdateSummarySuggestionWithLotsSuggestionJustRight() {
-        cs.analyze(200, 60, 60, 60, 50);
-        cs.analyze(200, 60, 60, 60, 50);
-        cs.analyze(200, 60, 60, 60, 50);
-        cs.analyze(200, 60, 60, 60, 50);
-        cs.analyze(200, 60, 60, 60, 50);
+        cs.analyze(200, 60, 60, 60, 50, false);
+        cs.analyze(200, 60, 60, 60, 50, false);
+        cs.analyze(200, 60, 60, 60, 50, false);
+        cs.analyze(200, 60, 60, 60, 50, false);
+        cs.analyze(200, 60, 60, 60, 50, false);
 
         Suggestion summary = cs.updateSummarySuggestion();
         String suggestion = summary.giveSuggestion();
@@ -309,9 +309,9 @@ class SessionTest {
 
     @Test
     public void testGetAllSuggestions() {
-        cs.analyze(300, 300, 60, 60, 50);
-        cs.analyze(1, 300, 60, 60, 50);
-        cs.analyze(300, 300, 60, 60, 50);
+        cs.analyze(300, 300, 60, 60, 50, false);
+        cs.analyze(1, 300, 60, 60, 50, false);
+        cs.analyze(300, 300, 60, 60, 50, false);
 
         List<Suggestion> allSuggestions = cs.getAllSuggestions();
 
@@ -323,7 +323,7 @@ class SessionTest {
 
     @Test
     public void testAccuracy() {
-        cs.analyze(300, 300, 60, 60, 50);
+        cs.analyze(300, 300, 60, 60, 50, false);
         cs.hit();
         double accuracy = cs.getAccuracy();
 

@@ -51,51 +51,52 @@ public class AimTrainer {
         mg = mainGUI;
     }
 
-    // MODIFIES: this
-    // EFFECTS: starts the aim trainer program, asks if distance is changed, prints out current distance from target,
-    // generates a random target, and adds new session to list of sessions
-    public void start() {
-        askSession(); // ask if load old session or run new session
-        while (!stop) {
-            askChangeDist();
-            if (oldSession) {
-                target = currentSession.getTarget();
-            } else {
-                target = generateTarget();
-            }
-            System.out.println("Current distance from target: " + currentSession.getDistance() + "m");
-            runGame();
-        }
-    }
+//    // MODIFIES: this
+//    // EFFECTS: starts the aim trainer program, asks if distance is changed, prints out current distance from target,
+//    // generates a random target, and adds new session to list of sessions
+//    public void start() {
+//        askSession(); // ask if load old session or run new session
+//        while (!stop) {
+//            askChangeDist();
+//            if (oldSession) {
+//                target = currentSession.getTarget();
+//            } else {
+//                target = generateTarget();
+//            }
+//            System.out.println("Current distance from target: " + currentSession.getDistance() + "m");
+//            runGame();
+//        }
+//    }
 
-    // MODIFIES: this
-    // EFFECTS: gets shot input from user, records suggestion if did not hit target, asks if the user wants to
-    // continue the session after every shot. If the user ends the session, session feedback is given. For CONSOLE
-    public void runGame() {
-        boolean hit = false;
-        while (!hit) {
-            double x = getXFromUser();
-            double y = getYFromUser();
-            hit = target.hitTarget((int) x, (int) y);
-            currentSession.analyze((int) x, (int) y, target.getCenterX(), target.getCenterY(), target.getRadius());
-            if (hit) {
-                System.out.println("Target hit!");
-                currentSession.hit();
-                generateTarget();
-            } else {
-                System.out.println("Target not hit! Keep trying!");
-                System.out.println("Immediate Feedback: " + currentSession.getLastSuggestion().giveSuggestion());
-            }
-            System.out.println("Continue the session? (N to stop, anything else to continue)");
-            SCN.nextLine();
-            String cont = SCN.nextLine();
-            if (cont.equals("N")) {
-                hit = true;
-                stop = true;
-                doNotContinue();
-            }
-        }
-    }
+//    // MODIFIES: this
+//    // EFFECTS: gets shot input from user, records suggestion if did not hit target, asks if the user wants to
+//    // continue the session after every shot. If the user ends the session, session feedback is given. For CONSOLE
+//    public void runGame() {
+//        boolean hit = false;
+//        while (!hit) {
+//            double x = getXFromUser();
+//            double y = getYFromUser();
+//            hit = target.hitTarget((int) x, (int) y);
+//            currentSession.analyze((int) x, (int) y, target.getCenterX(), target.getCenterY(),
+//            target.getRadius(), hit);
+//            if (hit) {
+//                System.out.println("Target hit!");
+//                currentSession.hit();
+//                generateTarget();
+//            } else {
+//                System.out.println("Target not hit! Keep trying!");
+//                System.out.println("Immediate Feedback: " + currentSession.getLastSuggestion().giveSuggestion());
+//            }
+//            System.out.println("Continue the session? (N to stop, anything else to continue)");
+//            SCN.nextLine();
+//            String cont = SCN.nextLine();
+//            if (cont.equals("N")) {
+//                hit = true;
+//                stop = true;
+//                doNotContinue();
+//            }
+//        }
+//    }
 
     // EFFECTS: returns a list of all the saved sessions
     public List<Session> getAllSessions() {
@@ -112,7 +113,7 @@ public class AimTrainer {
     // create feedback based on the shots. If the target was hit, a new target is randomly generated.
     public void update(int x, int y) {
         boolean hit = target.hitTarget(x, y);
-        currentSession.analyze(x, y, target.getCenterX(), target.getCenterY(), target.getRadius());
+        currentSession.analyze(x, y, target.getCenterX(), target.getCenterY(), target.getRadius(), hit);
         if (hit) {
             currentSession.hit();
             generateTarget();
@@ -224,36 +225,42 @@ public class AimTrainer {
     public void setToOldSession(int i) {
         oldSession = true;
         currentSession = sessions.get(i);
-        target = currentSession.getTarget();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: asks if the user wants to start a new session or load old session, loads old session if directed
-    // to do so by the user
-    public void askSession() {
-        String newSession = askNewSession();
-        int sessionNum = sessions.size() + 1;
-        if (! newSession.equals("N")) {
-            oldSession = true;
-            System.out.println("Please enter the session number of the past session you would like to open");
-            sessionNum = getNextInt();
-            if (sessionNum <= sessions.size() && sessionNum > 0) {
-                currentSession = sessions.get(sessionNum - 1);
-                System.out.println("Loaded Session " + currentSession.getSessionNum() + " from " + JSON_STORE);
-            } else {
-                fileDoesNotExist();
-            }
-        } else {
-            currentSession = new Session(sessionNum);
-        }
-        System.out.println("This is session " + currentSession.getSessionNum());
+        currentSession.getTarget().changeDist(currentSession.getDistance());
         try {
             currentSession.addOldSessionsToPastSessions(jsonReader);
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (NullPointerException n) {            //it's ok if there's nothing in file
+            throw new RuntimeException();
         }
+        target = currentSession.getTarget();
     }
+
+//    // MODIFIES: this
+//    // EFFECTS: asks if the user wants to start a new session or load old session, loads old session if directed
+//    // to do so by the user
+//    public void askSession() {
+//        String newSession = askNewSession();
+//        int sessionNum = sessions.size() + 1;
+//        if (! newSession.equals("N")) {
+//            oldSession = true;
+//            System.out.println("Please enter the session number of the past session you would like to open");
+//            sessionNum = getNextInt();
+//            if (sessionNum <= sessions.size() && sessionNum > 0) {
+//                currentSession = sessions.get(sessionNum - 1);
+//                System.out.println("Loaded Session " + currentSession.getSessionNum() + " from " + JSON_STORE);
+//            } else {
+//                fileDoesNotExist();
+//            }
+//        } else {
+//            currentSession = new Session(sessionNum);
+//        }
+//        System.out.println("This is session " + currentSession.getSessionNum());
+//        try {
+//            currentSession.addOldSessionsToPastSessions(jsonReader);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        } catch (NullPointerException n) {            //it's ok if there's nothing in file
+//        }
+//    }
 
     // MODIFIES: this
     // EFFECTS: creates a new session for the gui
@@ -264,12 +271,20 @@ public class AimTrainer {
         } catch (IOException e) {
             throw new RuntimeException();
         }
+        EventLog.getInstance().logEvent(new Event("A new session is created: session " + (sessions.size() + 1)));
         generateTarget();
     }
 
     // MODIFIES: this
     // EFFECTS: sets current session to a specified saved session
     public void setCurrentSession(int i) {
+        EventLog.getInstance().logEvent(new Event("A saved session, session " + (i + 1)
+                + " is retrieved and opened."));
+        try {
+            setToOldSession(i);
+        } catch (IndexOutOfBoundsException e) {
+            // nothing
+        }
         currentSession = sessions.get(i);
     }
 
@@ -375,7 +390,6 @@ public class AimTrainer {
             jsonWriter.open();
             jsonWriter.write(currentSession);
             jsonWriter.close();
-            System.out.println("Saved Session" + currentSession.getSessionNum() + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         } catch (IOException e) {
