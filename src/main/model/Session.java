@@ -38,7 +38,7 @@ public class Session implements Writable {
     // EFFECTS: changes the distance from target with logging
     public void setDistance(int newDistance) {
         this.distance = newDistance;
-        EventLog.getInstance().logEvent(new Event("Target is now set at a distance of: "  + distance));
+        EventLog.getInstance().logEvent(new Event("Target is now set at a distance of: "  + distance + "m"));
     }
 
     // MODIFIES: this
@@ -59,6 +59,21 @@ public class Session implements Writable {
     // EFFECTS: changes current target to a new target with no logging
     public void setOldTarget(Target t) {
         currentTarget = t;
+    }
+
+    // EFFECTS: returns all perfect suggestions
+    public List<String> getPerfectShots() {
+        EventLog.getInstance().logEvent(new Event("A filtered list of perfect shots this session has been "
+                + "generated"));
+        List<String> filteredShots = new ArrayList<String>();
+        for (int i = 0; i < getAllSuggestions().size(); i++) {
+            if (getAllSuggestions().get(i).giveSuggestion().equals("Perfect!")) {
+                filteredShots.add("Shot " + (i + 1) + ": X= " + getAllSuggestions().get(i).getCompX()
+                        + ", Y= " + getAllSuggestions().get(i).getCompY() + ", Suggestion: "
+                        + getAllSuggestions().get(i).giveSuggestion());
+            }
+        }
+        return filteredShots;
     }
 
     // EFFECTS: retrieves the current target
@@ -127,7 +142,6 @@ public class Session implements Writable {
     // shots by one
     public void hit() {
         hit++;
-        EventLog.getInstance().logEvent(new Event("A shot has hit the target"));
     }
 
     // EFFECTS: gets the list of all generated suggestions

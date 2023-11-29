@@ -19,8 +19,10 @@ public class Target {
     public boolean hitTarget(int x, int y) {
         EventLog.getInstance().logEvent(new Event("User has taken a shot at: (" + x + ", " + y + ")"));
         if (dist(x, y) <= this.radius) {
+            EventLog.getInstance().logEvent(new Event("A shot has hit the target"));
             return true;
         } else {
+            EventLog.getInstance().logEvent(new Event("A shot has missed the target"));
             return false;
         }
     }

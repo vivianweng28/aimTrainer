@@ -1,4 +1,38 @@
 {
+    "Session 6": {
+        "Suggestions": [
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 153,
+                "Shot X": 84,
+                "Direction Y": "perfect"
+            },
+            {
+                "Error Amount Y": 369.59834024894644,
+                "Error Amount X": 238.57670640408185,
+                "Direction X": "right",
+                "Shot Y": 124,
+                "Shot X": 254,
+                "Direction Y": "up"
+            },
+            {
+                "Error Amount Y": 0,
+                "Error Amount X": 0,
+                "Direction X": "perfect",
+                "Shot Y": 500,
+                "Shot X": 12,
+                "Direction Y": "perfect"
+            }
+        ],
+        "Target Distance": 230,
+        "Hits": 2,
+        "Target Y": 423,
+        "Target Type": "circle",
+        "Target X": 350,
+        "Shots": 3
+    },
     "Session 2": {
         "Suggestions": [
             {

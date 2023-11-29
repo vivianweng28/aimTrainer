@@ -58,11 +58,17 @@ that if your interval between two clicks is too short or if the click duration w
 register it as a click)
 
 ## Phase 4: Task 2
-Wed Nov 29 10:15:00 PST 2023: A new session is created: session 5 \
-Wed Nov 29 10:15:00 PST 2023: New target generated at: (360, 88) \
-Wed Nov 29 10:15:12 PST 2023: Target is now set at a distance of: 74 \
-Wed Nov 29 10:15:13 PST 2023: User has taken a shot at: (360, 82) \
-Wed Nov 29 10:15:13 PST 2023: A shot has hit the target \
-Wed Nov 29 10:15:13 PST 2023: New target generated at: (300, 537) \
-Wed Nov 29 10:15:15 PST 2023: User has taken a shot at: (193, 229) \
-Wed Nov 29 10:15:18 PST 2023: Session 5 saved by the user 
+Wed Nov 29 10:35:17 PST 2023: A new session is created: session 6 \
+Wed Nov 29 10:35:17 PST 2023: New target generated at: (84, 154) \
+Wed Nov 29 10:35:27 PST 2023: Target is now set at a distance of: 230m \
+Wed Nov 29 10:35:29 PST 2023: User has taken a shot at: (84, 153) \
+Wed Nov 29 10:35:29 PST 2023: A shot has hit the target \
+Wed Nov 29 10:35:29 PST 2023: New target generated at: (10, 502) \
+Wed Nov 29 10:35:30 PST 2023: User has taken a shot at: (254, 124) \
+Wed Nov 29 10:35:30 PST 2023: A shot has missed the target \
+Wed Nov 29 10:35:32 PST 2023: User has taken a shot at: (12, 500) \
+Wed Nov 29 10:35:32 PST 2023: A shot has hit the target \
+Wed Nov 29 10:35:32 PST 2023: New target generated at: (350, 423) \
+Wed Nov 29 10:35:34 PST 2023: Session 6 viewed by the user \
+Wed Nov 29 10:35:34 PST 2023: A filtered list of perfect shots this session has been generated \
+Wed Nov 29 10:35:39 PST 2023: Session 6 saved by the user

@@ -103,11 +103,6 @@ public class AimTrainer {
         return sessions;
     }
 
-    // EFFECTS: sets target to a new randomly generated target
-    public void setTarget() {
-        target = generateTarget();
-    }
-
     // MODIFIES: this
     // EFFECTS: for GUI based program. Receives an input of a user's shot, records whether the shot hit the target, and
     // create feedback based on the shots. If the target was hit, a new target is randomly generated.
@@ -121,17 +116,18 @@ public class AimTrainer {
         mg.immediateFeedback(currentSession);
     }
 
-    // MODIFIES: this
-    // EFFECTS: when the session is over, asks if user wants to see statistics from current session, see statistics from
-    // past sessions, or save the current session. Thanks the user for using the aim trainer.
-    public void doNotContinue() {
-        System.out.println("Session feedback: " + currentSession.updateSummarySuggestion().giveSuggestion());
-        askSeeCurrentStats();
-        askSeeAllStatistics();
-        askSave();
-        System.out.println("Thank you for training with us today!");
-        over = true;
-    }
+//    // MODIFIES: this
+//    // EFFECTS: when the session is over, asks if user wants to see statistics from current session,
+//    see statistics from
+//    // past sessions, or save the current session. Thanks the user for using the aim trainer.
+//    public void doNotContinue() {
+//        System.out.println("Session feedback: " + currentSession.updateSummarySuggestion().giveSuggestion());
+//        askSeeCurrentStats();
+//        askSeeAllStatistics();
+//        askSave();
+//        System.out.println("Thank you for training with us today!");
+//        over = true;
+//    }
 
     // EFFECTS: returns the DIM_X of the game.
     public int getDimX() {
@@ -143,24 +139,24 @@ public class AimTrainer {
         return DIM_Y;
     }
 
-    // EFFECTS: asks the user if they want to see the statistics from this session. If so, displays the statistics
-    public void askSeeCurrentStats() {
-        System.out.println("Would you like to see your statistics for this session? (\"Y\" to view)");
-        String answer = SCN.nextLine();
-        if (answer.equals("Y")) {
-            Suggestion summary = currentSession.updateSummarySuggestion();
-            System.out.println("Current session feedback: " + summary.giveSuggestion());
-            System.out.println("Total accuracy: " + currentSession.getAccuracy() + "%");
-            List<Suggestion> allSuggestions = currentSession.getAllSuggestions();
-            int count = 1;
-            for (Suggestion s : allSuggestions) {
-                System.out.println("Shot " + count + ": x = " + s.getCompX() + ", y = " + s.getCompY());
-                System.out.println("Shot " + count + " suggestion: " + s.giveSuggestion());
-                count++;
-            }
-            System.out.println();
-        }
-    }
+//    // EFFECTS: asks the user if they want to see the statistics from this session. If so, displays the statistics
+//    public void askSeeCurrentStats() {
+//        System.out.println("Would you like to see your statistics for this session? (\"Y\" to view)");
+//        String answer = SCN.nextLine();
+//        if (answer.equals("Y")) {
+//            Suggestion summary = currentSession.updateSummarySuggestion();
+//            System.out.println("Current session feedback: " + summary.giveSuggestion());
+//            System.out.println("Total accuracy: " + currentSession.getAccuracy() + "%");
+//            List<Suggestion> allSuggestions = currentSession.getAllSuggestions();
+//            int count = 1;
+//            for (Suggestion s : allSuggestions) {
+//                System.out.println("Shot " + count + ": x = " + s.getCompX() + ", y = " + s.getCompY());
+//                System.out.println("Shot " + count + " suggestion: " + s.giveSuggestion());
+//                count++;
+//            }
+//            System.out.println();
+//        }
+//    }
 
     // EFFECTS: returns session at the specified index
     public Session getSession(int i) {
