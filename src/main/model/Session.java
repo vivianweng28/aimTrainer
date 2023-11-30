@@ -97,6 +97,8 @@ public class Session implements Writable {
         allSuggestions.add(suggest);
     }
 
+    // EFFECTS: compares shot taken by player to the closest shot on the target and generates
+    // suggestion when the shot is not perfect
     public Suggestion notPerfect(int x, int y, double centerX, double centerY, double radius) {
         Shot closestShot = getClosestShot(new Vector(x - centerX, y - centerY), radius, centerX, centerY);
         double adjustX = x - closestShot.getCompX();

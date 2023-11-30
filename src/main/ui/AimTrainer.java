@@ -375,10 +375,6 @@ public class AimTrainer {
         return target;
     }
 
-    public void delete(int i) {
-        sessions.remove(i);
-    }
-
     // EFFECTS: saves all sessions to file
     public void saveSessions() {
         sessions.add(currentSession);

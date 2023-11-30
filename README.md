@@ -72,3 +72,18 @@ Wed Nov 29 10:35:32 PST 2023: New target generated at: (350, 423) \
 Wed Nov 29 10:35:34 PST 2023: Session 6 viewed by the user \
 Wed Nov 29 10:35:34 PST 2023: A filtered list of perfect shots this session has been generated \
 Wed Nov 29 10:35:39 PST 2023: Session 6 saved by the user
+
+## Phase 4: Task 3
+To make my program more efficient, one way that I would refactor my code is by 
+making my AimTrainer class a singleton. This is because there are many classes 
+that use the AimTrainer class, but they all currently pass around one AimTrainer 
+via arguments in their respective methods. However, this design can become confusing
+if this project was to expand further. Therefore, in order to ensure that my program
+is indeed only using one AimTrainer instance, (since only one AimTrainer will ever be
+required), designing the AimTrainer as a singleton class will make more sense. 
+
+Additionally, I currently have a JSONObject in my Session class that keeps track of all
+the past sessions, however, that should probably be refactored into a separate class since
+that JSONObject does not have much to do with the session itself, but is just helpful in saving
+the code. Therefore, I can probably refactor it into a PersistenceManager class and have all that 
+information be stored there.
