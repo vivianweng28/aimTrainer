@@ -83,7 +83,7 @@ is indeed only using one AimTrainer instance, (since only one AimTrainer will ev
 required), designing the AimTrainer as a singleton class will make more sense. 
 
 Additionally, I currently have a JSONObject in my Session class that keeps track of all
-the past sessions, however, that should probably be refactored into a separate class since
+the past sessions, however, that and all its relating methods should probably be refactored into a separate class since
 that JSONObject does not have much to do with the session itself, but is just helpful in saving
 the code. Therefore, I can probably refactor it into a PersistenceManager class and have all that 
 information be stored there.
