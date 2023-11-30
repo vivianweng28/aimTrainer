@@ -13,7 +13,7 @@ import model.Suggestion;
 import model.Target;
 import org.json.*;
 
-// "Code influenced by the JsonSerizalizationDemo link_to_demo
+// "Code influenced by the JsonSerizalizationDemo
 // Represents a reader that reads workroom from JSON data stored in file
 public class JsonReader {
     private String source;

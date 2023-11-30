@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-// "Code influenced by the JsonSerizalizationDemo link_to_demo
+// "Code influenced by the JsonSerizalizationDemo
 // Represents a writer that writes JSON representation of session to file
 public class JsonWriter {
     private static final int TAB = 4;
