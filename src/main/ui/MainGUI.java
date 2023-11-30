@@ -4,11 +4,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.List;
 
-import model.Event;
 import model.EventLog;
 import model.Session;
 import model.Suggestion;

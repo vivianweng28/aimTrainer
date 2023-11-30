@@ -92,7 +92,7 @@ public class Menu extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    // EFFECTS: returns whether the user has finished using the menu window
+    // EFFECTS: returns whether the user has afinished using the menu window
     public boolean getOver() {
         return over;
     }
